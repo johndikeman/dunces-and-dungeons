@@ -3,6 +3,7 @@ import random
 D6 = Die(6)
 D6 = Die(12)
 D6 = Die(20)
+# Im working here shhh
 
 class Dungeon:
 	def __init__(self, size, level, party):
