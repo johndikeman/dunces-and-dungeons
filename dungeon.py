@@ -1,8 +1,8 @@
 import random
 
 D6 = Die(6)
-D6 = Die(12)
-D6 = Die(20)
+D12 = Die(12)
+D20 = Die(20)
 # Im working here shhh
 
 class Dungeon:
@@ -58,8 +58,10 @@ class Room:
 
 
 class Monster(Entity):
-	pass
-class Skeleton(Monster)
+	def __init__(self):
+		self.agro= None
+
+class Skeleton(Monster):
 	pass
 
 # this is a superclass for general traps
