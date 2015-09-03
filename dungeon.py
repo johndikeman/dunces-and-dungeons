@@ -45,6 +45,8 @@ class Room:
 
 class Monster(Entity):
 	pass
+class Skeleton(Monster)
+	pass
 
 # this is a superclass for general traps
 class Trap:
