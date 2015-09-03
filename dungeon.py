@@ -25,7 +25,21 @@ class Dungeon:
 
 
 class Entity:
-	pass
+	def __init__(self):
+		# not sure about this
+		# attack_range = 0
+		self.strength = 0
+		self.perception = 0
+		self.luck = 0
+		self.agility = 0
+		self.mana = 0
+		self.health = 0
+
+	def do_turn(self):
+		pass
+
+	def kill(self):
+		self.alive = False
 
 class Player(Entity):
 	pass
@@ -61,7 +75,7 @@ class Trap:
 	def detect():
 		return "you spy a trap!"
 
-class WireTrap:
+class WireTrap(Trap):
 	def __init__(self,damage):
 		pass
 
