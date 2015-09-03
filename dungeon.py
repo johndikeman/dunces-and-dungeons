@@ -1,8 +1,8 @@
 import random
 
 D6 = Die(6)
-D6 = Die(12)
-D6 = Die(20)
+D12 = Die(12)
+D20 = Die(20)
 # Im working here shhh
 
 class Dungeon:
@@ -51,6 +51,7 @@ class Room:
 	def __init__(self,containing_dungeon):
 		self.containing_dungeon = containing_dungeon
 		self.neighbors = []
+		# the room should only be 50% weaker than the dungeon level or 150% stronger- this is not a mistake
 		self.level = ceil((random.random() + .5) * containing_dungeon.level)
 
 	def examine(self,examiner):
@@ -59,7 +60,8 @@ class Room:
 
 class Monster(Entity):
 	pass
-class Skeleton(Monster)
+	
+class Skeleton(Monster):
 	pass
 
 # this is a superclass for general traps
