@@ -4,3 +4,36 @@ class Monster(Entity):
 
 class Skeleton(Monster):
 	pass
+
+class Spider(Monster):
+	pass
+
+class Assassin(Monster):
+	pass
+
+class Hidden_Devourer(Monster):
+	pass
+
+class Goblin(Monster):
+	pass
+
+class Ogre(Monster)
+	pass
+
+class Hellhound(Monster):
+	pass
+
+class Sorcerer(Monster):
+	pass
+
+class Elemental(Monster):
+	pass
+
+class Demigod(Monster):
+	pass
+
+class Overcharger(Monster):
+	pass
+
+class Cyclops(Monster):
+	pass
