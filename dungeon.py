@@ -59,14 +59,9 @@ class Room:
 
 
 class Monster(Entity):
-<<<<<<< HEAD
 	def __init__(self):
 		self.agro= None
 
-=======
-	pass
-	
->>>>>>> origin/master
 class Skeleton(Monster):
 	pass
 
