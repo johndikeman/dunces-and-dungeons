@@ -65,6 +65,12 @@ class Monster(Entity):
 class Skeleton(Monster):
 	pass
 
+class Item(Entity):
+	def __init__(self):
+		pass
+	def examine(self, examiner):
+	 	pass
+
 # this is a superclass for general traps
 class Trap:
 	def __init__(self):
