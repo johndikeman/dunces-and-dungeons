@@ -51,6 +51,7 @@ class Room:
 	def __init__(self,containing_dungeon):
 		self.containing_dungeon = containing_dungeon
 		self.neighbors = []
+		# the room should only be 50% weaker than the dungeon level or 150% stronger- this is not a mistake
 		self.level = ceil((random.random() + .5) * containing_dungeon.level)
 
 	def examine(self,examiner):
@@ -58,9 +59,14 @@ class Room:
 
 
 class Monster(Entity):
+<<<<<<< HEAD
 	def __init__(self):
 		self.agro= None
 
+=======
+	pass
+	
+>>>>>>> origin/master
 class Skeleton(Monster):
 	pass
 
