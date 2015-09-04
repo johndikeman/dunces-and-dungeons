@@ -1,5 +1,5 @@
 class Player(Entity):
-	pass
+	def 
 
-class Party:
+class Party(object):
 	pass

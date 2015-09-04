@@ -16,6 +16,7 @@ class Entity(object):
 		# self.mana = 0
 		# self.health = 0
 		self.alive = True
+		self.action_points = 1
 
 	def do_turn(self):
 		pass
