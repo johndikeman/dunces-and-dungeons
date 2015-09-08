@@ -17,6 +17,7 @@ class Entity(object):
 		# self.health = 0
 		self.alive = True
 		self.action_points = 1
+		self.options = []
 
 	def do_turn(self):
 		pass
@@ -25,6 +26,9 @@ class Entity(object):
 	# 	self.alive = False
 
 	def return_options(self):
+		pass
+
+	def process_options(self,*options):
 		pass
 
 # this is a superclass for general traps
