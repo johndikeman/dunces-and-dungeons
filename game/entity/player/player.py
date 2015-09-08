@@ -1,3 +1,4 @@
+import Entity
 class Player(Entity):
 	def __init__(self,name):
 		super(self,Player).__init__()
