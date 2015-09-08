@@ -18,6 +18,7 @@ class Entity(object):
 		self.alive = True
 		self.action_points = 1
 		self.options = []
+		self.inventory = []
 
 	def do_turn(self):
 		pass
@@ -26,7 +27,12 @@ class Entity(object):
 	# 	self.alive = False
 
 	def return_options(self):
-		pass
+		li = []
+		li += self.options
+		for a in self.inventory.keys(): 
+			li += self.inventory[a].return_options()
+		return li
+
 
 	def process_options(self,*options):
 		pass

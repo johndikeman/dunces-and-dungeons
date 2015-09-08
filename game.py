@@ -12,9 +12,13 @@ class Manager:
 		for a in range(party_size):
 			name = raw_input('enter the name of player %d' % num) 
 			PARTY.append(Player(name))
-		
+			num += 1
+			if num == party_size:
+				num = 0
+
 		while(True):
-			print "it is %s's turn! available options: %s" % ()
+			options =  raw_input("it is %d's turn! available options: %s" % (num,str(PARTY[num].return_options())))
+			PARTY[num].process_options(options.split(" "))
 
 
 
