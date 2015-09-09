@@ -1,7 +1,7 @@
-import Entity
-class Player(Entity):
+import base
+class Player(base.Entity):
 	def __init__(self,name):
-		super(self,Player).__init__()
+		super(Player,self).__init__()
 		self.name = name
 		
 	def process_options(self,*args):

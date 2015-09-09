@@ -1,8 +1,6 @@
 import random
 
-D6 = Die(6)
-D12 = Die(12)
-D20 = Die(20)
+
 # Im working here shhh
 
 class Entity(object):
@@ -29,8 +27,8 @@ class Entity(object):
 	def return_options(self):
 		li = []
 		li += self.options
-		for a in self.inventory.keys(): 
-			li += self.inventory[a].return_options()
+		for a in self.inventory: 
+			li += a.return_options()
 		return li
 
 
@@ -57,3 +55,6 @@ class Die(object):
 	
 	def roll():
 		return random.randint(1,self.num)
+D6 = Die(6)
+D12 = Die(12)
+D20 = Die(20)
