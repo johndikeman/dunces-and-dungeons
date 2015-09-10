@@ -15,7 +15,7 @@ class Manager:
 			num += 1
 			if num == int(party_size):
 				num = 0
-
+		
 		while(True):
 			options =  raw_input("it is %d's turn! available options: %s" % (num,str(PARTY[num].return_options())))
 			PARTY[num].process_options(options.split(" "))
