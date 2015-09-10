@@ -13,12 +13,15 @@ class Entity(object):
 		# self.agility = 0
 		# self.mana = 0
 		# self.health = 0
+
+		# base ap is what the ap should be restored to after a turn is complete
+		self.base_ap = 1
 		self.alive = True
 		self.action_points = 1
 		self.options = []
 		self.inventory = []
 
-	def do_turn(self):
+	def do_turn(self,*options):
 		pass
 
 	# def kill(self):

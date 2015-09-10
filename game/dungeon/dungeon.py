@@ -16,6 +16,10 @@ class Dungeon(object):
 				current_room = current_room.generate_neighbor()
 				num_doors = 0
 
+	def handle_monster_turn(self):
+		pass
+
+
 class Room:
 	def __init__(self,containing_dungeon):
 		self.containing_dungeon = containing_dungeon
