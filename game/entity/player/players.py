@@ -4,10 +4,16 @@ class Player(base.Entity):
 		super(Player,self).__init__()
 		self.name = name
 		self.party = None
+		self.action_points = 2
+		self.options = ['leave']
 
-	def process_options(self,*args):
-		for a in self.inventory.keys():
-			self.inventory[a].process_options(args)
+	def do_turn(self, args):
+		print args
+		if 'leave' in args:
+			door = raw_input('choose a door to exit from! %s' % str([a.id for a in self.party.current_dungeon.active_room.neighbors]))
+
+		for a in self.inventory:
+			a.do_turn(args)
 
 
 
@@ -16,6 +22,7 @@ class Party(base.Entity):
 	def __init__(self):
 		super(Party,self).__init__()
 		self.index = 0
+		self.current_dungeon = None
 
 	def add_player(self,player):
 		# party is an entity and all the players will be in
@@ -28,14 +35,14 @@ class Party(base.Entity):
 		print 'options: %s' % str(self.inventory[self.index].return_options())
 
 
-	def do_turn(self,*options):
+	def do_turn(self,options):
 		self.inventory[self.index].do_turn(options)
 		self.inventory[self.index].action_points -= 1
 
 	def handle_player_turn(self):
 		while(self.inventory[self.index].action_points > 0):
 			self.return_options()
-			self.do_turn(raw_input())
+			self.do_turn(raw_input().split(' '))
 		self.inventory[self.index].action_points = self.inventory[self.index].base_ap
 		self.index += 1
 

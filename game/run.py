@@ -12,6 +12,12 @@ class Manager:
 			name = raw_input('enter the name of player %d: ' % a) 
 			PARTY.add_player(Player(name))
 
+		dungeon = Dungeon(12,4,PARTY)
+
+		PARTY.current_dungeon = dungeon
+
+		dungeon.start()
+
 		while(True):
 			PARTY.handle_player_turn()
 

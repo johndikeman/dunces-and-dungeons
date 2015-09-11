@@ -21,7 +21,7 @@ class Entity(object):
 		self.options = []
 		self.inventory = []
 
-	def do_turn(self,*options):
+	def do_turn(self,options):
 		pass
 
 	# def kill(self):
@@ -56,7 +56,7 @@ class Die(object):
 	def __init__(self,num):
 		self.num = num
 	
-	def roll():
+	def roll(self):
 		return random.randint(1,self.num)
 D6 = Die(6)
 D12 = Die(12)
