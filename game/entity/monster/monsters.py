@@ -1,4 +1,6 @@
-class Monster(Entity):
+import base
+
+class Monster(base.Entity):
 	def __init__(self):
 		self.agro= None
 

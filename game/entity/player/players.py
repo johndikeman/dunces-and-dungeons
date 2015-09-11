@@ -10,7 +10,9 @@ class Player(base.Entity):
 	def do_turn(self, args):
 		print args
 		if 'leave' in args:
-			door = raw_input('choose a door to exit from! %s' % str([a.id for a in self.party.current_dungeon.active_room.neighbors]))
+			# door should be the INDEX of the returned list, ie 0 1 2 3
+			door = raw_input('choose a door to exit from. (0-%s)' % str(len(self.party.current_dungeon.active_room.neighbors)-1))
+			self.party.current_dungeon.active_room.move_to(int(door))
 
 		for a in self.inventory:
 			a.do_turn(args)
