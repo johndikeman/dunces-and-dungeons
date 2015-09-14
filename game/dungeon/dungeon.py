@@ -48,7 +48,7 @@ class Room(object):
 
 		# this will identify the rooms to the players for now
 		self.id = random.getrandbits(32)
-		self.monsters = []
+		self.contents = []
 
 	def generate_neighbor(self):
 		new_room = Room(self.containing_dungeon)
@@ -63,7 +63,7 @@ class Room(object):
 
 	def to_str(self):
 		# this method was a thing at one point, but now it is not. rip
-		pass
+		return 'this is a room, id %s' % str(self.id)
 
 	def move_to(self,ind):
 		self.containing_dungeon.active_room = self.neighbors[ind]
@@ -73,9 +73,8 @@ class Room(object):
 		print 'you enter a %s' % self.description
 
 	def handle_monster_turn(self):
-		# READY FOR THE SPACE JAMMMMMM
-		for monstar in self.monsters:
-			monstar.do_turn()
+		for thing in self.things:
+			thing.do_turn()
 
 
 		

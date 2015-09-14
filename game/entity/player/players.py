@@ -1,4 +1,16 @@
 import base
+
+RACES = {
+	"dwarf":{
+		"rolls":{
+			'agility': base.D6,
+			'intelligence':base.D12,
+			'strength':base.D20,
+			'luck':base.D6
+		},
+		'abilities':[]
+	}
+}
 class Player(base.Entity):
 	def __init__(self,name):
 		super(Player,self).__init__()
@@ -6,9 +18,26 @@ class Player(base.Entity):
 		self.party = None
 		self.action_points = 2
 		self.options = ['leave']
+		self.alive = True
+		option = base.make_choice(RACES.keys(),'race')
+		self.race = RACES.keys()[option]
+
+		for attribute, dice in RACES[self.race]['rolls'].iteritems():
+			rolls = [dice.roll() for a in range(3)]
+			selection = base.make_choice(rolls,'%s roll' % attribute)
+			self.attributes[attribute] = rolls[selection]
+
+		# haha this looks so disgusting
+		print 'final attributes:\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t' % ('agility',self.attributes['agility'],'intelligence',self.attributes['intelligence'],'strength',self.attributes['strength'],'luck',self.attributes['luck'],'mana',self.attributes['mana'])
+				
+
 
 	def do_turn(self, args):
-		print args
+		# print args
+
+		for x in self.statuses:
+			x.do_turn()
+
 		if 'leave' in args:
 			# door should be the INDEX of the returned list, ie 0 1 2 3
 			door = raw_input('choose a door to exit from. (0-%s)' % str(len(self.party.current_dungeon.active_room.neighbors)-1))
