@@ -16,8 +16,8 @@ class Entity(object):
 		self.action_points = 1
 		self.options = []
 		self.inventory = Inventory(self)
-		self.statuses = []
-
+		self.statuses = Inventory(self)
+		self.owner = None
 	def do_turn(self,options):
 		pass
 
@@ -32,8 +32,8 @@ class Entity(object):
 		return li
 
 
-	def process_options(self,*options):
-		pass
+	# def process_options(self,*options):
+	# 	pass
 
 # this is a superclass for general traps
 class Trap(object):
@@ -66,7 +66,7 @@ class Inventory(list):
 		self.owner = owner
 
 	def append(self,thing):
-		thing.owner = self
+		thing.owner = self.owner
 		super(Inventory,self).append(thing)
 
 

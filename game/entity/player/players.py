@@ -8,9 +8,11 @@ RACES = {
 			'strength':base.D20,
 			'luck':base.D6
 		},
-		'abilities':[]
+		'abilities':[],
+		'statuses':[]
 	}
 }
+
 class Player(base.Entity):
 	def __init__(self,name):
 		super(Player,self).__init__()
@@ -21,6 +23,8 @@ class Player(base.Entity):
 		self.alive = True
 		option = base.make_choice(RACES.keys(),'race')
 		self.race = RACES.keys()[option]
+		self.health = 0
+		self.max_health = 0
 
 		for attribute, dice in RACES[self.race]['rolls'].iteritems():
 			rolls = [dice.roll() for a in range(3)]
@@ -29,7 +33,9 @@ class Player(base.Entity):
 
 		# haha this looks so disgusting
 		print 'final attributes:\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t' % ('agility',self.attributes['agility'],'intelligence',self.attributes['intelligence'],'strength',self.attributes['strength'],'luck',self.attributes['luck'],'mana',self.attributes['mana'])
-				
+		
+		self.max_health = self.attributes['strength'] * 10		
+		self.health = self.max_health
 
 
 	def do_turn(self, args):
@@ -79,3 +85,4 @@ class Party(base.Entity):
 
 		if self.index == len(self.inventory):
 			self.index = 0
+
