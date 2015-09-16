@@ -115,11 +115,21 @@ class Player(base.Entity):
 		self.race = RACES.keys()[option]
 		self.health = 0
 		self.max_health = 0
+		choices={}
 
-		for attribute, dice in RACES[self.race]['rolls'].iteritems():
-			rolls = [dice.roll() for a in range(3)]
-			selection = base.make_choice(rolls,'%s roll' % attribute)
-			self.attributes[attribute] = rolls[selection]+RACES[self.race]['BaseStats'][attribute]
+		#Please tell me i didn't mess this up.
+		for x in xrange(3): 
+			more_choices={}
+			for attribute, dice in RACES[self.race]['rolls'].iteritems():
+				rolls = [dice.roll() for a in range(3)]
+				selection=0;
+				for(b in range(3))
+					if rolls[b]<selection
+						selection = rolls[b]
+				more_choices=more_choices+{attribute:selection}
+			choices=choices+{x:more_choices}
+		#need your help displaying the choices for the player to pick his character.
+		self.attributes[attribute] = rolls[selection]+RACES[self.race]['BaseStats'][attribute]
 
 		# haha this looks so disgusting
 		print 'final attributes:\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t' % ('agility',self.attributes['agility'],'intelligence',self.attributes['intelligence'],'strength',self.attributes['strength'],'luck',self.attributes['luck'],'mana',self.attributes['mana'])
