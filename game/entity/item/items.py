@@ -22,7 +22,7 @@ class Sword(Item):
 			self.swing(self.owner.party.dungeon.current_room.contents[target_ind])
 
 	def swing(self,target):
-
+		pass
 
 
 

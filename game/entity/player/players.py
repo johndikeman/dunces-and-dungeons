@@ -70,7 +70,7 @@ RACES = {
 			'agility': 3.2,
 			'intelligence': 1.8,
 			'strength': 2.2,
-			'luck': 1
+			'luck': 1,
 			'mana': .8
 		},
 		'abilities':[],
@@ -118,18 +118,28 @@ class Player(base.Entity):
 		choices={}
 
 		#Please tell me i didn't mess this up.
-		for x in xrange(3): 
+
+		# options will be the list all the potential dictionarys will be added to
+		options = []
+		for x in range(3): 
 			more_choices={}
 			for attribute, dice in RACES[self.race]['rolls'].iteritems():
 				rolls = [dice.roll() for a in range(3)]
 				selection=0;
-				for(b in range(3))
-					if rolls[b]<selection
-						selection = rolls[b]
-				more_choices=more_choices+{attribute:selection}
-			choices=choices+{x:more_choices}
+
+				# find the largest roll out of three
+				for b in range(3):
+					if rolls[b] > selection:
+						selection = rolls[b]+RACES[self.race]['BaseStats'][attribute]
+				# update more choices with the attribute value
+				more_choices.update({attribute:selection})
+			# when more choices is full, add it to options
+			options.append(more_choices)
+		# print str(options)
+
+		ret = base.make_choice(options,'character setup!')
 		#need your help displaying the choices for the player to pick his character.
-		self.attributes[attribute] = rolls[selection]+RACES[self.race]['BaseStats'][attribute]
+		self.attributes = options[ret]
 
 		# haha this looks so disgusting
 		print 'final attributes:\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t' % ('agility',self.attributes['agility'],'intelligence',self.attributes['intelligence'],'strength',self.attributes['strength'],'luck',self.attributes['luck'],'mana',self.attributes['mana'])

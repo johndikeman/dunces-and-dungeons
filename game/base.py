@@ -68,11 +68,6 @@ class Inventory(list):
 
 	def append(self,thing):
 		thing.owner = self.owner
-		if thing.consumes_inventory_space 
-			if self.space > 0:
-				self.space -= 1
-			else:
-				print 'No more inventory space!'
 
 		super(Inventory,self).append(thing)
 
