@@ -98,6 +98,7 @@ def make_choice(choices,thing=None):
 	ans = raw_input()
 	return int(ans)
 
+D2 = Die(2)
 D6 = Die(6)
 D12 = Die(12)
 D20 = Die(20)
