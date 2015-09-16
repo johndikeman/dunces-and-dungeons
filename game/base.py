@@ -64,10 +64,24 @@ class Inventory(list):
 	def __init__(self,owner):
 		super(Inventory,self).__init__()
 		self.owner = owner
+		self.space = 6
 
 	def append(self,thing):
 		thing.owner = self.owner
+		if thing.consumes_inventory_space 
+			if self.space > 0:
+				self.space -= 1
+			else:
+				print 'No more inventory space!'
+
 		super(Inventory,self).append(thing)
+
+	def remove(self,object_to_remove):
+		for ind, obj in enumerate(self):
+			if isinstance(obj,object_to_remove):
+				obj.remove()
+				self = self[:ind] + self[ind+1:]
+
 
 
 # use this method when you have a list of things that the 
