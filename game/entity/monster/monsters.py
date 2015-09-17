@@ -1,8 +1,11 @@
 import base
 
+
 class Monster(base.Entity):
 	def __init__(self):
 		self.agro= None
+	def take_damage(self,val):
+		pass
 
 class Skeleton(Monster):
 	pass
