@@ -170,6 +170,10 @@ class Party(base.Entity):
 		super(Party,self).__init__()
 		self.index = 0
 		self.current_dungeon = None
+		self.partySize = 0
+
+	def set_PartySize(self,size):
+		self.partySize=size
 
 	def add_player(self,player):
 		# party is an entity and all the players will be in
