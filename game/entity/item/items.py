@@ -4,7 +4,6 @@ class Item(base.Entity):
 	def __init__(self):
 		super(Item,self).__init__()
 		self.consumes_inventory_space = True
-		self.level = 0
 
 	def to_str(self):
 		return "this is the item superclass. if you're reading this you really shouldn't be"
@@ -25,6 +24,7 @@ class Sword(Item):
 
 	def swing(self,target):
 		target.take_damage(self.damage + self.owner.strength + base.D12.roll())
+
 
 
 	def to_str(self):

@@ -48,7 +48,7 @@ class Room(object):
 
 		# this will identify the rooms to the players for now
 		self.id = random.getrandbits(32)
-		self.contents = []
+		self.contents = Inventory()
 
 	def generate_neighbor(self):
 		new_room = Room(self.containing_dungeon)
