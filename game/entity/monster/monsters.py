@@ -14,6 +14,9 @@ class Monster(base.Entity):
 		self.statuses = Inventory(self)
 		self.owner = None
 
+	def take_damage(self,val):
+		pass
+
 class Skeleton(Monster):
 	pass
 

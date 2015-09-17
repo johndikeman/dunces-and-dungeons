@@ -162,6 +162,9 @@ class Player(base.Entity):
 		for a in self.inventory:
 			a.do_turn(args)
 
+	def take_damage(self,damage):
+		pass
+
 
 
 
