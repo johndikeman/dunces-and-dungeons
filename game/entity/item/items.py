@@ -18,14 +18,14 @@ class Sword(Item):
 		self.damage = 10.0 * self.level
 		
 	def do_turn(self,options):
+		# print options
 		if self.options[0] in options:
-			target_ind = base.make_choice(self.owner.party.dungeon.current_room.contents,'target')
-			self.swing(self.owner.party.dungeon.current_room.contents[target_ind])
+			target_ind = base.make_choice(self.owner.party.current_dungeon.active_room.things,'target')
+			if target_ind:
+				self.swing(self.owner.party.current_dungeon.active_room.things[target_ind])
 
 	def swing(self,target):
-		target.take_damage(self.damage + self.owner.strength + base.D12.roll())
-
-
+		target.take_damage(self.owner,self.damage + self.owner.strength + base.D12.roll())
 
 	def to_str(self):
 		return 'sword'

@@ -1,4 +1,6 @@
 import base
+import entity.item.items as items
+
 
 RACES = {
 	"Dwarf":{
@@ -148,6 +150,9 @@ class Player(base.Entity):
 		self.health = self.max_health
 
 
+		# THIS IS NOT FINAL- ITS A TEST
+		self.inventory.append(items.Sword())
+
 	def do_turn(self, args):
 		# print args
 
@@ -162,9 +167,15 @@ class Player(base.Entity):
 		for a in self.inventory:
 			a.do_turn(args)
 
-	def take_damage(self,damage):
-		pass
+	def take_damage(self,attacker,damage):
+		print '(%s) takes (%d) damage from (%s)' % (self.to_str(),damage,attacker.to_str())
+		self.health -= val
+		if self.hp <= 0:
+			self.alive = False
+			print "(%s) has died by the hand of (%s)" % (self.to_str(),attacker.to_str())
 
+	def to_str(self):
+		return self.name
 
 
 
@@ -185,8 +196,7 @@ class Party(base.Entity):
 		player.party = self
 
 	def return_options(self):
-		print "it is %s's turn!" % self.inventory[self.index].name
-		print 'options: %s' % str(self.inventory[self.index].return_options())
+		return self.inventory[self.index].return_options()
 
 
 	def do_turn(self,options):
@@ -195,8 +205,8 @@ class Party(base.Entity):
 
 	def handle_player_turn(self):
 		while(self.inventory[self.index].action_points > 0):
-			self.return_options()
-			self.do_turn(raw_input().split(' '))
+			selection = base.make_choice(self.return_options(),'option')
+			self.do_turn(self.return_options()[selection])
 		self.inventory[self.index].action_points = self.inventory[self.index].base_ap
 		self.index += 1
 

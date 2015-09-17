@@ -1,5 +1,6 @@
 from dungeon.dungeon import Dungeon
 from entity.player.players import Player, Party
+import entity.item.items as items
 
 PARTY = Party()
 class Manager:
@@ -11,6 +12,7 @@ class Manager:
 		for a in range(int(party_size)):
 			name = raw_input('enter the name of player %d: ' % a) 
 			PARTY.add_player(Player(name))
+			
 
 		dungeon = Dungeon(12,1,PARTY)
 

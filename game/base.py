@@ -3,7 +3,6 @@ import random
 
 class Entity(object):
 	def __init__(self):
-		# not sure about this
 
 		# ATTRIBUTES
 		self.attributes = {'strength':0,'intelligence':0,'luck':0,'agility':0,'mana':0}
@@ -83,6 +82,9 @@ class Inventory(list):
 # player needs to choose from. it will be handy later on 
 # i think
 def make_choice(choices,thing=None):
+	if len(choices) <= 0:
+		print 'nothing to choose from!'
+		return
 	if thing:
 		print 'choose a %s' % thing
 	else:

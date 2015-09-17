@@ -13,8 +13,11 @@ class Dungeon(object):
 		self.level = level
 		self.party = party
 		self.active_room = None
-		self.starting_room = Room(self)
+		self.starting_room = Room(self,self.party)
 		self.starting_room.test = 0
+
+		# okso current_room is only used in generation. to access the ACTIVE room, use self.active_room instead.
+
 		current_room = self.starting_room
 
 		for a in range(0,size):
@@ -37,7 +40,7 @@ class Dungeon(object):
 
 
 class Room(object):
-	def __init__(self,containing_dungeon):
+	def __init__(self,containing_dungeon,party):
 		self.containing_dungeon = containing_dungeon
 		self.neighbors = []
 		# the room should only be 50% weaker than the dungeon level or 150% stronger- this is not a mistake
@@ -48,10 +51,12 @@ class Room(object):
 
 		# this will identify the rooms to the players for now
 		self.id = random.getrandbits(32)
-		self.contents = Inventory()
+		self.things = base.Inventory(self)
+
+		self.party = party
 
 	def generate_neighbor(self):
-		new_room = Room(self.containing_dungeon)
+		new_room = Room(self.containing_dungeon,self.party)
 		# each room is assigned a unique ID at generation
 		new_room.id = self.id + len(self.neighbors) + 1
 		self.neighbors.append(new_room)
