@@ -68,11 +68,6 @@ class Inventory(list):
 
 	def append(self,thing):
 		thing.owner = self.owner
-		if thing.consumes_inventory_space 
-			if self.space > 0:
-				self.space -= 1
-			else:
-				print 'No more inventory space!'
 
 		super(Inventory,self).append(thing)
 
@@ -98,6 +93,7 @@ def make_choice(choices,thing=None):
 	ans = raw_input()
 	return int(ans)
 
+D2 = Die(2)
 D6 = Die(6)
 D12 = Die(12)
 D20 = Die(20)

@@ -1,16 +1,106 @@
 import base
 
 RACES = {
-	"dwarf":{
+	"Dwarf":{
 		"rolls":{
 			'agility': base.D6,
 			'intelligence':base.D12,
 			'strength':base.D20,
-			'luck':base.D6
+			'luck':base.D6,
+			'mana':base.D2
+		},
+		'BaseStats':{
+			'agility': 2,
+			'intelligence': 5,
+			'strength': 8,
+			'luck': 3,
+			'mana': 0
+		},
+		'LvlGains':{
+			'agility': 1.4,
+			'intelligence': 2,
+			'strength': 3.6,
+			'luck': 1,
+			'mana': .2
 		},
 		'abilities':[],
 		'statuses':[]
-	}
+	},
+	'Wizard':{
+		"rolls":{
+			'agility': base.D12,
+			'intelligence':base.D20,
+			'strength':base.D6,
+			'luck':base.D6,
+			'mana':base.D12
+		},
+		'BaseStats':{
+			'agility': 4,
+			'intelligence': 9,
+			'strength': 2,
+			'luck': 3,
+			'mana': 4
+		},
+		'LvlGains':{
+			'agility': 2,
+			'intelligence': 4,
+			'strength': 1,
+			'luck': 1,
+			'mana':1.6
+		},
+		'abilities':[],
+		'statuses':[]
+	},
+	'Ranger':{
+		"rolls":{
+			'agility': base.D20,
+			'intelligence':base.D12,
+			'strength':base.D12,
+			'luck':base.D6,
+			'mana':base.D6
+		},
+		'BaseStats':{
+			'agility': 6,
+			'intelligence': 3,
+			'strength': 4,
+			'luck': 3,
+			'mana': 2
+		},
+		'LvlGains':{
+			'agility': 3.2,
+			'intelligence': 1.8,
+			'strength': 2.2,
+			'luck': 1,
+			'mana': .8
+		},
+		'abilities':[],
+		'statuses':[]
+	},
+	'Rogue':{
+		"rolls":{
+			'agility': base.D20,
+			'intelligence':base.D12,
+			'strength':base.D20,
+			'luck':base.D6,
+			'mana':base.D6
+		},
+		'BaseStats':{
+			'agility': 8,
+			'intelligence': 6,
+			'strength': 9,
+			'luck': 5,
+			'mana': 4
+		},
+		'LvlGains':{
+			'agility': 2,
+			'intelligence': 1.6,
+			'strength': 2.2,
+			'luck': .8,
+			'mana': .8
+		},
+		'abilities':[],
+		'statuses':[]
+	},
 }
 
 class Player(base.Entity):
@@ -25,11 +115,31 @@ class Player(base.Entity):
 		self.race = RACES.keys()[option]
 		self.health = 0
 		self.max_health = 0
+		choices={}
 
-		for attribute, dice in RACES[self.race]['rolls'].iteritems():
-			rolls = [dice.roll() for a in range(3)]
-			selection = base.make_choice(rolls,'%s roll' % attribute)
-			self.attributes[attribute] = rolls[selection]
+		#Please tell me i didn't mess this up.
+
+		# options will be the list all the potential dictionarys will be added to
+		options = []
+		for x in range(3): 
+			more_choices={}
+			for attribute, dice in RACES[self.race]['rolls'].iteritems():
+				rolls = [dice.roll() for a in range(3)]
+				selection=0;
+
+				# find the largest roll out of three
+				for b in range(3):
+					if rolls[b] > selection:
+						selection = rolls[b]+RACES[self.race]['BaseStats'][attribute]
+				# update more choices with the attribute value
+				more_choices.update({attribute:selection})
+			# when more choices is full, add it to options
+			options.append(more_choices)
+		# print str(options)
+
+		ret = base.make_choice(options,'character setup!')
+		#need your help displaying the choices for the player to pick his character.
+		self.attributes = options[ret]
 
 		# haha this looks so disgusting
 		print 'final attributes:\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t' % ('agility',self.attributes['agility'],'intelligence',self.attributes['intelligence'],'strength',self.attributes['strength'],'luck',self.attributes['luck'],'mana',self.attributes['mana'])
