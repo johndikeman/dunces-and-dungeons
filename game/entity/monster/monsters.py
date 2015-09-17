@@ -1,8 +1,10 @@
 import base
 
+
 class Monster(base.Entity):
 	def __init__(self):
 		self.agro= None
+
 		self.health = 10
 
 		# base ap is what the ap should be restored to after a turn is complete
