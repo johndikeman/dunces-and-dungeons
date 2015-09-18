@@ -1,7 +1,4 @@
-import base
-
-
-
+import base, random
 
 
 class Monster(base.Entity):
@@ -9,10 +6,6 @@ class Monster(base.Entity):
 		self.aggro = None
 		self.aggroed = False
 		self.probablity = 0.0
-
-		# this is the potential size of the group
-		self.groupsize = range(2)
-
 
 		self.health = 100
 		self.level=1
@@ -23,15 +16,15 @@ class Monster(base.Entity):
 		self.alive = True
 		self.action_points = 3
 		self.options = []
-		self.inventory = Inventory(self)
-		self.statuses = Inventory(self)
+		self.inventory = base.Inventory(self)
+		self.statuses = base.Inventory(self)
 		self.owner = None
 
 	def take_damage(self,attacker,val):
-		print '(%s) takes (%d) damage from (%s)' % (self.to_str(),damage,attacker.to_str())
+		print '(%s) takes (%d) damage from (%s)' % (self.to_str(),val,attacker.to_str())
 
 		self.health -= val
-		if self.hp <= 0:
+		if self.health <= 0:
 			self.alive = False
 			print "(%s) has died by the hand of (%s)" % (self.to_str(),attacker.to_str())
 
@@ -89,7 +82,7 @@ class Hidden_Devourer(Monster):
 		self.action_points=1
 
 
-class Ogre(Monster)
+class Ogre(Monster):
 	def __init__(self,level):
 		super(Ogre,self).__init__(level)
 		self.health=200*self.level*40
@@ -164,11 +157,16 @@ class Cyclops(Monster):
 
 MONSTERLIST = {
 	Skeleton:{
-		"probablity":100.0,
+		'probablity':100.0,
 		'groupsize':3
 	},
 }
 
-def spawn():
+def spawn(level):
+	ret = []
 	for key, val in MONSTERLIST.iteritems():
-		pass
+		if random.random() * 100 < val['probablity']:
+			for x in range(random.choice(range(val['groupsize']))+1):
+				ret.append(key(level))
+	return ret
+

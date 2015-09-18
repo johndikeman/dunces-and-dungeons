@@ -1,4 +1,5 @@
 import math, random, base
+import entity.monster.monsters as monsters
 
 # these words are from http://acreativemoment.com/2008/07/18/words-to-describe-smell-sound-taste-touch/
 # feel free to add some more that you don't see
@@ -61,6 +62,8 @@ class Room(object):
 		new_room.id = self.id + len(self.neighbors) + 1
 		self.neighbors.append(new_room)
 		new_room.neighbors.append(self)
+		for a in monsters.spawn(self.level):
+			new_room.things.append(a)
 
 		return new_room
 	# def examine(self,examiner):

@@ -111,7 +111,7 @@ class Player(base.Entity):
 		self.name = name
 		self.party = None
 		self.action_points = 2
-		self.options = ['leave']
+		self.options = ['leave','examine']
 		self.alive = True
 		option = base.make_choice(RACES.keys(),'race')
 		self.race = RACES.keys()[option]
@@ -161,13 +161,16 @@ class Player(base.Entity):
 			door = raw_input('choose a door to exit from. (0-%s)' % str(len(self.party.current_dungeon.active_room.neighbors)-1))
 			self.party.current_dungeon.active_room.move_to(int(door))
 
+		if 'examine' in args:
+			print str(self.party.current_dungeon.active_room.things)
+
 		for a in self.inventory:
 			a.do_turn(args)
 
 	def take_damage(self,attacker,damage):
 		print '(%s) takes (%d) damage from (%s)' % (self.to_str(),damage,attacker.to_str())
 		self.health -= val
-		if self.hp <= 0:
+		if self.health <= 0:
 			self.alive = False
 			print "(%s) has died by the hand of (%s)" % (self.to_str(),attacker.to_str())
 
