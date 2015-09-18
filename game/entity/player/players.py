@@ -126,13 +126,10 @@ class Player(base.Entity):
 		for x in range(3): 
 			more_choices={}
 			for attribute, dice in RACES[self.race]['rolls'].iteritems():
-				rolls = [dice.roll() for a in range(3)]
+				rolls = [dice.roll() for a in range(1)]
 				selection=0;
 
-				# find the largest roll out of three
-				for b in range(3):
-					if rolls[b] > selection:
-						selection = rolls[b]+RACES[self.race]['BaseStats'][attribute]
+				selection = rolls[0]+RACES[self.race]['BaseStats'][attribute]
 				# update more choices with the attribute value
 				more_choices.update({attribute:selection})
 			# when more choices is full, add it to options
@@ -144,7 +141,7 @@ class Player(base.Entity):
 		self.attributes = options[ret]
 
 		# haha this looks so disgusting
-		print 'final attributes:\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t' % ('agility',self.attributes['agility'],'intelligence',self.attributes['intelligence'],'strength',self.attributes['strength'],'luck',self.attributes['luck'],'mana',self.attributes['mana'])
+		print self.race +' '+self.name+ '\'s final attributes:\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t' % ('agility',self.attributes['agility'],'intelligence',self.attributes['intelligence'],'strength',self.attributes['strength'],'luck',self.attributes['luck'],'mana',self.attributes['mana'])
 		
 		self.max_health = self.attributes['strength'] * 10		
 		self.health = self.max_health
@@ -212,4 +209,8 @@ class Party(base.Entity):
 
 		if self.index == len(self.inventory):
 			self.index = 0
-
+	def to_str(self):
+		bob=""
+		for a in self.inventory:
+			bob+= a.race +' '+a.name+ '\'s final attributes:\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t\n' % ('agility',a.attributes['agility'],'intelligence',a.attributes['intelligence'],'strength',a.attributes['strength'],'luck',a.attributes['luck'],'mana',a.attributes['mana'])
+		return bob			

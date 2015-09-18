@@ -12,7 +12,8 @@ class Manager:
 		for a in range(int(party_size)):
 			name = raw_input('enter the name of player %d: ' % a) 
 			PARTY.add_player(Player(name))
-			
+		print 'Game Start'
+		print PARTY.to_str()	
 
 		dungeon = Dungeon(12,1,PARTY)
 
@@ -22,6 +23,7 @@ class Manager:
 
 		while(True):
 			PARTY.handle_player_turn()
+			dungeon.handle_monster_turn()
 
 
 
