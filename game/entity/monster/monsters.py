@@ -32,14 +32,13 @@ class Monster(base.Entity):
 		pass
 
 	def do_turn(self):
-		for a in self.owner.party:
-			if not self.aggroed:
-				self.aggro = a
-			else:
-				attack(self.aggro)
+		if not self.aggroed:
+			self.aggro = self.owner.party.inventory[0]
+				
+		self.attack(self.aggro)
 
 	def attack(self,target):
-		target.take_damage(0)
+		target.take_damage(self,0)
 
 	def to_str(self):
 		return 'hmMm looks like SOMEONE didn\'t implement this method in the monster they designed!'
@@ -51,6 +50,9 @@ class Skeleton(Monster):
 		self.health=50+self.level*20
 		self.power=10+self.level*10
 		self.probablity = 1.0
+
+	def to_str(self):
+		return 'skeleton'
 
 class Goblin(Monster):
 	def __init__(self,level):

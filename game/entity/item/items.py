@@ -20,7 +20,7 @@ class Sword(Item):
 	def do_turn(self,options):
 		# print options
 		if self.options[0] in options:
-			print 'swing mah sword'
+			# print 'swing mah sword'
 			target_ind = base.make_choice(self.owner.party.current_dungeon.active_room.things,'target')
 			if target_ind is not None:
 				self.swing(self.owner.party.current_dungeon.active_room.things[target_ind])

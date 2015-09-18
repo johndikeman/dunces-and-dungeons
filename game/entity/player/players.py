@@ -169,7 +169,7 @@ class Player(base.Entity):
 
 	def take_damage(self,attacker,damage):
 		print '(%s) takes (%d) damage from (%s)' % (self.to_str(),damage,attacker.to_str())
-		self.health -= val
+		self.health -= damage
 		if self.health <= 0:
 			self.alive = False
 			print "(%s) has died by the hand of (%s)" % (self.to_str(),attacker.to_str())
