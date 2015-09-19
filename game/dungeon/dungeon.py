@@ -82,7 +82,8 @@ class Room(object):
 
 	def handle_monster_turn(self):
 		for thing in self.things:
-			thing.do_turn()
+			if thing.alive:
+				thing.do_turn()
 
 
 		

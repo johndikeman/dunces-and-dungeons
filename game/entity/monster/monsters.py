@@ -22,7 +22,6 @@ class Monster(base.Entity):
 
 	def take_damage(self,attacker,val):
 		print '(%s) takes (%d) damage from (%s)' % (self.to_str(),val,attacker.to_str())
-
 		self.health -= val
 		if self.health <= 0:
 			self.alive = False
@@ -33,7 +32,8 @@ class Monster(base.Entity):
 
 	def do_turn(self):
 		if not self.aggroed:
-			self.aggro = self.owner.party.inventory[0]
+			self.aggro = random.choice(self.owner.party.inventory)
+		self.aggroed = True
 				
 		self.attack(self.aggro)
 
@@ -49,7 +49,6 @@ class Skeleton(Monster):
 		super(Skeleton,self).__init__(level)
 		self.health=50+self.level*20
 		self.power=10+self.level*10
-		self.probablity = 1.0
 
 	def to_str(self):
 		return 'skeleton'
@@ -171,4 +170,3 @@ def spawn(level):
 			for x in range(random.choice(range(val['groupsize']))+1):
 				ret.append(key(level))
 	return ret
-
