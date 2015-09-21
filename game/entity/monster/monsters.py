@@ -1,5 +1,63 @@
 import base, random
 
+SMELL = ('acidic acrid aromatic camphoric fetid flowery foul fragrant fresh funky heady musky musty nasty noxious perfumed piney pungent rancid savory sharp smelly stinky stuffy sweet'.split(' '))
+Mod={"acidic":{"health":"*.5"},
+	 "acrid":{},
+	 "aromatic":{},
+	 "camphoric":{},
+	 "fetid":{},
+	 "flowery":{},
+	 "foul":{},
+	 "fragrant":{},
+	 "fresh":{},
+	 "funky":{},
+	 "heady":{},
+	 "musky":{},
+	 "musty":{},
+	 "nasty":{},
+	 "noxious":{},
+	 "perfumed":{},
+	 "piney":{},
+	 "pungent":{},
+	 "rancid":{},
+	 "savory":{},
+	 "sharp":{},
+	 "smelly":{},
+	 "stinky":{},
+	 "stuffy":{},
+	 "sweet":{}}
+class Apply(object):
+	def modify_monster(Monster):
+		namer=random.choice(SMELL)
+		run=Mod[namer]
+		for a in run:
+			if(a=="health"):
+				if(run[a][0]=="+"):
+					Monster.health=Monster.health+float(run[a][0:len(run[a])])
+				elif(run[a][0]=="*"):
+					Monster.health=Monster.health*float(run[a][0:len(run[a])])
+			elif(a=="power"):
+				if(run[a][0]=="+"):
+					Monster.power=Monster.power+float(run[a][0:len(run[a])])
+				elif(run[a][0]=="*"):
+					Monster.power=Monster.power*float(run[a][0:len(run[a])])
+			elif(a=="level"):
+				if(run[a][0]=="+"):
+					Monster.level=Monster.level+float(run[a][0:len(run[a])])
+				elif(run[a][0]=="*"):
+					Monster.level=Monster.level*float(run[a][0:len(run[a])])
+			elif(a=="ap"):
+				if(run[a][0]=="+"):
+					Monster.action_points=Monster.action_points+float(run[a][0:len(run[a])])
+				elif(run[a][0]=="*"):
+					Monster.health=Monster.health*float(run[a][0:len(run[a])])
+			elif(a=="baseap"):
+				if(run[a][0]=="+"):
+					Monster.health=Monster.health+float(run[a][0:len(run[a])])
+				elif(run[a][0]=="*"):
+					Monster.health=Monster.health*float(run[a][0:len(run[a])])
+
+
 
 class Monster(base.Entity):
 	def __init__(self,level):
@@ -42,7 +100,13 @@ class Monster(base.Entity):
 
 	def to_str(self):
 		return 'hmMm looks like SOMEONE didn\'t implement this method in the monster they designed!'
-
+def spawn(level):
+	ret = []
+	for key, val in MONSTERLIST.iteritems():
+		if random.random() * 100 < val['probablity']:
+			for x in range(random.choice(range(val['groupsize']))+1):
+				ret.append(key(level))
+	return ret
 
 class Skeleton(Monster):
 	def __init__(self,level):
@@ -163,10 +227,3 @@ MONSTERLIST = {
 	},
 }
 
-def spawn(level):
-	ret = []
-	for key, val in MONSTERLIST.iteritems():
-		if random.random() * 100 < val['probablity']:
-			for x in range(random.choice(range(val['groupsize']))+1):
-				ret.append(key(level))
-	return ret
