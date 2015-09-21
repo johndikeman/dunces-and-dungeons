@@ -1,13 +1,11 @@
 import random
 
-
 class Entity(object):
 	def __init__(self):
-
 		# ATTRIBUTES
 		self.attributes = {'strength':0,'intelligence':0,'luck':0,'agility':0,'mana':0}
 
-		self.health = 0
+		self.health = 0.0
 		self.level = 0
 		# base ap is what the ap should be restored to after a turn is complete
 		self.base_ap = 1
@@ -17,6 +15,7 @@ class Entity(object):
 		self.inventory = Inventory(self)
 		self.statuses = Inventory(self)
 		self.owner = None
+		self.armor = 0
 	def do_turn(self,options):
 		pass
 

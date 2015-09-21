@@ -1,4 +1,4 @@
-import base
+import base,  math
 import entity.item.items as items
 
 
@@ -118,6 +118,7 @@ class Player(base.Entity):
 		self.health = 0
 		self.max_health = 0
 		choices={}
+		self.armor = 60
 
 		#Please tell me i didn't mess this up.
 
@@ -168,6 +169,9 @@ class Player(base.Entity):
 			a.do_turn(args)
 
 	def take_damage(self,attacker,damage):
+		# compute damage resistance based on the armor
+		res = (25 * math.log(self.armor,6)) / 100.0
+		damage = damage * 1.0 * res
 		print '(%s) takes (%d) damage from (%s)' % (self.to_str(),damage,attacker.to_str())
 		self.health -= damage
 		if self.health <= 0:
