@@ -163,10 +163,16 @@ class Player(base.Entity):
 			self.party.current_dungeon.active_room.move_to(int(door))
 
 		if 'examine' in args:
-			print str(self.party.current_dungeon.active_room.things)
+			s = ''
+			for a in self.party.current_dungeon.active_room.things:
+				s+='a '+a.examine(self)+', '
+			print 'you examine the room and notice %s' % s
+
 
 		for a in self.inventory:
 			a.do_turn(args)
+
+		self.action_points -= 1
 
 	def take_damage(self,attacker,damage):
 		# compute damage resistance based on the armor
@@ -208,14 +214,18 @@ class Party(base.Entity):
 		self.inventory[self.index].action_points -= 1
 
 	def handle_player_turn(self):
-		while(self.inventory[self.index].action_points > 0):
-			selection = base.make_choice(self.return_options(),'option')
-			self.do_turn(self.return_options()[selection])
-		self.inventory[self.index].action_points = self.inventory[self.index].base_ap
-		self.index += 1
+		for a in range(len(self.inventory)-1):
+			print "------====%s's turn====------" % self.inventory[self.index].name
+			while(self.inventory[self.index].action_points > 0):
+				selection = base.make_choice(self.return_options(),'option')
+				self.do_turn(self.return_options()[selection])
 
-		if self.index == len(self.inventory):
-			self.index = 0
+			# set the ap back to start. the subtraction per turn is done in the player do_turn
+			self.inventory[self.index].action_points = self.inventory[self.index].base_ap
+			self.index += 1
+
+			if self.index == len(self.inventory):
+				self.index = 0
 	def to_str(self):
 		bob=""
 		for a in self.inventory:

@@ -97,7 +97,7 @@ class Monster(base.Entity):
 		print '(%s) takes (%d) damage from (%s)' % (self.to_str(),val,attacker.to_str())
 		self.health -= val
 		if self.health <= 0:
-			self.alive = False
+			self.kill()
 			print "(%s) has died by the hand of (%s)" % (self.to_str(),attacker.to_str())
 
 	def set_level(self,val):
@@ -115,6 +115,14 @@ class Monster(base.Entity):
 
 	def to_str(self):
 		return 'hmMm looks like SOMEONE didn\'t decide to just fix the problem instead of sarcastically trying to win a unimportant, noncombatative, meaningless arguement about another persons laziness.'
+
+	def examine(self,examiner):
+		return self.to_str()
+		
+	def kill(self):
+		self.alive = False
+		self.owner.things = self.owner.things[:self.owner.things.index(self)]+self.owner.things[self.owner.things.index(self)+1:]
+
 def spawn(level):
 	app=Apply()
 	ret = []
