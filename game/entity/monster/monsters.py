@@ -1,21 +1,15 @@
 import base, random
 
-SMELL = ('acidic acrid aromatic camphoric fetid flowery foul funky musky musty nasty noxious pungent rancid stinky'.split(' '))
+SMELL = ('acidic camphoric fetid flowery foul funky musky nasty rancid'.split(' '))
 Mod={"acidic":{"health":"*.5","power":"+10"},
-	 "acrid":{"health":"=1"},
-	 "aromatic":{"health":"=1"},
 	 "camphoric":{"health":"*.5", "power":"*2","ap":"+1"},
 	 "fetid":{"health":"*.2","power":"/2"},
 	 "flowery":{"health":"=1","power":"=1","level":"=1","ap":"=1","baseap":"=1"},
-	 "foul":{"health":"=1"},
+	 "foul":{"health":"*.8","power":"-12"},
 	 "funky":{"health":random.choice('+=')+str(random.randint(1,1000)),"power":random.choice('+*=')+str(random.randint(1,100)),"level":random.choice('+=')+str(random.randint(1,10)),"ap":random.choice('+*=')+str(random.randint(1,2))},
 	 "musky":{"health":"*2","power":"*2","ap":"+2"},
-	 "musty":{"health":"=1"},
 	 "nasty":{"health":"*.9","power":"+20"},
-	 "noxious":{"health":"=1"},
-	 "pungent":{"health":"=1"},
-	 "rancid":{"health":"=1"},
-	 "stinky":{"health":"=1"}}
+	 "rancid":{"health":"-20","power":"-5"}}
 class Apply(object):
 	def __init__(self):
 		pass
@@ -114,7 +108,7 @@ class Monster(base.Entity):
 		target.take_damage(self,0)
 
 	def to_str(self):
-		return 'hmMm looks like SOMEONE didn\'t decide to just fix the problem instead of sarcastically trying to win a unimportant, noncombatative, meaningless arguement about another persons laziness.'
+		return self.name
 
 	def examine(self,examiner):
 		return self.to_str()
@@ -137,7 +131,7 @@ class Skeleton(Monster):
 		super(Skeleton,self).__init__(level)
 		self.health=50+self.level*20
 		self.power=10+self.level*10
-		self.name="Skeleton"
+		self.name="skeleton"
 
 	def to_str(self):
 		return self.name
