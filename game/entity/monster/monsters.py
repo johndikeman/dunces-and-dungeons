@@ -1,31 +1,21 @@
 import base, random
 
-SMELL = ('acidic acrid aromatic camphoric fetid flowery foul fragrant fresh funky heady musky musty nasty noxious perfumed piney pungent rancid savory sharp smelly stinky stuffy sweet'.split(' '))
+SMELL = ('acidic acrid aromatic camphoric fetid flowery foul funky musky musty nasty noxious pungent rancid stinky'.split(' '))
 Mod={"acidic":{"health":"*.5","power":"+10"},
 	 "acrid":{"health":"=1"},
 	 "aromatic":{"health":"=1"},
-	 "camphoric":{"health":"=1"},
-	 "fetid":{"health":"=1"},
+	 "camphoric":{"health":"*.5", "power":"*2","ap":"+1"},
+	 "fetid":{"health":"*.2","power":"/2"},
 	 "flowery":{"health":"=1","power":"=1","level":"=1","ap":"=1","baseap":"=1"},
 	 "foul":{"health":"=1"},
-	 "fragrant":{"health":"=1"},
-	 "fresh":{"health":"=1"},
-	 "funky":{"health":"=1"},
-	 "heady":{"health":"=1"},
-	 "musky":{"health":"=1"},
+	 "funky":{"health":random.choice('+=')+str(random.randint(1,1000)),"power":random.choice('+*=')+str(random.randint(1,100)),"level":random.choice('+=')+str(random.randint(1,10)),"ap":random.choice('+*=')+str(random.randint(1,2))},
+	 "musky":{"health":"*2","power":"*2","ap":"+2"},
 	 "musty":{"health":"=1"},
-	 "nasty":{"health":"=1"},
+	 "nasty":{"health":"*.9","power":"+20"},
 	 "noxious":{"health":"=1"},
-	 "perfumed":{"health":"=1"},
-	 "piney":{"health":"=1"},
 	 "pungent":{"health":"=1"},
 	 "rancid":{"health":"=1"},
-	 "savory":{"health":"=1"},
-	 "sharp":{"health":"=1"},
-	 "smelly":{"health":"=1"},
-	 "stinky":{"health":"=1"},
-	 "stuffy":{"health":"=1"},
-	 "sweet":{"health":"=1"}}
+	 "stinky":{"health":"=1"}}
 class Apply(object):
 	def __init__(self):
 		pass
@@ -40,6 +30,8 @@ class Apply(object):
 					Monster.health=Monster.health*float(run[a][1:len(run[a])])
 				elif(run[a][0]=="="):
 					Monster.health=float(run[a][1:len(run[a])])
+				elif(run[a][0]=="/"):
+					Monster.health=Monster.health/int(run[a][1:len(run[a])])
 			elif(a=="power"):
 				if(run[a][0]=="+"):
 					Monster.power=Monster.power+int(run[a][1:len(run[a])])
@@ -47,6 +39,8 @@ class Apply(object):
 					Monster.power=Monster.power*int(run[a][1:len(run[a])])
 				elif(run[a][0]=="="):
 					Monster.power=int(run[a][1:len(run[a])])
+				elif(run[a][0]=="/"):
+					Monster.power=Monster.power/int(run[a][1:len(run[a])])
 			elif(a=="level"):
 				if(run[a][0]=="+"):
 					Monster.level=Monster.level+int(run[a][1:len(run[a])])
@@ -54,6 +48,8 @@ class Apply(object):
 					Monster.level=Monster.level*int(run[a][1:len(run[a])])
 				elif(run[a][0]=="="):
 					Monster.level=int(run[a][1:len(run[a])])
+				elif(run[a][0]=="/"):
+					Monster.level=Monster.level/int(run[a][1:len(run[a])])
 			elif(a=="ap"):
 				if(run[a][0]=="+"):
 					Monster.action_points=Monster.action_points+int(run[a][1:len(run[a])])
@@ -61,6 +57,8 @@ class Apply(object):
 					Monster.action_points=Monster.action_points*int(run[a][1:len(run[a])])
 				elif(run[a][0]=="="):
 					Monster.action_points=int(run[a][1:len(run[a])])
+				elif(run[a][0]=="/"):
+					Monster.action_points=Monster.action_points/int(run[a][1:len(run[a])])
 			elif(a=="baseap"):
 				if(run[a][0]=="+"):
 					Monster.base_ap=Monster.base_ap+int(run[a][1:len(run[a])])
@@ -68,6 +66,8 @@ class Apply(object):
 					Monster.base_ap=Monster.base_ap*int(run[a][1:len(run[a])])
 				elif(run[a][0]=="="):
 					Monster.base_ap=int(run[a][1:len(run[a])])
+				elif(run[a][0]=="/"):
+					Monster.baseap=Monster.baseap/int(run[a][1:len(run[a])])
 		Monster.name=namer+" "+ Monster.name
 		return Monster
 
