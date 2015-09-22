@@ -211,7 +211,6 @@ class Party(base.Entity):
 
 	def do_turn(self,options):
 		self.inventory[self.index].do_turn(options)
-		self.inventory[self.index].action_points -= 1
 
 	def handle_player_turn(self):
 		for a in range(len(self.inventory)-1):
