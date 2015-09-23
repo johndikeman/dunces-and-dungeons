@@ -194,6 +194,10 @@ class Player(base.Entity):
 			self.alive = False
 			print "(%s) has died by the hand of (%s)" % (self.to_str(),attacker.to_str())
 
+
+	def select_target(self):
+		target_ind = base.make_choice([a.to_str() for a in self.owner.party.current_dungeon.active_room.things],'target')
+		
 	def to_str(self):
 		return self.name
 

@@ -99,11 +99,15 @@ class Monster(base.Entity):
 		pass
 
 	def do_turn(self):
-		if not self.aggroed:
-			self.aggro = random.choice(self.owner.party.inventory)
-		self.aggroed = True
-				
-		self.attack(self.aggro)
+		for a in self.statuses:
+			a.do_turn()
+
+		if self.action_points > 0:
+			if not self.aggroed:
+				self.aggro = random.choice(self.owner.party.inventory)
+			self.aggroed = True
+					
+			self.attack(self.aggro)
 
 	def attack(self,target):
 		target.take_damage(self,0)
