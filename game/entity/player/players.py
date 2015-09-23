@@ -209,6 +209,7 @@ class Party(base.Entity):
 		self.index = 0
 		self.current_dungeon = None
 		self.partySize = 0
+		self.end=True
 
 	def set_PartySize(self,size):
 		self.partySize=size
@@ -227,9 +228,15 @@ class Party(base.Entity):
 		self.inventory[self.index].do_turn(options)
 
 	def handle_player_turn(self):
+		count=0
+		for a in range(len(self.inventory)):
+			if(self.inventory[self.index].alive==False):
+				count=count+1
+		if(count==len(self.inventory)):
+			self.end=False
 		for a in range(len(self.inventory)):
 			print "------====%s's turn====------" % self.inventory[self.index].name
-			while(self.inventory[self.index].action_points > 0):
+			while((self.inventory[self.index].action_points > 0) & (self.inventory[self.index].alive==True)):
 				selection = base.make_choice(self.return_options(),'option')
 				self.do_turn(self.return_options()[selection])
 

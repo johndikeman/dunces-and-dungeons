@@ -1,20 +1,23 @@
 import base, random
 
-SMELL = ('acidic camphoric fetid flowery foul funky musky nasty rancid'.split(' '))
+SMELL = ('Acidic Camphoric Dank Destructive Fetid Flowery Foul Funky Lightning Musky Nasty Rancid'.split(' '))
 
 class Apply(object):
 	def __init__(self):
 		pass
 	def modify_monster(self,Monster):
-		Mod={"acidic":{"health":"*.5","power":"+10"},
-	 "camphoric":{"health":"*.5", "power":"*2","ap":"+1"},
-	 "fetid":{"health":"*.2","power":"/2"},
-	 "flowery":{"health":"=1","power":"=1","level":"=1","ap":"=1","baseap":"=1"},
-	 "foul":{"health":"*.8","power":"+-12"},
-	 "funky":{"health":random.choice('+=')+str(random.randint(1,1000)),"power":random.choice('+*=')+str(random.randint(1,100)),"level":random.choice('+=')+str(random.randint(1,10)),"ap":random.choice('+*=')+str(random.randint(1,2))},
-	 "musky":{"health":"*2","power":"*2","ap":"+2"},
-	 "nasty":{"health":"*.9","power":"+20"},
-	 "rancid":{"health":"+-20","power":"+-5"}}
+		Mod={"Acidic":{"health":"*.5","power":"+10"},
+	 	"Camphoric":{"health":"*.5", "power":"*2","ap":"+1"},
+	 	"Dank":{"health":"*1.5","power":"*2","ap":"+2"},
+	 	"Destructive":{"health":"*1.2","power":"+90"},
+	 	"Fetid":{"health":"*.2","power":"/2"},
+		"Flowery":{"health":"=1","power":"=1","level":"=1","ap":"=1","baseap":"=1"},
+		"Foul":{"health":"*.8","power":"+-12"},
+		"Funky":{"health":random.choice('+=')+str(random.randint(1,1000)),"power":random.choice('+*=')+str(random.randint(1,100)),"level":random.choice('+=')+str(random.randint(1,10)),"ap":random.choice('+*=')+str(random.randint(1,2))},
+		"Lightning":{"health":"*.1","power":"*3","ap":"*2"},
+		"Musky":{"health":"*2","power":"*2","ap":"+2"},
+		"Nasty":{"health":"*.9","power":"+20"},
+		"Rancid":{"health":"+-20","power":"+-5"}}
 		namer=random.choice(SMELL)
 		run=Mod[namer]
 
@@ -112,7 +115,7 @@ class Monster(base.Entity):
 			self.attack(self.aggro)
 
 	def attack(self,target):
-		target.take_damage(self,0)
+		target.take_damage(self,self.power)
 
 	def to_str(self):
 		return self.name
@@ -141,7 +144,7 @@ class Skeleton(Monster):
 		super(Skeleton,self).__init__(level)
 		self.health=50+self.level*20
 		self.power=10+self.level*10
-		self.name="skeleton"
+		self.name="Skeleton"
 
 	def to_str(self):
 		return self.name
@@ -210,7 +213,12 @@ class Elemental(Monster):
 		self.health=60+self.level*20
 		self.power=20+self.level*7
 		self.name="Elemental"
-
+class Meme(Monster):
+	def __init__(self,level):
+		super(Meme,self).__init__(level)
+		self.health=420+self.level*9.11
+		self.power=69+self.level*42
+		self.name ="Meme"
 class WindElemental(Elemental):
 	def __init__(self,level):
 		super(WindElemental,self).__init__(level)

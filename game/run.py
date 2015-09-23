@@ -21,9 +21,20 @@ class Manager:
 
 		dungeon.start()
 
-		while(True):
+		while(PARTY.end):
 			PARTY.handle_player_turn()
 			dungeon.handle_monster_turn()
+		print "              "
+		print "              "
+		print "              "
+		print "              "
+		print "              "
+		print "              "
+		print "              "
+		print "              "
+		print "              "
+		print "              "
+		print "                 *****GAME OVER*****"
 
 
 
