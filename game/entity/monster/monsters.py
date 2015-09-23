@@ -1,21 +1,23 @@
 import base, random
 
 SMELL = ('acidic camphoric fetid flowery foul funky musky nasty rancid'.split(' '))
-Mod={"acidic":{"health":"*.5","power":"+10"},
-	 "camphoric":{"health":"*.5", "power":"*2","ap":"+1"},
-	 "fetid":{"health":"*.2","power":"/2"},
-	 "flowery":{"health":"=1","power":"=1","level":"=1","ap":"=1","baseap":"=1"},
-	 "foul":{"health":"*.8","power":"-12"},
-	 "funky":{"health":random.choice('+=')+str(random.randint(1,1000)),"power":random.choice('+*=')+str(random.randint(1,100)),"level":random.choice('+=')+str(random.randint(1,10)),"ap":random.choice('+*=')+str(random.randint(1,2))},
-	 "musky":{"health":"*2","power":"*2","ap":"+2"},
-	 "nasty":{"health":"*.9","power":"+20"},
-	 "rancid":{"health":"-20","power":"-5"}}
+
 class Apply(object):
 	def __init__(self):
 		pass
 	def modify_monster(self,Monster):
+		Mod={"acidic":{"health":"*.5","power":"+10"},
+	 "camphoric":{"health":"*.5", "power":"*2","ap":"+1"},
+	 "fetid":{"health":"*.2","power":"/2"},
+	 "flowery":{"health":"=1","power":"=1","level":"=1","ap":"=1","baseap":"=1"},
+	 "foul":{"health":"*.8","power":"+-12"},
+	 "funky":{"health":random.choice('+=')+str(random.randint(1,1000)),"power":random.choice('+*=')+str(random.randint(1,100)),"level":random.choice('+=')+str(random.randint(1,10)),"ap":random.choice('+*=')+str(random.randint(1,2))},
+	 "musky":{"health":"*2","power":"*2","ap":"+2"},
+	 "nasty":{"health":"*.9","power":"+20"},
+	 "rancid":{"health":"+-20","power":"+-5"}}
 		namer=random.choice(SMELL)
 		run=Mod[namer]
+
 		for a in run:
 			if(a=="health"):
 				if(run[a][0]=="+"):
