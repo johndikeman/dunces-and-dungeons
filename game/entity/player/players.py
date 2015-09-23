@@ -111,7 +111,7 @@ class Player(base.Entity):
 		self.name = name
 		self.party = None
 		self.action_points = 2
-		self.options = ['leave','examine']
+		self.options = ['leave','examine','dev-examine']
 		self.alive = True
 		option = base.make_choice(RACES.keys(),'race')
 		self.race = RACES.keys()[option]
@@ -152,17 +152,17 @@ class Player(base.Entity):
 		self.inventory.append(items.Sword())
 
 	def do_turn(self, args):
-		# print args
+		print args
 
 		for x in self.statuses:
 			x.do_turn()
 
-		if 'leave' in args:
+		if args == 'leave':
 			# door should be the INDEX of the returned list, ie 0 1 2 3
 			door = base.make_choice([a.to_str() for a in self.party.current_dungeon.active_room.neighbors],'room')
 			self.party.current_dungeon.active_room.move_to(door)
 
-		if 'examine' in args:
+		if args == 'examine':
 			s = ''
 			for ind, a in enumerate(self.party.current_dungeon.active_room.things):
 				if ind != len(self.party.current_dungeon.active_room.things) - 1:
@@ -172,6 +172,11 @@ class Player(base.Entity):
 			if not s:
 				s = 'absolutely nothing.'
 			print 'you examine the room and notice %s' % s
+
+		if args == 'dev-examine':
+			for a in self.party.current_dungeon.active_room.things:
+				print a.dev_examine()
+
 
 
 		for a in self.inventory:

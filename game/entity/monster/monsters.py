@@ -69,6 +69,7 @@ class Apply(object):
 
 class Monster(base.Entity):
 	def __init__(self,level):
+		super(Monster,self).__init__()
 		self.name="Monster"
 		self.aggro = None
 		self.aggroed = False
@@ -113,6 +114,9 @@ class Monster(base.Entity):
 	def examine(self,examiner):
 		return self.to_str()
 		
+	def dev_examine(self):
+		print 'name: %s health: %d, attributes: %s, power: %s, level: %d' % (self.name, self.health,str(self.attributes),self.power,self.level)
+
 	def kill(self):
 		self.alive = False
 		self.owner.things = self.owner.things[:self.owner.things.index(self)]+self.owner.things[self.owner.things.index(self)+1:]
