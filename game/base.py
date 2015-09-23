@@ -93,7 +93,15 @@ def make_choice(choices,thing=None):
 		print "\t%s (%d)\n" % (a, ind)
 
 	ans = raw_input()
-	return int(ans)
+	try:
+		ret = int(ans)
+		if ret > len(choices)-1:
+			print 'that wasn\'t a choice! try again.'
+			return make_choice(choices,thing)
+	except ValueError:
+		print 'that wasn\'t a choice! try again.'
+		return make_choice(choices,thing)
+	return ret
 
 D2 = Die(2)
 D6 = Die(6)

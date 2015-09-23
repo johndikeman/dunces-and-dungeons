@@ -71,7 +71,7 @@ class Room(object):
 
 	def to_str(self):
 		# this method was a thing at one point, but now it is not. rip
-		return 'this is a room, id %s' % str(self.id)
+		return self.description
 
 	def move_to(self,ind):
 		self.containing_dungeon.active_room = self.neighbors[ind]

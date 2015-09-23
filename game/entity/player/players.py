@@ -159,13 +159,18 @@ class Player(base.Entity):
 
 		if 'leave' in args:
 			# door should be the INDEX of the returned list, ie 0 1 2 3
-			door = raw_input('choose a door to exit from. (0-%s)' % str(len(self.party.current_dungeon.active_room.neighbors)-1))
-			self.party.current_dungeon.active_room.move_to(int(door))
+			door = base.make_choice([a.to_str() for a in self.party.current_dungeon.active_room.neighbors],'room')
+			self.party.current_dungeon.active_room.move_to(door)
 
 		if 'examine' in args:
 			s = ''
-			for a in self.party.current_dungeon.active_room.things:
-				s+='a '+a.examine(self)+', '
+			for ind, a in enumerate(self.party.current_dungeon.active_room.things):
+				if ind != len(self.party.current_dungeon.active_room.things) - 1:
+					s+='a %s, ' % a.examine(self)
+				else:
+					s+='and a %s.' % a.examine(self)
+			if not s:
+				s = 'absolutely nothing.'
 			print 'you examine the room and notice %s' % s
 
 
