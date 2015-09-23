@@ -213,7 +213,7 @@ class Party(base.Entity):
 		self.inventory[self.index].do_turn(options)
 
 	def handle_player_turn(self):
-		for a in range(len(self.inventory)-1):
+		for a in range(len(self.inventory)):
 			print "------====%s's turn====------" % self.inventory[self.index].name
 			while(self.inventory[self.index].action_points > 0):
 				selection = base.make_choice(self.return_options(),'option')
