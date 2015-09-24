@@ -4,3 +4,6 @@ class BurrowStatus(Entity):
 
 	def do_turn(self):
 		self.hp
+
+
+# TODO- implement Stun(turns_to_be_stunned)

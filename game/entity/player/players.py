@@ -1,4 +1,4 @@
-import base,  math
+import base, math, time
 import entity.item.items as items
 
 
@@ -118,7 +118,7 @@ class Player(base.Entity):
 		self.health = 0
 		self.max_health = 0
 		choices={}
-		self.armor = 60
+		self.armor = 0
 
 		#Please tell me i didn't mess this up.
 
@@ -184,19 +184,12 @@ class Player(base.Entity):
 
 		self.action_points -= 1
 
-	def take_damage(self,attacker,damage):
-		# compute damage resistance based on the armor
-		res = (25 * math.log(self.armor,6)) / 100.0
-		damage = damage * 1.0 * res
-		print '(%s) takes (%d) damage from (%s)' % (self.to_str(),damage,attacker.to_str())
-		self.health -= damage
-		if self.health <= 0:
-			self.alive = False
-			print "(%s) has died by the hand of (%s)" % (self.to_str(),attacker.to_str())
-
-
+	# IMPORTANT- return value of select_target NEEDS to be validated before use to prevent crashes, cause sometimes it'll return None
 	def select_target(self):
-		target_ind = base.make_choice([a.to_str() for a in self.owner.party.current_dungeon.active_room.things],'target')
+		target_ind = base.make_choice([a.to_str() for a in self.owner.current_dungeon.active_room.identified_things],'target')
+		if target_ind != None:
+			return self.owner.current_dungeon.active_room.identified_things[target_ind]
+		return None
 		
 	def to_str(self):
 		return self.name

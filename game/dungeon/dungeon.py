@@ -53,6 +53,7 @@ class Room(object):
 		# this will identify the rooms to the players for now
 		self.id = random.getrandbits(32)
 		self.things = base.Inventory(self)
+		self.identified_things = base.Inventory(self)
 
 		self.party = party
 

@@ -1,4 +1,4 @@
-import random
+import random, math, time
 
 class Entity(object):
 	def __init__(self):
@@ -28,6 +28,17 @@ class Entity(object):
 		for a in self.inventory: 
 			li += a.return_options()
 		return li
+
+	def take_damage(self,attacker,damage):
+		# compute damage resistance based on the armor
+		res = (25 * math.log(self.armor + 2,6)) / 100.0
+		damage -= damage * 1.0 * res
+		print '(%s) takes (%d) damage from (%s)' % (self.to_str(),damage,attacker.to_str())
+		self.health -= damage
+		if self.health <= 0:
+			self.alive = False
+			print "(%s) has died by the hand of (%s)" % (self.to_str(),attacker.to_str())
+		time.sleep(1)
 
 
 	# def process_options(self,*options):
@@ -71,8 +82,7 @@ class Inventory(list):
 
 	def remove(self,object_to_remove):
 		for ind, obj in enumerate(self):
-			if isinstance(obj,object_to_remove):
-				obj.remove()
+			if obj == object_to_remove:
 				self = self[:ind] + self[ind+1:]
 
 

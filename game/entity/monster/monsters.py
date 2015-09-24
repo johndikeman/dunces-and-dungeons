@@ -1,4 +1,4 @@
-import base, random
+import base, random, time
 
 SMELL = ('Acidic Camphoric Caustic Dank Decaying Destructive Dieing Dusty Fetid Flowery Forgotten Foul Funky Lightning Lowly Musky Nasty Normal Putrid Rancid Scorched Tiny Weak'.split(' '))
 
@@ -104,12 +104,6 @@ class Monster(base.Entity):
 		self.statuses = base.Inventory(self)
 		self.owner = None
 
-	def take_damage(self,attacker,val):
-		print '(%s) takes (%d) damage from (%s)' % (self.to_str(),val,attacker.to_str())
-		self.health -= val
-		if self.health <= 0:
-			self.kill()
-			print "(%s) has died by the hand of (%s)" % (self.to_str(),attacker.to_str())
 
 	def set_level(self,val):
 		pass
@@ -126,6 +120,7 @@ class Monster(base.Entity):
 			self.attack(self.aggro)
 
 	def attack(self,target):
+		self.reveal()
 		target.take_damage(self,self.power)
 
 	def to_str(self):
@@ -133,6 +128,11 @@ class Monster(base.Entity):
 
 	def examine(self,examiner):
 		return self.to_str()
+		self.reveal()
+
+	def reveal(self):
+		self.owner.things.remove(self)
+		self.owner.identified_things.append(self)
 		
 	def dev_examine(self):
 		print 'name: %s health: %d, attributes: %s, power: %s, level: %d' % (self.name, self.health,str(self.attributes),self.power,self.level)

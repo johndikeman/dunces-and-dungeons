@@ -1,6 +1,5 @@
 import base
-# warrior
-# level one abilities
+import status.player_statuses as s
 
 class BattleCry(base.Entity):
 	def __init__(self):
@@ -37,6 +36,9 @@ class ShieldBash(base.Entity):
 			self.level = 1
 
 	def do_turn(self,option):
-		pass
+		target = self.owner.select_target()
+		if target:
+			# TODO- implement stun
+			target.statuses.append(s.Stun(2))
 
 
