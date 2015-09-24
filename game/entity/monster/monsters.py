@@ -1,6 +1,6 @@
 import base, random
 
-SMELL = ('Acidic Camphoric Dank Destructive Fetid Flowery Foul Funky Lightning Musky Nasty Rancid'.split(' '))
+SMELL = ('Acidic Camphoric Caustic Dank Decaying Destructive Dieing Dusty Fetid Flowery Forgotten Foul Funky Lightning Lowly Musky Nasty Normal Putrid Rancid Scorched Tiny Weak'.split(' '))
 
 class Apply(object):
 	def __init__(self):
@@ -8,16 +8,27 @@ class Apply(object):
 	def modify_monster(self,Monster):
 		Mod={"Acidic":{"health":"*.5","power":"+10"},
 	 	"Camphoric":{"health":"*.5", "power":"*2","ap":"+1"},
+	 	"Caustic":{"health":"*.5"},
 	 	"Dank":{"health":"*1.5","power":"*2","ap":"+2"},
+	 	"Decaying":{"health":"*.3","power":"+-40","ap":"+-1"},
 	 	"Destructive":{"health":"*1.2","power":"+90"},
+	 	"Dieing":{"health":"*.05","power":"/20"},
+	 	"Dusty":{"health":"*.7","power":"/2"},
 	 	"Fetid":{"health":"*.2","power":"/2"},
 		"Flowery":{"health":"=1","power":"=1","level":"=1","ap":"=1","baseap":"=1"},
+		"Forgotten":{"health":"1.1","power":"/2"},
 		"Foul":{"health":"*.8","power":"+-12"},
 		"Funky":{"health":random.choice('+=')+str(random.randint(1,1000)),"power":random.choice('+*=')+str(random.randint(1,100)),"level":random.choice('+=')+str(random.randint(1,10)),"ap":random.choice('+*=')+str(random.randint(1,2))},
 		"Lightning":{"health":"*.1","power":"*3","ap":"*2"},
+		"Lowly":{"health":"*.4","power":"/2","ap":"=1"},
 		"Musky":{"health":"*2","power":"*2","ap":"+2"},
 		"Nasty":{"health":"*.9","power":"+20"},
-		"Rancid":{"health":"+-20","power":"+-5"}}
+		"Normal":{},
+		"Putrid":{"health":"*.6","power":"/10"},
+		"Rancid":{"health":"+-20","power":"+-5"},
+		"Scorched":{"health":"*.4","power":"/2"},
+		"Tiny":{"health":"*.3","power":"/3"},
+		"Weak":{"health":"*.1","power":"/5"}}
 		namer=random.choice(SMELL)
 		run=Mod[namer]
 
@@ -35,7 +46,7 @@ class Apply(object):
 				if(run[a][0]=="+"):
 					Monster.power=Monster.power+int(run[a][1:len(run[a])])
 				elif(run[a][0]=="*"):
-					Monster.power=Monster.power*int(run[a][1:len(run[a])])
+					Monster.power=Monster.power*(run[a][1:len(run[a])])
 				elif(run[a][0]=="="):
 					Monster.power=int(run[a][1:len(run[a])])
 				elif(run[a][0]=="/"):

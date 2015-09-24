@@ -235,10 +235,11 @@ class Party(base.Entity):
 		if(count==len(self.inventory)):
 			self.end=False
 		for a in range(len(self.inventory)):
-			print "------====%s's turn====------" % self.inventory[self.index].name
-			while((self.inventory[self.index].action_points > 0) & (self.inventory[self.index].alive==True)):
-				selection = base.make_choice(self.return_options(),'option')
-				self.do_turn(self.return_options()[selection])
+			if(self.end):
+				print "------====%s's turn====------" % self.inventory[self.index].name
+				while((self.inventory[self.index].action_points > 0) & (self.inventory[self.index].alive==True)):
+					selection = base.make_choice(self.return_options(),'option')
+					self.do_turn(self.return_options()[selection])
 
 			# set the ap back to start. the subtraction per turn is done in the player do_turn
 			self.inventory[self.index].action_points = self.inventory[self.index].base_ap

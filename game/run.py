@@ -23,7 +23,8 @@ class Manager:
 
 		while(PARTY.end):
 			PARTY.handle_player_turn()
-			dungeon.handle_monster_turn()
+			if(PARTY.end):
+				dungeon.handle_monster_turn()
 		print "              "
 		print "              "
 		print "              "
