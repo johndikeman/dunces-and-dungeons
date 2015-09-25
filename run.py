@@ -15,7 +15,8 @@ class Manager:
 		print 'Game Start'
 		print PARTY.to_str()	
 
-		dungeon = Dungeon(100,1,PARTY)
+		dungeon = Dungeon(10,1,PARTY)
+		print dungeon.to_str()
 
 		PARTY.current_dungeon = dungeon
 

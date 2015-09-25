@@ -152,14 +152,14 @@ class Player(base.Entity):
 		self.inventory.append(items.Sword())
 
 	def do_turn(self, args):
-		print args
+		# print args
 
 		for x in self.statuses:
 			x.do_turn()
 
 		if args == 'leave':
 			# door should be the INDEX of the returned list, ie 0 1 2 3
-			door = base.make_choice([a.to_str() for a in self.party.current_dungeon.active_room.neighbors],'room')
+			door = base.make_choice([a for a in self.party.current_dungeon.active_room.get_neighbors().keys()],'room')
 			self.party.current_dungeon.active_room.move_to(door)
 
 		if args == 'examine':
