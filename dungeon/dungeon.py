@@ -91,16 +91,17 @@ class Room(object):
 					if len(self.get_neighbors().keys()) < 3 and base.D6.roll() > 4:
 						self.generate_neighbor(direction)
 
-
-		
 	def get_neighbors(self):
+		# this returns a dictionary structured like {'direction':room_object}
 		neighbors = {}
 
 		for direction, coordpair in self.directions.iteritems():
 			x,y = coordpair
 			try:
-				if self.containing_dungeon.rooms[self.cords[0]+x][self.cords[1]+y]:
-					neighbors.update({direction:self.containing_dungeon.rooms[self.cords[0]+x][self.cords[1]+y]})
+				newx,newy = self.cords[0]+x,self.cords[1]+y
+				if newx >=0 and newy >=0:
+					if self.containing_dungeon.rooms[newx][newy]:
+						neighbors.update({direction:self.containing_dungeon.rooms[self.cords[0]+x][self.cords[1]+y]})
 			except IndexError:
 				pass
 		return neighbors

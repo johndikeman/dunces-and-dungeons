@@ -1,7 +1,5 @@
 import base, random, time
 
-SMELL = ('Acidic Camphoric Caustic Dank Decaying Destructive Dieing Dusty Fetid Flowery Forgotten Foul Funky Lightning Lowly Musky Nasty Normal Putrid Rancid Scorched Tiny Weak'.split(' '))
-
 class Apply(object):
 	def __init__(self):
 		pass
@@ -29,8 +27,7 @@ class Apply(object):
 		"Scorched":{"health":"*.4","power":"/2"},
 		"Tiny":{"health":"*.3","power":"/3"},
 		"Weak":{"health":"*.1","power":"/5"}}
-		namer=random.choice(SMELL)
-		run=Mod[namer]
+		run=Mod[random.choice(Mod.keys())]
 
 		for a in run:
 			if(a=="health"):
@@ -141,11 +138,17 @@ class Monster(base.Entity):
 		self.alive = False
 		self.owner.things = self.owner.things[:self.owner.things.index(self)]+self.owner.things[self.owner.things.index(self)+1:]
 
+# def compute(comp,val):
+	
+
+
 def spawn(level):
 	app=Apply()
 	ret = []
+	compound = []
 	for key, val in MONSTERLIST.iteritems():
-		if random.random() * 100 < val['probablity']:
+		if random.random() * 100 < val['probability']:
+			compound
 			for x in range(random.choice(range(val['groupsize']))+1):
 				ret.append(app.modify_monster(key(level)))
 	return ret
@@ -250,6 +253,8 @@ class FireElemental(Elemental):
 		self.power=30+self.level*12
 		self.name="Fire Elemental"
 
+# here down are not added to the spawn list
+
 class EarthElemental(Elemental):
 	def __init__(self,level):
 		super(EarthElemental,self).__init__(level)
@@ -286,8 +291,44 @@ class Cyclops(Monster):
 
 MONSTERLIST = {
 	Skeleton:{
-		'probablity':100.0,
+		'probability':50.0,
 		'groupsize':3
 	},
+	Goblin:{
+		'probability':32.0,
+		'groupsize':4
+	},
+	Spider:{
+		'probability':40.0,
+		'groupsize':8
+	},
+	Assassin:{
+		'probability':12.0,
+		'groupsize':2
+	},
+	Hidden_Devourer:{
+		'probability':8.0,
+		'groupsize':1
+	},
+	Ogre:{
+		'probability':32.0,
+		'groupsize':1
+	},
+	Hellhound:{
+		'probability':32.0,
+		'groupsize':4
+	},
+	Meme:{
+		'probability':1.0,
+		'groupsize':69 # fucking lol
+	},
+	WindElemental:{
+		'probability':32.0,
+		'groupsize':4
+	},
+	FireElemental:{
+		'probability':32.0,
+		'groupsize':4
+	}
 }
 
