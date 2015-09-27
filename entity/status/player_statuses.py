@@ -24,3 +24,20 @@ class Stun(base.Entity):
 		else:
 			self.owner.statuses.remove(self)
 
+
+class Poison(base.Entity):
+	def __init__(self,turns,damage):
+		self.turns = turns
+		self.damage = damage
+		self.name = 'poison'
+
+	def do_turn(self,option):
+		if self.turns > 0:
+			self.owner.health -= self.damage
+			print '%s takes %f poison damage' % (self.owner.name,self.damage)
+			self.turns -= 1
+		else:
+			self.owner.statuses.remove(self)
+
+	def to_str(self):
+		return self.name

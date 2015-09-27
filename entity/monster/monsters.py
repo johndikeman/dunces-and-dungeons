@@ -111,9 +111,14 @@ class Monster(base.Entity):
 		self.aggro = random.choice(self.owner.party.inventory)
 		self.aggroed = True
 
+	def check_if_alive(self):
+		if self.health <= 0:
+			self.kill()
+
 	def do_turn(self):
 		for a in self.statuses:
 			a.do_turn()
+		self.check_if_alive()
 
 		if self.action_points > 0:
 			if not self.aggroed:
