@@ -76,6 +76,8 @@ class Room(object):
 		self.directions = {'north':(-1,0),'south':(1,0),'east':(0,1),'west':(0,-1)}
 
 	def generate(self):
+		for monstar in monsters.spawn(self.level):
+			self.things.append(monstar)
 		for direction, dircords in self.directions.iteritems():
 			x,y = dircords
 			selfx,selfy = self.cords

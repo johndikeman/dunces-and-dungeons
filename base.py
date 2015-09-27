@@ -30,10 +30,11 @@ class Entity(object):
 		return li
 
 	def take_damage(self,attacker,damage):
+		damage = float(damage)
 		# compute damage resistance based on the armor
 		res = (25 * math.log(self.armor + 2,6)) / 100.0
 		damage -= damage * 1.0 * res
-		print '(%s) takes (%d) damage from (%s)' % (self.to_str(),damage,attacker.to_str())
+		print '(%s) takes (%.2f) damage from (%s)' % (self.to_str(),damage,attacker.to_str())
 		self.health -= damage
 		if self.health <= 0:
 			self.alive = False

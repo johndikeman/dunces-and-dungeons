@@ -27,7 +27,8 @@ class Apply(object):
 		"Scorched":{"health":"*.4","power":"/2"},
 		"Tiny":{"health":"*.3","power":"/3"},
 		"Weak":{"health":"*.1","power":"/5"}}
-		run=Mod[random.choice(Mod.keys())]
+		namer = random.choice(Mod.keys())
+		run=Mod[namer]
 
 		for a in run:
 			if(a=="health"):
@@ -100,10 +101,15 @@ class Monster(base.Entity):
 		self.inventory = base.Inventory(self)
 		self.statuses = base.Inventory(self)
 		self.owner = None
+		self.revealed = False
 
 
 	def set_level(self,val):
 		pass
+
+	def select_aggro(self):
+		self.aggro = random.choice(self.owner.party.inventory)
+		self.aggroed = True
 
 	def do_turn(self):
 		for a in self.statuses:
@@ -111,10 +117,10 @@ class Monster(base.Entity):
 
 		if self.action_points > 0:
 			if not self.aggroed:
-				self.aggro = random.choice(self.owner.party.inventory)
-			self.aggroed = True
+				self.select_aggro()
 					
-			self.attack(self.aggro)
+			if self.aggro.alive:
+				self.attack(self.aggro)
 
 	def attack(self,target):
 		self.reveal()
@@ -124,12 +130,13 @@ class Monster(base.Entity):
 		return self.name
 
 	def examine(self,examiner):
-		return self.to_str()
 		self.reveal()
+		return self.to_str()
 
 	def reveal(self):
-		self.owner.things.remove(self)
-		self.owner.identified_things.append(self)
+		if not self.revealed:
+			self.owner.things.remove(self)
+			self.owner.identified_things.append(self)
 		
 	def dev_examine(self):
 		print 'name: %s health: %d, attributes: %s, power: %s, level: %d' % (self.name, self.health,str(self.attributes),self.power,self.level)
@@ -138,19 +145,25 @@ class Monster(base.Entity):
 		self.alive = False
 		self.owner.things = self.owner.things[:self.owner.things.index(self)]+self.owner.things[self.owner.things.index(self)+1:]
 
-# def compute(comp,val):
-	
-
+def compute(comp,val):
+	fin = 1.0
+	for a in comp:
+		fin *= a
+	return (fin * (val / 100.0))
 
 def spawn(level):
+	ind = 0
 	app=Apply()
 	ret = []
 	compound = []
-	for key, val in MONSTERLIST.iteritems():
-		if random.random() * 100 < val['probability']:
-			compound
+	while ind < len(MONSTERLIST.keys()):
+		key = random.choice(MONSTERLIST.keys())
+		val = MONSTERLIST[key]
+		if random.random() * 100 < compute(compound,val['probability'])*100.0:
+			compound.append(val['probability'] / 100.0)
 			for x in range(random.choice(range(val['groupsize']))+1):
 				ret.append(app.modify_monster(key(level)))
+		ind += 1
 	return ret
 
 class Skeleton(Monster):
