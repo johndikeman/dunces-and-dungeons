@@ -18,6 +18,7 @@ class Dungeon(object):
 		self.starting_room = Room(self,self.party)
 		self.starting_room.test = 0
 		self.rooms = []
+		self.roomsmap=[]
 		self.size = size
 		self.room_num = 1
 		# okso current_room is only used in generation. to access the ACTIVE room, use self.active_room instead.
@@ -29,6 +30,12 @@ class Dungeon(object):
 			for b in range(size):
 				row.append(None)
 			self.rooms.append(row)
+		for a in range(size):
+			row = []
+			for b in range(size):
+				row.append(False)
+			self.roomsmap.append(row)
+
 
 		self.starting_room.cords = (0,0)
 		self.rooms[0][0] = self.starting_room
@@ -146,6 +153,7 @@ class Room(object):
 	def move_to(self,ind):
 		self.containing_dungeon.active_room = self.get_neighbors()[self.get_neighbors().keys()[ind]]
 		self.containing_dungeon.active_room.enter()
+		self.party.current_dungeon.roomsmap[self.cords[0]][self.cords[1]]=True
 
 	def enter(self):
 		print 'you enter a %s, CORDS:%s' % (self.description,str(self.cords))

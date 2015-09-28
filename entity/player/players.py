@@ -112,7 +112,7 @@ class Player(base.Entity):
 		self.name = name
 		self.party = None
 		self.action_points = 2
-		self.options = ['leave','examine','dev-examine']
+		self.options = ['leave','examine','dev-examine','map']
 		self.alive = True
 		option = base.make_choice(RACES.keys(),'race')
 		self.race = RACES.keys()[option]
@@ -171,6 +171,7 @@ class Player(base.Entity):
 			door = base.make_choice([a for a in self.party.current_dungeon.active_room.get_neighbors().keys()],'room')
 			self.party.current_dungeon.active_room.move_to(door)
 
+		## This is the examine method.
 		if args == 'examine':
 			s = ''
 			for ind, a in enumerate(self.party.current_dungeon.active_room.things):
@@ -186,8 +187,19 @@ class Player(base.Entity):
 			for a in self.party.current_dungeon.active_room.things:
 				print a.dev_examine()
 
+
 		if args == 'shop':
 			self.party.containing_dungeon.enter_shop()
+		if args =='map':
+			ret = ''
+			for x, a in enumerate(self.party.current_dungeon.rooms):
+				for y,b in enumerate(a):
+					if isinstance(b,dungeon.Room) and self.party.current_dungeon.roomsmap[x][y]:
+						ret += 'R'
+					else:
+						ret += '*' 
+				ret += '\n'
+			print ret
 
 		if args == 'enter a dungeon':
 			self.party.containing_dungeon.leave()
