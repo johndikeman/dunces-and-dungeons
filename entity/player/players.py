@@ -1,5 +1,6 @@
 import base, math, time
 import entity.item.items as items
+import dungeon.dungeon as dungeon
 
 
 RACES = {
@@ -151,7 +152,15 @@ class Player(base.Entity):
 		# THIS IS NOT FINAL- ITS A TEST
 		self.inventory.append(items.Sword())
 
+	def return_options(self):
+		if not isinstance(self.owner.current_dungeon,dungeon.Hub):
+			self.options = ['leave','examine','dev-examine']
+		else:
+			self.options =  ['shop','enter a dungeon']
+		return super(Player,self).return_options()
+
 	def do_turn(self, args):
+
 		# print args
 
 		for x in self.statuses:
@@ -177,7 +186,11 @@ class Player(base.Entity):
 			for a in self.party.current_dungeon.active_room.things:
 				print a.dev_examine()
 
+		if args == 'shop':
+			self.party.containing_dungeon.enter_shop()
 
+		if args == 'enter a dungeon':
+			self.party.containing_dungeon.leave()
 
 		for a in self.inventory:
 			a.do_turn(args)
@@ -215,6 +228,12 @@ class Party(base.Entity):
 
 	def return_options(self):
 		return self.inventory[self.index].return_options()
+
+	def get_avg_level(self):
+		num = 0
+		for ind,a in enumerate(self.inventory):
+			num += a
+		return math.ceil(num/ind)
 
 
 	def do_turn(self,options):
