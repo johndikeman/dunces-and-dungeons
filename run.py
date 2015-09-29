@@ -19,12 +19,12 @@ class Manager:
 
 		PARTY.current_dungeon = dungeon
 
-		dungeon.start()
+		PARTY.current_dungeon.start()
 
 		while(PARTY.end):
 			PARTY.handle_player_turn()
 			if(PARTY.end):
-				dungeon.handle_monster_turn()
+				PARTY.current_dungeon.handle_monster_turn()
 		print "              "
 		print "              "
 		print "              "

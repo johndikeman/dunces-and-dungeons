@@ -189,7 +189,7 @@ class Player(base.Entity):
 
 
 		if args == 'shop':
-			self.party.containing_dungeon.enter_shop()
+			self.party.current_dungeon.enter_shop()
 		if args =='map':
 			ret = ''
 			for x, a in enumerate(self.party.current_dungeon.rooms):
@@ -202,7 +202,7 @@ class Player(base.Entity):
 			print ret
 
 		if args == 'enter a dungeon':
-			self.party.containing_dungeon.leave()
+			self.party.current_dungeon.leave_dungeon()
 
 		for a in self.inventory:
 			a.do_turn(args)
@@ -243,8 +243,10 @@ class Party(base.Entity):
 
 	def get_avg_level(self):
 		num = 0
-		for ind,a in enumerate(self.inventory):
-			num += a
+		ind = 0
+		for a in self.inventory:
+			num += a.level
+			ind +=1
 		return math.ceil(num/ind)
 
 
