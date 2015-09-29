@@ -4,12 +4,12 @@ class Apply(object):
 	def __init__(self):
 		pass
 	def modify_monster(self,Monster):
-		Mod={"Acidic":{"health":"*.5","power":"+10"},
+		Mod={"Acidic":{"health":"*.5","power":"*1.1"},
 	 	"Camphoric":{"health":"*.5", "power":"*2","ap":"+1"},
 	 	"Caustic":{"health":"*.5"},
 	 	"Dank":{"health":"*1.5","power":"*2","ap":"+2"},
-	 	"Decaying":{"health":"*.3","power":"+-40","ap":"+-1"},
-	 	"Destructive":{"health":"*1.2","power":"+90"},
+	 	"Decaying":{"health":"*.3","power":"*.5","ap":"+-1"},
+	 	"Destructive":{"health":"*1.2","power":"*3"},
 	 	"Dieing":{"health":"*.05","power":"/20"},
 	 	"Dusty":{"health":"*.7","power":"/2"},
 	 	"Fetid":{"health":"*.2","power":"/2"},
@@ -19,8 +19,8 @@ class Apply(object):
 		"Funky":{"health":random.choice('+=')+str(random.randint(1,1000)),"power":random.choice('+*=')+str(random.randint(1,100)),"level":random.choice('+=')+str(random.randint(1,10)),"ap":random.choice('+*=')+str(random.randint(1,2))},
 		"Lightning":{"health":"*.1","power":"*3","ap":"*2"},
 		"Lowly":{"health":"*.4","power":"/2","ap":"=1"},
-		"Musky":{"health":"*2","power":"*2","ap":"+2"},
-		"Nasty":{"health":"*.9","power":"+20"},
+		"Musky":{"health":"*2","power":"*1.2","ap":"+2"},
+		"Nasty":{"health":"*.9","power":"*1.2"},
 		"Normal":{},
 		"Putrid":{"health":"*.6","power":"/10"},
 		"Rancid":{"health":"+-20","power":"+-5"},

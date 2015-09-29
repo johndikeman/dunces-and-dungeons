@@ -63,13 +63,19 @@ class Dungeon(object):
 					ret += '____ ' 
 			ret += '\n'
 		return ret
-
+SHOP = {"Health":{"Healing Potion":"2G","Regeneration Orb":"4G"},
+		"Weapons":{"Sword":"3G","Bow":"5G","Arrows":".5G"},
+		"Armor":{"Helmet":"5G","Chestplate":"10G","Chainmail":"7G","Platelegs":"6G","Boots":"2G"},
+		"Spells":{"":""},
+		"Utility":{"":""}}
 class Hub(Dungeon):
 	def __init__(self,party):
-		self.shop = []
+		#self.shop = []
 		self.party = party
 
 	def enter_shop(self):
+		shopping = base.make_choice(SHOP.keys())
+		shopper=base.make_choice(SHOP[SHOP.keys()[shopping]].keys())
 		print 'there is nothing here yet!'
 
 	def leave_dungeon(self):
