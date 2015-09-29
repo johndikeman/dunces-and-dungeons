@@ -183,10 +183,12 @@ class Player(base.Entity):
 			ret = ''
 			for x, a in enumerate(self.party.current_dungeon.rooms):
 				for y,b in enumerate(a):
-					if isinstance(b,dungeon.Room) and self.party.current_dungeon.roomsmap[x][y]:
-						ret += 'R'
+					if isinstance(b,dungeon.Room) and self.party.current_dungeon.roomsmap[x][y]=='T':
+						ret += 'R '
+					elif(isinstance(b,dungeon.Room) and self.party.current_dungeon.roomsmap[x][y]=='?'):
+						ret+='? '
 					else:
-						ret += '*' 
+						ret += '  ' 
 				ret += '\n'
 			print ret
 

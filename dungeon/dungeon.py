@@ -14,10 +14,12 @@ class Dungeon(object):
 		self.level = level
 		self.party = party
 		self.active_room = None
+		self.roomslist=""
 		self.starting_room = Room(self,self.party)
 		self.starting_room.test = 0
 		self.rooms = []
 		self.roomsmap=[]
+		
 		self.size = size
 		self.room_num = 1
 		# okso current_room is only used in generation. to access the ACTIVE room, use self.active_room instead.
@@ -32,7 +34,7 @@ class Dungeon(object):
 		for a in range(size):
 			row = []
 			for b in range(size):
-				row.append(False)
+				row.append('F')
 			self.roomsmap.append(row)
 
 
@@ -123,7 +125,7 @@ class Room(object):
 
 		dirx,diry = self.directions[di]
 		new_room.cords = (x+dirx,y+diry)
-
+		self.containing_dungeon.roomslist+=''+str(x+dirx)+' '+str(y+diry)+' '
 		self.containing_dungeon.rooms[new_room.cords[0]][new_room.cords[1]] = new_room
 		self.containing_dungeon.rooms[new_room.cords[0]][new_room.cords[1]].generate()
 
@@ -132,12 +134,25 @@ class Room(object):
 		return self.description
 
 	def move_to(self,ind):
-
+		
 		self.containing_dungeon.active_room = self.get_neighbors()[self.get_neighbors().keys()[ind]]
 		self.containing_dungeon.active_room.enter()
-		self.party.current_dungeon.roomsmap[self.cords[0]][self.cords[1]]=True
+		
+		##HELP! i need to put all possible neighbors adjacent to a room already in to be ? 
+		
 
 	def enter(self):
+		self.party.current_dungeon.roomsmap[self.cords[0]][self.cords[1]]='T'
+		g=self.cords[0]
+		h=self.cords[1]
+		if((str(g+1)+' '+str(h)) in self.containing_dungeon.roomslist and self.party.current_dungeon.roomsmap[g+1][h]!="T"):
+			self.party.current_dungeon.roomsmap[g+1][h]='?'
+		if((str(g-1)+' '+str(h)) in self.containing_dungeon.roomslist and self.party.current_dungeon.roomsmap[g-1][h]!="T"):
+			self.party.current_dungeon.roomsmap[g-1][h]='?'
+		if((str(g)+' '+str(h+1)) in self.containing_dungeon.roomslist and self.party.current_dungeon.roomsmap[g][h+1]!="T"):
+			self.party.current_dungeon.roomsmap[g][h+1]='?'
+		if((str(g)+' '+str(h-1)) in self.containing_dungeon.roomslist and self.party.current_dungeon.roomsmap[g][h-1]!="T"):
+			self.party.current_dungeon.roomsmap[g][h-1]='?'
 		print 'you enter a %s, CORDS:%s' % (self.description,str(self.cords))
 
 	def handle_monster_turn(self):
