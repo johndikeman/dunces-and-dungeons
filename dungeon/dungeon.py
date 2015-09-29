@@ -6,6 +6,7 @@ import entity.monster.monsters as monsters
 SMELL = ('acidic acrid aromatic camphoric fetid flowery foul fragrant fresh funky heady musky musty nasty noxious perfumed piney pungent rancid savory sharp smelly stinky stuffy sweet'.split(' '))
 TOUCH = ('tough bristly burning cold cottony damp dank moist dry feathery frosty furry fuzzy gnarled hairy hot knobbed knotted leathery limp lumpy oily puffy ribbed rough rubbery sandy sharp slimy smooth sticky velvety wet'.split(' '))
 
+
 class Dungeon(object):
 	def __init__(self, size, level, party):
 		# as far as i can tell, the generation algorithm doesn't pay attention to the size
@@ -62,6 +63,26 @@ class Dungeon(object):
 					ret += '____ ' 
 			ret += '\n'
 		return ret
+
+class Hub(Dungeon):
+	def __init__(self,party):
+		self.shop = []
+		self.party = party
+
+	def enter_shop(self):
+		print 'there is nothing here yet!'
+
+	def leave_dungeon(self):
+		he = [10,20,30,50]
+		ind = base.make_choice(['smol','medium','large','goliath'],'size')
+		self.party.current_dungeon = Dungeon(he[ind],self.party.get_avg_level(),self.party)
+		self.party.current_dungeon.start()
+		print self.party.current_dungeon
+
+
+	def start(self):
+		print 'welcome to the hub!'
+
 
 class Room(object):
 	def __init__(self,containing_dungeon,party):
@@ -134,7 +155,10 @@ class Room(object):
 		return self.description
 
 	def move_to(self,ind):
+<<<<<<< HEAD
 		
+=======
+>>>>>>> origin/master
 		self.containing_dungeon.active_room = self.get_neighbors()[self.get_neighbors().keys()[ind]]
 		self.containing_dungeon.active_room.enter()
 		

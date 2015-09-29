@@ -152,7 +152,15 @@ class Player(base.Entity):
 		# THIS IS NOT FINAL- ITS A TEST
 		self.inventory.append(items.Sword())
 
+	def return_options(self):
+		if not isinstance(self.owner.current_dungeon,dungeon.Hub):
+			self.options = ['leave','examine','dev-examine']
+		else:
+			self.options =  ['shop','enter a dungeon']
+		return super(Player,self).return_options()
+
 	def do_turn(self, args):
+
 		# print args
 
 		for x in self.statuses:
@@ -179,6 +187,9 @@ class Player(base.Entity):
 			for a in self.party.current_dungeon.active_room.things:
 				print a.dev_examine()
 
+
+		if args == 'shop':
+			self.party.current_dungeon.enter_shop()
 		if args =='map':
 			ret = ''
 			for x, a in enumerate(self.party.current_dungeon.rooms):
@@ -192,6 +203,8 @@ class Player(base.Entity):
 				ret += '\n'
 			print ret
 
+		if args == 'enter a dungeon':
+			self.party.current_dungeon.leave_dungeon()
 
 		for a in self.inventory:
 			a.do_turn(args)
@@ -229,6 +242,14 @@ class Party(base.Entity):
 
 	def return_options(self):
 		return self.inventory[self.index].return_options()
+
+	def get_avg_level(self):
+		num = 0
+		ind = 0
+		for a in self.inventory:
+			num += a.level
+			ind +=1
+		return math.ceil(num/ind)
 
 
 	def do_turn(self,options):
