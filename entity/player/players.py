@@ -154,7 +154,7 @@ class Player(base.Entity):
 
 	def return_options(self):
 		if not isinstance(self.owner.current_dungeon,dungeon.Hub):
-			self.options = ['leave','examine','dev-examine']
+			self.options = ['leave','examine','dev-examine','map']
 		else:
 			self.options =  ['shop','enter a dungeon']
 		return super(Player,self).return_options()

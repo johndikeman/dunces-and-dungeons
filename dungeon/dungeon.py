@@ -73,11 +73,11 @@ class Hub(Dungeon):
 		print 'there is nothing here yet!'
 
 	def leave_dungeon(self):
-		he = [10,20,30,50]
+		he = [5,8,15,25]
 		ind = base.make_choice(['smol','medium','large','goliath'],'size')
 		self.party.current_dungeon = Dungeon(he[ind],self.party.get_avg_level(),self.party)
 		self.party.current_dungeon.start()
-		print self.party.current_dungeon
+		# print self.party.current_dungeon
 
 
 	def start(self):

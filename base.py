@@ -15,7 +15,7 @@ class Entity(object):
 		self.inventory = Inventory(self)
 		self.statuses = Inventory(self)
 		self.owner = None
-		self.armor = 0
+		self.armor = 1
 	def do_turn(self,options):
 		pass
 
@@ -29,11 +29,17 @@ class Entity(object):
 			li += a.return_options()
 		return li
 
+	def mod_armor(self,val):
+		self.armor += val
+		if self.armor < 1:
+			self.armor = 1
+
+
 	def take_damage(self,attacker,damage):
 		damage = float(damage)
 		# compute damage resistance based on the armor
-		res = (25 * math.log(self.armor + 2,6)) / 100.0
-		damage -= damage * 1.0 * res
+		res = (25 * math.log(self.armor,11) + 3) / 100.0
+		damage -= (damage * res)
 		print '(%s) takes (%.2f) damage from (%s)' % (self.to_str(),damage,attacker.to_str())
 		self.health -= damage
 		if self.health <= 0:
