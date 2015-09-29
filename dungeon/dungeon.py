@@ -155,10 +155,6 @@ class Room(object):
 		return self.description
 
 	def move_to(self,ind):
-<<<<<<< HEAD
-		
-=======
->>>>>>> origin/master
 		self.containing_dungeon.active_room = self.get_neighbors()[self.get_neighbors().keys()[ind]]
 		self.containing_dungeon.active_room.enter()
 		
