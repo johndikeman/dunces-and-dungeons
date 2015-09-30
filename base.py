@@ -43,6 +43,8 @@ class Entity(object):
 		# compute damage resistance based on the armor
 		res = (25 * math.log(self.armor + 1, 11) + 3) / 100.0
 		damage -= (damage * res)
+		if(damage<0):
+			damage=0
 		print '(%s) takes (%.2f) damage from (%s)' % (self.to_str(),damage,attacker.to_str())
 		self.health -= damage
 		if self.health <= 0:
