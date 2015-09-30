@@ -63,11 +63,11 @@ class Dungeon(object):
 					ret += '____ ' 
 			ret += '\n'
 		return ret
-SHOP = {"Health":{"Healing Potion":"2G","Regeneration Orb":"4G"},
-		"Weapons":{"Sword":"3G","Bow":"5G","Arrows":".5G"},
-		"Armor":{"Helmet":"5G","Chestplate":"10G","Chainmail":"7G","Platelegs":"6G","Boots":"2G"},
-		"Spells":{"":""},
-		"Utility":{"":""}}
+SHOP = {"Health":{"Healing Potion":2,"Regeneration Orb":4},
+		"Weapons":{"Sword":3,"Bow":5,"Arrows":.5},
+		"Armor":{"Helmet":5,"Chestplate":10,"Chainmail":7,"Platelegs":6,"Boots":2},
+		"Spells":{"":0},
+		"Utility":{"":0}}
 class Hub(Dungeon):
 	def __init__(self,party):
 		#self.shop = []
@@ -75,8 +75,13 @@ class Hub(Dungeon):
 
 	def enter_shop(self):
 		shopping = base.make_choice(SHOP.keys())
-		shopper=base.make_choice(SHOP[SHOP.keys()[shopping]].keys())
-		print 'there is nothing here yet!'
+		item=base.shop_make_choice(SHOP[SHOP.keys()[shopping]].keys(),SHOP[SHOP.keys()[shopping]].values())
+		if(item is "Back"):
+			print 'You bought nothing!'
+		else:
+			self.party.inventory[self.party.index].inventory.append(item)
+			self.party.inventory[self.party.index].gold=self.party.inventory[self.party.index].gold-SHOP[shopping][item]
+			print 'You bought a '
 
 	def leave_dungeon(self):
 		he = [5,8,15,25]
@@ -85,6 +90,8 @@ class Hub(Dungeon):
 		self.party.current_dungeon.start()
 		# print self.party.current_dungeon
 
+	def handle_monster_turn(self):
+		pass
 
 	def start(self):
 		print 'welcome to the hub!'

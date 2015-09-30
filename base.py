@@ -120,6 +120,30 @@ def make_choice(choices,thing=None):
 		return make_choice(choices,thing)
 	return ret
 
+def shop_make_choice(choices,choiceskeys,thing=None):
+	choices.append("Back")
+	choiceskeys.append(0)
+	if len(choices) <= 0:
+		print 'nothing to choose from!'
+		return
+	if thing:
+		print 'choose a %s' % thing
+	else:
+		print 'choose one!'
+	for ind, a in enumerate(choices):
+		print "\t%s for %d (%d)\n" % (a, choiceskeys[ind], ind)
+
+	ans = raw_input()
+	try:
+		ret = int(ans)
+		if ret > len(choices)-1:
+			print 'that wasn\'t a choice! try again.'
+			return make_choice(choices,thing)
+	except ValueError:
+		print 'that wasn\'t a choice! try again.'
+		return make_choice(choices,thing)
+	return choices[ret]
+
 D2 = Die(2)
 D6 = Die(6)
 D12 = Die(12)
