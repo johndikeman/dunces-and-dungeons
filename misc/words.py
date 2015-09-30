@@ -9,3 +9,6 @@ Stell'bsna ph'shtunggli Chaugnar Faugn goka Shub-Niggurath naflooboshu zhro ya y
 Cshugg uln nilgh'ri Chaugnar Faugn orr'e r'luh ya f'ch' geb r'luh geb wgah'n tharanak y'hah nilgh'ri, 'fhalma Hastur naflfhtagn grah'n n'gha syha'h phlegeth orr'e nafln'gha Shub-Niggurath kadishtu r'luh ilyaa. Ee sgn'wahl n'ghftog throdyar uaaah zhroor ngy'hah ch' orr'e shagg naflshugg mg tharanak, chtenff n'gha chtenff n'ghft y-k'yarnak fm'latgh li'hee Azathoth 'fhalmanyth mnahn' tharanak throdnyth, nog ftaghu hupadgh shugg cchtenff lw'nafh shoggog hupadgh llll chtenff n'ghftyar. Tharanak phlegethagl vulgtm cuaaah f'Yoggoth phlegeth ngsll'ha 'bthnk stell'bsna vulgtm, naflee naChaugnar Faugn lloig ph'grah'n Azathothor gotha Hastur y-ehye, ebunma athg nafhtagn hrii ph'phlegeth 'ai ron nnnshugg. 
 
 Ebunma hafh'drn kadishtu stell'bsna kadishtu Hastur Yoggoth, k'yarnak sll'ha phlegeth k'yarnak shugg ebunma k'yarnak, ehye sll'ha hrii Hastur n'ghft. Dagonnyth vulgtlaglnoth hupadgh nw nglui Shub-Niggurath n'ghft, k'yarnak fm'latgh kadishtu kn'a ron.""".split(' ')
+
+
+weapon_words = 'sharp quick unpredictable shiny legendary'.split(' ')

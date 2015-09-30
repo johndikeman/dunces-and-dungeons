@@ -16,6 +16,7 @@ class Entity(object):
 		self.statuses = Inventory(self)
 		self.owner = None
 		self.armor = 1
+		self.id = random.random() * 100000000
 	def do_turn(self,options):
 		pass
 
@@ -36,6 +37,13 @@ class Entity(object):
 		self.armor += val
 		if self.armor < 1:
 			self.armor = 1
+
+	# these methods are going to be used for armor and shit to apply their augments
+	def apply(self):
+		pass
+
+	def exit(self):
+		pass
 
 
 	def take_damage(self,attacker,damage):
@@ -89,12 +97,15 @@ class Inventory(list):
 
 	def append(self,thing):
 		thing.owner = self.owner
+		thing.apply()
 
 		super(Inventory,self).append(thing)
 
 	def remove(self,object_to_remove):
+		object_to_remove.exit()
+		# print 'base remove method called!'
 		for ind, obj in enumerate(self):
-			if obj == object_to_remove:
+			if obj.id == object_to_remove.id:
 				self = self[:ind] + self[ind+1:]
 
 

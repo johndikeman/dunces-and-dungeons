@@ -41,3 +41,16 @@ class Poison(base.Entity):
 
 	def to_str(self):
 		return self.name
+
+class Cooldown(base.Entity):
+	def __init__(self,spell,turns):
+		self.spell = spell
+		self.turns = turns
+		self.spell.on_cooldown = True
+
+	def do_turn(self,option):
+		if self.turns > 0:
+			self.turns -= 1
+		else:
+			self.spell.on_cooldown = False
+			self.owner.statuses.remove(self)

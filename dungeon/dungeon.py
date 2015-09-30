@@ -1,5 +1,6 @@
 import math, random, base
 import entity.monster.monsters as monsters
+import entity.item.items as items
 
 # these words are from http://acreativemoment.com/2008/07/18/words-to-describe-smell-sound-taste-touch/
 # feel free to add some more that you don't see
@@ -63,24 +64,28 @@ class Dungeon(object):
 					ret += '____ ' 
 			ret += '\n'
 		return ret
-SHOP = {"Health":{"Healing Potion":2,"Regeneration Orb":4},
-		"Weapons":{"Sword":3,"Bow":5,"Arrows":.5},
-		"Armor":{"Helmet":5,"Chestplate":10,"Chainmail":7,"Platelegs":6,"Boots":2},
-		"Spells":{"":0},
-		"Utility":{"":0}}
+
 class Hub(Dungeon):
 	def __init__(self,party):
 		#self.shop = []
 		self.party = party
+		self.shop = {
+			"health":{},
+			"weapons":{},
+			"armor":{},
+			"spells":{},
+			"utility":{}
+		}
+		self.controller = items.ItemController(party)
 
 	def enter_shop(self):
-		shopping = base.make_choice(SHOP.keys())
-		item=base.shop_make_choice(SHOP[SHOP.keys()[shopping]].keys(),SHOP[SHOP.keys()[shopping]].values())
+		shopping = base.make_choice(self.shop.keys())
+		item=base.shop_make_choice(self.shop[self.shop.keys()[shopping]].keys(),self.shop[self.shop.keys()[shopping]].values())
 		if(item is "Back"):
 			print 'You bought nothing!'
 		else:
 			self.party.inventory[self.party.index].inventory.append(item)
-			self.party.inventory[self.party.index].gold=self.party.inventory[self.party.index].gold-SHOP[shopping][item]
+			self.party.inventory[self.party.index].gold=self.party.inventory[self.party.index].gold-self.shop[shopping][item]
 			print 'You bought a '
 
 	def leave_dungeon(self):
@@ -95,6 +100,12 @@ class Hub(Dungeon):
 
 	def start(self):
 		print 'welcome to the hub!'
+		for category in self.shop.keys():
+			for b in range(random.randint(0,5)):
+				inst = self.controller.generate(category)
+				if inst:
+					self.shop[category].update({inst:inst.cost})
+
 
 
 class Room(object):
@@ -186,7 +197,7 @@ class Room(object):
 			self.party.current_dungeon.roomsmap[g][h+1]='?'
 		if((str(g)+' '+str(h-1)) in self.containing_dungeon.roomslist and self.party.current_dungeon.roomsmap[g][h-1]!="T"):
 			self.party.current_dungeon.roomsmap[g][h-1]='?'
-		print 'you enter a %s, CORDS:%s' % (self.description,str(self.cords))
+		# print 'you enter a %s, CORDS:%s' % (self.description,str(self.cords))
 
 	def handle_monster_turn(self):
 		for thing in self.things:

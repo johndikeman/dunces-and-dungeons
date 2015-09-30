@@ -120,6 +120,7 @@ class Player(base.Entity):
 		self.max_health = 0
 		choices={}
 		self.armor = 1
+		self.gold = 25
 
 		#Please tell me i didn't mess this up.
 
