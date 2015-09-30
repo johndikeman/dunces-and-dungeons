@@ -6,7 +6,7 @@ class Entity(object):
 		self.attributes = {'strength':0,'intelligence':0,'luck':0,'agility':0,'mana':0}
 
 		self.health = 0.0
-		self.level = 0
+		self.level = 1
 		# base ap is what the ap should be restored to after a turn is complete
 		self.base_ap = 1
 		self.alive = False
@@ -22,12 +22,15 @@ class Entity(object):
 	# def kill(self):
 	# 	self.alive = False
 
-	def return_options(self):
+	def return_options(self,inv=True):
 		li = []
 		li += self.options
-		for a in self.inventory: 
-			li += a.return_options()
+		if inv:
+			for a in self.inventory: 
+				li += a.return_options()
+			return li
 		return li
+
 
 	def mod_armor(self,val):
 		self.armor += val
@@ -38,7 +41,7 @@ class Entity(object):
 	def take_damage(self,attacker,damage):
 		damage = float(damage)
 		# compute damage resistance based on the armor
-		res = (25 * math.log(self.armor,11) + 3) / 100.0
+		res = (25 * math.log(self.armor + 1, 11) + 3) / 100.0
 		damage -= (damage * res)
 		print '(%s) takes (%.2f) damage from (%s)' % (self.to_str(),damage,attacker.to_str())
 		self.health -= damage

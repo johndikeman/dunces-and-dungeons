@@ -28,7 +28,7 @@ class Apply(object):
 		"Tiny":{"health":"*.3","power":"/3"},
 		"Weak":{"health":"*.1","power":"/5"}}
 		namer = random.choice(Mod.keys())
-		run=Mod[namer]
+		run = Mod[namer]
 
 		for a in run:
 			if(a=="health"):
@@ -142,6 +142,7 @@ class Monster(base.Entity):
 		if not self.revealed:
 			self.owner.things.remove(self)
 			self.owner.identified_things.append(self)
+			self.revealed = True
 		
 	def dev_examine(self):
 		print 'name: %s health: %d, attributes: %s, power: %s, level: %d' % (self.name, self.health,str(self.attributes),self.power,self.level)

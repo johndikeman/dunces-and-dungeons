@@ -119,7 +119,7 @@ class Player(base.Entity):
 		self.health = 0
 		self.max_health = 0
 		choices={}
-		self.armor = 0
+		self.armor = 1
 
 		#Please tell me i didn't mess this up.
 
@@ -150,14 +150,16 @@ class Player(base.Entity):
 
 
 		# THIS IS NOT FINAL- ITS A TEST
-		self.inventory.append(items.Sword())
+		self.inventory.append(items.Sword(self.level))
 
 	def return_options(self):
 		if not isinstance(self.owner.current_dungeon,dungeon.Hub):
 			self.options = ['leave','examine','dev-examine','map']
+			return super(Player,self).return_options(True)
+
 		else:
 			self.options =  ['shop','enter a dungeon']
-		return super(Player,self).return_options()
+			return super(Player,self).return_options(False)
 
 	def do_turn(self, args):
 
