@@ -168,7 +168,7 @@ class Player(base.Entity):
 		# print args
 
 		for x in self.statuses:
-			x.do_turn()
+			x.do_turn(args)
 
 		if args == 'leave':
 			# door should be the INDEX of the returned list, ie 0 1 2 3
@@ -243,6 +243,9 @@ class Party(base.Entity):
 		# the party's inventory
 		self.inventory.append(player)
 		player.party = self
+
+	# def get_active(self):
+	# 	return self.inventory[self.index]
 
 	def return_options(self):
 		return self.inventory[self.index].return_options()

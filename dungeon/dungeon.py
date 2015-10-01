@@ -80,13 +80,13 @@ class Hub(Dungeon):
 
 	def enter_shop(self):
 		shopping = base.make_choice(self.shop.keys())
-		item=base.shop_make_choice(self.shop[self.shop.keys()[shopping]].keys(),self.shop[self.shop.keys()[shopping]].values())
+		item = base.shop_make_choice(self.shop[self.shop.keys()[shopping]].keys(),self.shop[self.shop.keys()[shopping]].values())
 		if(item is "Back"):
 			print 'You bought nothing!'
 		else:
 			self.party.inventory[self.party.index].inventory.append(item)
-			self.party.inventory[self.party.index].gold=self.party.inventory[self.party.index].gold-self.shop[shopping][item]
-			print 'You bought a '
+			self.party.inventory[self.party.index].gold -= item.cost
+			print 'You bought a %s' % item.to_str()
 
 	def leave_dungeon(self):
 		he = [5,8,15,25]

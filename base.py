@@ -20,6 +20,9 @@ class Entity(object):
 	def do_turn(self,options):
 		pass
 
+
+	def examine(self):
+		pass
 	# def kill(self):
 	# 	self.alive = False
 

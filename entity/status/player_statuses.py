@@ -27,6 +27,7 @@ class Stun(base.Entity):
 
 class Poison(base.Entity):
 	def __init__(self,turns,damage):
+		super(Poison,self).__init__()
 		self.turns = turns
 		self.damage = damage
 		self.name = 'poison'
@@ -44,6 +45,7 @@ class Poison(base.Entity):
 
 class Cooldown(base.Entity):
 	def __init__(self,spell,turns):
+		super(Cooldown,self).__init__()
 		self.spell = spell
 		self.turns = turns
 		self.spell.on_cooldown = True

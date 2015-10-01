@@ -1,5 +1,6 @@
 import base,random,math
 from misc.words import arcane_words, weapon_words
+import entity.status.player_statuses as s
 
 class Item(base.Entity):
 	def __init__(self):
@@ -176,8 +177,9 @@ class Helmet(Item):
 	def exit(self):
 		self.owner.armor -= self.armor
 
-class SpellBook(base.Entity):
+class SpellBook(Item):
 	def __init__(self,level):
+		super(SpellBook,self).__init__()
 		self.cost = random.randint(0,10)
 		self.level = level
 		self.name = ''
@@ -185,7 +187,7 @@ class SpellBook(base.Entity):
 		level = int(math.ceil(level))
 		for a in range(int(math.ceil(level))):
 			self.name += " %s" % random.choice(arcane_words)
-		self.options = ['cast %s' % self.name,'rename %s' % self.name]
+		self.options = ['cast %s' % self.name,'rename %s' % self.name,'examine %s' % self.name]
 		self.stuntime = random.choice(range(level * 4))
 		self.poisontime = random.choice(range(level * 4))
 		self.damage = random.choice(range(-20*level,20*level))
@@ -200,29 +202,40 @@ class SpellBook(base.Entity):
 		if option == self.options[1]:
 			name = raw_input('enter a new name for %s' % self.name)
 			self.name = name
-		if not self.on_cooldown:
-			if option == self.options[0]:
+
+		if option == self.options[2]:
+			print self.descr()
+
+		if option == self.options[0]:
+			if not self.on_cooldown:
 				if not self.aoe:
 					targets = [self.owner.select_target()]
 				else:
 					targets = self.owner.party.current_dungeon.active_room.things
 				for target in targets:
 					if target:
-						if damage:
-							target.take_damage(damage*ec)
-						if stuntime:
-							target.statuses.append(s.Stun(math.ceil(stuntime*ec)))
-						if poisontime and poisondamage:
-							target.statuses.append(s.Poison(math.ceil(poisontime*ec),poisondamage*ec))
+						if self.damage:
+							target.take_damage(self.owner,self.damage*ec)
+						if self.stuntime:
+							target.statuses.append(s.Stun(math.ceil(self.stuntime*ec)))
+						if self.poisontime and self.poisondamage:
+							target.statuses.append(s.Poison(math.ceil(self.poisontime*ec),self.poisondamage*ec))
 				self.owner.statuses.append(s.Cooldown(self,self.cooldown_time))
+			else:
+				print '%s is on cooldown!' % self.name
+
+		self.options = ['cast %s' % self.name,'rename %s' % self.name,'examine %s' % self.name]
 
 	def to_str(self):
+		return 'a spell by the name of %s' % self.name
+
+	def descr(self):
 		ret =  "%s does %.2f damage, stuns for %d turns and does %.2f of poison damage every turn for %d turns " % (self.name,self.damage,self.stuntime,self.poisondamage,self.poisontime)
 		if self.aoe:
 			ret += 'in an area of effect.'
 		else:
 			ret += 'to a single target.'
-		return ret
+		return ret		
 
 
 class ItemController():

@@ -138,7 +138,7 @@ class Monster(base.Entity):
 
 	def do_turn(self):
 		for a in self.statuses:
-			a.do_turn()
+			a.do_turn([])
 		self.check_if_alive()
 
 		if self.action_points > 0:
