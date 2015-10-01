@@ -86,7 +86,7 @@ class Hub(Dungeon):
 		else:
 			self.party.inventory[self.party.index].inventory.append(item)
 			self.party.inventory[self.party.index].gold -= item.cost
-			print 'You bought a %s' % item.to_str()
+			print 'You bought a %s' % item.name
 
 	def leave_dungeon(self):
 		he = [5,8,15,25]

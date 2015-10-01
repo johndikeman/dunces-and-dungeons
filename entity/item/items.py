@@ -8,7 +8,7 @@ class Item(base.Entity):
 		self.consumes_inventory_space = True
 		# THIS PROBABLY IS NOT FINAL
 		self.cost = random.randint(0,10)
-
+		self.name="item"
 	def to_str(self):
 		return self.name
 

@@ -150,6 +150,7 @@ def shop_make_choice(choices,choiceskeys,thing=None):
 	else:
 		print 'choose one!'
 	for ind, a in enumerate(choices):
+		print a
 		print "\t%s for %d (%d)\n" % (a, choiceskeys[ind], ind)
 
 	ans = raw_input()

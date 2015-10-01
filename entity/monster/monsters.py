@@ -80,27 +80,54 @@ class Apply(object):
 		return Monster
 
 	def modify_item(self,Item):
-		Mod={"Common": {"Common":{},
-						"Iron":{},
-						"Rusty":{},
-						"Used":{},
-						"Weathered":{},
-						"Wooden":{}},
-			 "Uncommon":{"Good":{},
-			 			 "Shining":{},
-			 			 "Steel":{}},
-			 "Rare":{"Ceremonial":{},
-			 		 "Silver":{},
-			 		 "Killing":{},
-			 		 "Blessed":{}},
-			 "Legendary":{"Kingly":{},
-			 			  "Enchaned":{},
-			 			  "Master":{}},
-			 "Divine": {"Celestial":{},
-			 			"Divine":{},
-			 			"Heavenly":{}}
+		Mod={"Common": {"Common ":1,
+						"Iron ":1.1,
+						"Rusty ":.5,
+						"Used ":.8,
+						"Weathered ":.7,
+						"Wooden ":.5,
+						"Notched ":.9,
+						"Scratched ":.9},
+			 "Uncommon":{"Good ":1.3,
+			 			 "Shining ":1.4,
+			 			 "Steel ":1.6,
+			 			 "Archaic ":1.3,
+			 			 "Brutal ":2},
+			 "Rare":{"Ceremonial ":2.5,
+			 		 "Silver ":2.4,
+			 		 "Killing ":3,
+			 		 "Blessed ":3.2},
+			 "Legendary":{"Kingly ":4,
+			 			  "Enchanted ":3.8,
+			 			  "Master ":4.6},
+			 "Divine": {"Celestial ":6,
+			 			"Divine ":6.8,
+			 			"Heavenly ":6.4,
+			 			"Arch":8}
 			 }
-
+		rander=random.randrange(1,100,.01)
+		mymap={}
+		if(rander<76):
+			mymap=Mod["Common"]
+		elif(rander<91):
+			mymap=Mod["Uncommon"]
+		elif(rander<96):
+			mymap=Mod["Rare"]
+		elif(rander<99):
+			mymap=Mod["Legendary"]
+		else:
+			mymap=Mod["Divine"]
+		namer = random.choice(mymap.keys())
+		run = mymap[namer]
+		try:
+			Item.damage=Item.damage*run
+		except:
+			try:
+				Item.armor=Item.armor*run
+			except:
+				print "HELP ME BOBBY"
+		Item.name=namer+Item.name
+		return Item
 
 class Monster(base.Entity):
 	def __init__(self,level):
