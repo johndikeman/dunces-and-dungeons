@@ -93,19 +93,34 @@ class Shield(Item):
 		self.name = 'shield'
 		self.level = level
 		self.options=['Block with %s' % self.to_str(),'Defend Allies with %s' % self.to_str()]
-		self.armor=10
+		self.armor=4*self.level
+		self.defendin=False
+		self.blockin=False 
 
 	#I am not sure how to do the do_turn method.
-
-
+	def do_turn(self,option):
+		if self.defendin:
+			for a in self.owner.party.inventory:
+				a.armor-=(self.level*2)
+			self.defendin=False
+		if self.blockin:
+			self.owner.armor-=(3*self.level)
+			self.blockin=False
+		if option == self.options[0]:
+			self.block()
+		if option == self.options[1]:
+			self.defend()
 	#Imagining Blocking will increase armor by a set amount on top of the amount given passively from a shield and cost 1 action point
 	#while Defending Allies will increase armor of all Allies (including you) by a set amount and cost 2 action points.
 
-	def block(self,target):
-		target.armor+=20
+	def block(self):
+		self.owner.armor+=(3*self.level)
+		self.blockin=True
 
-	def defend(self,ally):
-		pass
+	def defend(self):
+		for a in self.owner.party.inventory:
+			a.armor+=(2*self.level)
+		self.defendin=True
 	def apply(self):
 		self.owner.armor += self.armor
 

@@ -79,6 +79,27 @@ class Apply(object):
 		Monster.name=namer+" "+ Monster.name
 		return Monster
 
+	def modify_item(self,Item):
+		Mod={"Common": {"Common":{},
+						"Iron":{},
+						"Rusty":{},
+						"Used":{},
+						"Weathered":{},
+						"Wooden":{}},
+			 "Uncommon":{"Good":{},
+			 			 "Shining":{},
+			 			 "Steel":{}},
+			 "Rare":{"Ceremonial":{},
+			 		 "Silver":{},
+			 		 "Killing":{},
+			 		 "Blessed":{}},
+			 "Legendary":{"Kingly":{},
+			 			  "Enchaned":{},
+			 			  "Master":{}},
+			 "Divine": {"Celestial":{},
+			 			"Divine":{},
+			 			"Heavenly":{}}
+			 }
 
 
 class Monster(base.Entity):

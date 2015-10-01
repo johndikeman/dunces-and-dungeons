@@ -152,6 +152,7 @@ class Player(base.Entity):
 
 		# THIS IS NOT FINAL- ITS A TEST
 		self.inventory.append(items.Sword(self.level))
+		self.inventory.append(items.Shield(self.level))
 
 	def return_options(self):
 		if not isinstance(self.owner.current_dungeon,dungeon.Hub):
