@@ -111,12 +111,12 @@ class Apply(object):
 			mymap=Mod["Common"]
 		elif(rander<91):
 			mymap=Mod["Uncommon"]
-		elif(rander<96):
-			mymap=Mod["Rare"]
 		elif(rander<99):
+			mymap=Mod["Rare"]
+		elif(rander<99.99):
 			mymap=Mod["Legendary"]
 		else:
-			mymap=Mod["Divine"]
+			mymap=Mod['Divine']
 		namer = random.choice(mymap.keys())
 		run = mymap[namer]
 		try:
@@ -188,9 +188,12 @@ class Monster(base.Entity):
 
 	def reveal(self):
 		if not self.revealed:
-			self.owner.things.remove(self)
-			self.owner.identified_things.append(self)
-			self.revealed = True
+			try:
+				self.owner.things.remove(self)
+				self.owner.identified_things.append(self)
+				self.revealed = True
+			except:
+				pass
 		
 	def dev_examine(self):
 		print 'name: %s health: %d, attributes: %s, power: %s, level: %d' % (self.name, self.health,str(self.attributes),self.power,self.level)
