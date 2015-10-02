@@ -1,6 +1,7 @@
 import base,random,math
 from misc.words import arcane_words, weapon_words
 import entity.status.player_statuses as s
+import entity.monster.monsters as r
 
 class Item(base.Entity):
 	def __init__(self):
@@ -259,7 +260,7 @@ class ItemController():
 			return None
 
 	def get_weapon(self):
-		weapon_instance = random.choice(self.items['weapons'])(self.party.get_avg_level())
+		weapon_instance = r.Apply.modify_item(random.choice(self.items['weapons'])(self.party.get_avg_level()))
 		# if base.D12.roll() > 9:
 		# 	word = random.choice(words.weapon_words)
 		# 	weapon_instance.name = '%s %s' % (word, weapon_instance.name)

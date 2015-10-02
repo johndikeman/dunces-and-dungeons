@@ -110,9 +110,9 @@ class Inventory(list):
 		# print 'base remove method called!'
 		for ind, obj in enumerate(self[:]):
 			if obj.id == object_to_remove.id:
-				print 'removed a thing!'
+				#print 'removed a thing!'
 				self = self[:ind] + self[ind+2:]
-				print self
+				#print self
 
 
 

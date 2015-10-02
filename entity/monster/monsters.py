@@ -105,7 +105,7 @@ class Apply(object):
 			 			"Heavenly ":6.4,
 			 			"Arch":8}
 			 }
-		rander=random.randrange(1,100,.01)
+		rander=random.randrange(1,100,.001)
 		mymap={}
 		if(rander<76):
 			mymap=Mod["Common"]
