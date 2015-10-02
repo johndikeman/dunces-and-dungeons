@@ -70,23 +70,26 @@ class Hub(Dungeon):
 		#self.shop = []
 		self.party = party
 		self.shop = {
-			"health":{},
-			"weapons":{},
-			"armor":{},
-			"spells":{},
-			"utility":{}
+			"health":[],
+			"weapons":[],
+			"armor":[],
+			"spells":[],
+			"utility":[]
 		}
 		self.controller = items.ItemController(party)
 
 	def enter_shop(self):
 		shopping = base.make_choice(self.shop.keys())
-		item = base.shop_make_choice(self.shop[self.shop.keys()[shopping]].keys(),self.shop[self.shop.keys()[shopping]].values())
-		if(item is "Back"):
+		item = base.make_choice( ['%s for %d' % (a.to_str(),a.cost) for a in self.shop[self.shop.keys()[shopping]]] )
+		if(item is None):
 			print 'You bought nothing!'
 		else:
-			self.party.inventory[self.party.index].inventory.append(item)
-			self.party.inventory[self.party.index].gold -= item.cost
-			print 'You bought a %s' % item.name
+			item_object = self.shop[self.shop.keys()[shopping]][item]
+			# remove the item from the shop afterwards
+			self.shop[self.shop.keys()[shopping]].remove(item_object)
+			self.party.inventory[self.party.index].inventory.append(item_object)
+			self.party.inventory[self.party.index].gold -= item_object.cost
+			print 'successfully purchased a %s' % item_object.to_str()
 
 	def leave_dungeon(self):
 		he = [5,8,15,25]
@@ -104,7 +107,7 @@ class Hub(Dungeon):
 			for b in range(random.randint(0,5)):
 				inst = self.controller.generate(category)
 				if inst:
-					self.shop[category].update({inst:inst.cost})
+					self.shop[category].append(inst)
 
 
 

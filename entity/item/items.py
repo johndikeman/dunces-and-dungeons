@@ -73,9 +73,10 @@ class Bow(Item):
 
 class Flail(Item):
 	def __init__(self,level):
-		self.name = 'flail'
+		
 		self.level = level
 		super(Flail,self).__init__()
+		self.name = 'flail'
 		self.options = ['attack with %s' % self.to_str()]
 		self.damage = 4.0 * self.level
 
