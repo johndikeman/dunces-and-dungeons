@@ -61,6 +61,7 @@ class Entity(object):
 		if self.health <= 0:
 			self.alive = False
 			print "(%s) has died by the hand of (%s)" % (self.to_str(),attacker.to_str())
+			self.kill()
 		time.sleep(1)
 
 
@@ -107,9 +108,11 @@ class Inventory(list):
 	def remove(self,object_to_remove):
 		object_to_remove.exit()
 		# print 'base remove method called!'
-		for ind, obj in enumerate(self):
+		for ind, obj in enumerate(self[:]):
 			if obj.id == object_to_remove.id:
-				self = self[:ind] + self[ind+1:]
+				print 'removed a thing!'
+				self = self[:ind] + self[ind+2:]
+				print self
 
 
 

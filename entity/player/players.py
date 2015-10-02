@@ -225,6 +225,9 @@ class Player(base.Entity):
 	def to_str(self):
 		return self.name
 
+	def kill(self):
+		pass
+
 
 
 class Party(base.Entity):
