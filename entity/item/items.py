@@ -248,6 +248,7 @@ class ItemController():
 			'spells':[SpellBook]
 		}
 		self.party = party
+		self.applier = r.Apply()
 
 	def generate(self,kind):
 		if kind == 'weapons':
@@ -260,7 +261,7 @@ class ItemController():
 			return None
 
 	def get_weapon(self):
-		weapon_instance = r.Apply.modify_item(random.choice(self.items['weapons'])(self.party.get_avg_level()))
+		weapon_instance = self.applier.modify_item(random.choice(self.items['weapons'])(self.party.get_avg_level()))
 		# if base.D12.roll() > 9:
 		# 	word = random.choice(words.weapon_words)
 		# 	weapon_instance.name = '%s %s' % (word, weapon_instance.name)
