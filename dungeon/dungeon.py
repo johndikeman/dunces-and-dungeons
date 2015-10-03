@@ -203,9 +203,12 @@ class Room(object):
 		# print 'you enter a %s, CORDS:%s' % (self.description,str(self.cords))
 
 	def handle_monster_turn(self):
-		print "THINGS: %s" % str(self.things)
-		print 'ID: %s' % str(self.identified_things)
+		# print "THINGS: %s" % str(self.things)
+		# print 'ID: %s' % str(self.identified_things)
 		for thing in self.things:
+			if thing.alive:
+				thing.do_turn()
+		for thing in self.identified_things:
 			if thing.alive:
 				thing.do_turn()
 

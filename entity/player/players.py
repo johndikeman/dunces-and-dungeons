@@ -178,8 +178,8 @@ class Player(base.Entity):
 		## This is the examine method.
 		if args == 'examine':
 			s = ''
-			for ind, a in enumerate(self.party.current_dungeon.active_room.things):
-				if ind != len(self.party.current_dungeon.active_room.things) - 1:
+			for ind, a in enumerate(self.party.current_dungeon.active_room.identified_things):
+				if ind != len(self.party.current_dungeon.active_room.identified_things) - 1:
 					s+='a %s, ' % a.examine(self)
 				else:
 					s+='and a %s.' % a.examine(self)
@@ -188,7 +188,7 @@ class Player(base.Entity):
 			print 'you examine the room and notice %s' % s
 
 		if args == 'dev-examine':
-			for a in self.party.current_dungeon.active_room.things:
+			for a in self.party.current_dungeon.active_room.identified_things:
 				print a.dev_examine()
 
 

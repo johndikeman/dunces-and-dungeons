@@ -93,28 +93,40 @@ class Die(object):
 # inventory is the exact same thing as list, except it 
 # installs a backref to itself (and therefore the player/entity)
 # to everything that is added to it
-class Inventory(list):
+class Inventory():
 	def __init__(self,owner):
-		super(Inventory,self).__init__()
 		self.owner = owner
 		self.space = 6
+		self.list = []
 
 	def append(self,thing):
 		thing.owner = self.owner
 		thing.apply()
 
-		super(Inventory,self).append(thing)
+		self.list.append(thing)
 
 	def remove(self,object_to_remove):
-		object_to_remove.exit()
-		# print 'base remove method called!'
-		for ind, obj in enumerate(self[:]):
-			if obj.id == object_to_remove.id:
-				#print 'removed a thing!'
-				self = self[:ind] + self[ind+2:]
-				#print self
+		if object_to_remove in self:
+			object_to_remove.exit()
+			self.list.remove(object_to_remove)
 
+	def __getitem__(self,key):
+		return self.list[key]
 
+	def __setitem__(self,key,val):
+		self.list[key] = val
+
+	def __iter__(self):
+		return iter(self.list)
+
+	def __contains__(self,obj):
+		for a in self.list:
+			if a.id == obj.id:
+				return True
+		return False
+
+	def __len__(self):
+		return len(self.list)
 
 
 # use this method when you have a list of things that the 

@@ -188,12 +188,9 @@ class Monster(base.Entity):
 
 	def reveal(self):
 		if not self.revealed:
-			try:
-				self.owner.things.remove(self)
-				self.owner.identified_things.append(self)
-				self.revealed = True
-			except:
-				pass
+			self.owner.things.remove(self)
+			self.owner.identified_things.append(self)
+			self.revealed = True
 		
 	def dev_examine(self):
 		print 'name: %s health: %d, attributes: %s, power: %s, level: %d' % (self.name, self.health,str(self.attributes),self.power,self.level)
