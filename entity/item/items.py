@@ -21,34 +21,37 @@ class Sword(Item):
 		super(Sword,self).__init__()
 		self.name = 'sword'
 		self.level = level
-		self.options = ['attack with %s' % self.to_str()]
+		self.options = ['%s' % self.to_str()]
 		self.damage = 10.0 * self.level
 		
 	def do_turn(self,options):
 		# print options
 		if self.options[0] in options:
-			# print 'swing mah sword'
-			target =  self.owner.select_target()
-			if target:
-				self.swing(target)
+			p = base.make_choice(['swing %s' % self.to_str()])
+			if p == 0:
+				target = self.owner.select_target()
+				if target:
+					self.swing(target)
 
 	def swing(self,target):
 		target.take_damage(self.owner,self.damage + self.owner.attributes['strength'] + base.D12.roll())
 
 class Dagger(Item):
 	def __init__(self,level):
+		super(Dagger,self).__init__()
 		self.name = 'dagger'
 		self.level = level
-		super(Dagger,self).__init__()
-		self.options = ['attack with %s' % self.to_str()]
+		self.options = ['%s' % self.to_str()]
 		self.damage = 5.0 * self.level
 		
 
 	def do_turn(self,option):
 		if option == self.options[0]:
-			target = self.owner.select_target()
-			if target:
-				self.swing(target)
+			p = base.make_choice(['attack with %s'])
+			if p == 0:
+				target = self.owner.select_target()
+				if target:
+					self.swing(target)
 
 	def swing(self,target):
 		target.take_damage(self.owner,self.damage + self.owner.attributes['strength'] / 2.0 + self.owner.attributes['agility'] / 2.0 + base.D20.roll())
@@ -58,13 +61,19 @@ class Bow(Item):
 		super(Bow,self).__init__()
 		self.name='bow'
 		self.level = level
-		self.options =['Shoot with %s' % self.to_str(), 'Fully draw the %s' % self.to_str()]
+		self.options = ['%s' % self.to_str()]
 		self.damage=7.0 * self.level
 	def do_turn(self,option):
 		if option == self.options[0]:
-			target = self.owner.select_target()
-			if target:
-				self.shoot(target)
+			p = make_choice(['Shoot with %s' % self.to_str(), 'Fully draw the %s' % self.to_str()])
+			if p == 0:	
+				target = self.owner.select_target()
+				if target:
+					self.shoot(target)
+			if p == 1:
+				target = self.owner.select_target()
+				if target:
+					self.aim(target)
 
 	#an attempt to further increase the action points system. shoot would only cost 1 action point while aim would take 2
 	def shoot(self,target):
@@ -78,14 +87,16 @@ class Flail(Item):
 		self.level = level
 		super(Flail,self).__init__()
 		self.name = 'flail'
-		self.options = ['attack with %s' % self.to_str()]
+		self.options = ['%s' % self.to_str()]
 		self.damage = 4.0 * self.level
 
 	def do_turn(self,option):
 		if option == self.options[0]:
-			target = self.owner.select_target()
-			if target:
-				self.swing(target)
+			p = make_choice(['attack with %s' % self.to_str()])
+			if p == 0:
+				target = self.owner.select_target()
+				if target:
+					self.swing(target)
 
 	def swing(self,target):
 		target.take_damage(self.owner,self.damage + self.owner.attributes['strength'] / 2.0 + self.owner.attributes['agility'] + self.owner.attributes['luck'] + base.D20.roll())
@@ -95,7 +106,7 @@ class Shield(Item):
 		super(Shield,self).__init__()
 		self.name = 'shield'
 		self.level = level
-		self.options=['Block with %s' % self.to_str(),'Defend Allies with %s' % self.to_str()]
+		self.options=['%s' % self.to_str()]
 		self.armor=4*self.level
 		self.defendin=False
 		self.blockin=False 
@@ -110,9 +121,11 @@ class Shield(Item):
 			self.owner.armor-=(3*self.level)
 			self.blockin=False
 		if option == self.options[0]:
-			self.block()
-		if option == self.options[1]:
-			self.defend()
+			p = base.make_choice(['Block with %s' % self.to_str(),'Defend Allies with %s' % self.to_str()])
+			if p == 0:
+				self.block()
+			if p == 1:
+				self.defend()
 	#Imagining Blocking will increase armor by a set amount on top of the amount given passively from a shield and cost 1 action point
 	#while Defending Allies will increase armor of all Allies (including you) by a set amount and cost 2 action points.
 
@@ -189,7 +202,7 @@ class SpellBook(Item):
 		level = int(math.ceil(level))
 		for a in range(int(math.ceil(level))):
 			self.name += " %s" % random.choice(arcane_words)
-		self.options = ['cast %s' % self.name,'rename %s' % self.name,'examine %s' % self.name]
+		self.options = ['%s' % self.name]
 		self.stuntime = random.choice(range(level * 4))
 		self.poisontime = random.choice(range(level * 4))
 		self.damage = random.choice(range(-20*level,20*level))
@@ -201,32 +214,32 @@ class SpellBook(Item):
 	def do_turn(self,option):
 		# effectiveness coefficient
 		ec = self.owner.attributes['mana'] / 5
-		if option == self.options[1]:
-			name = raw_input('enter a new name for %s' % self.name)
-			self.name = name
-
-		if option == self.options[2]:
-			print self.descr()
-
 		if option == self.options[0]:
-			if not self.on_cooldown:
-				if not self.aoe:
-					targets = [self.owner.select_target()]
-				else:
-					targets = self.owner.party.current_dungeon.active_room.things
-				for target in targets:
-					if target:
-						if self.damage:
-							target.take_damage(self.owner,self.damage*ec)
-						if self.stuntime:
-							target.statuses.append(s.Stun(math.ceil(self.stuntime*ec)))
-						if self.poisontime and self.poisondamage:
-							target.statuses.append(s.Poison(math.ceil(self.poisontime*ec),self.poisondamage*ec))
-				self.owner.statuses.append(s.Cooldown(self,self.cooldown_time))
-			else:
-				print '%s is on cooldown!' % self.name
+			p = base.make_choice(['cast %s' % self.name,'rename %s' % self.name,'examine %s' % self.name])
+			if p == 1:
+				name = raw_input('enter a new name for %s' % self.name)
+				self.name = name
 
-		self.options = ['cast %s' % self.name,'rename %s' % self.name,'examine %s' % self.name]
+			if p == 2:
+				print self.descr()
+
+			if p == 0:
+				if not self.on_cooldown:
+					if not self.aoe:
+						targets = [self.owner.select_target()]
+					else:
+						targets = self.owner.party.current_dungeon.active_room.things
+					for target in targets:
+						if target:
+							if self.damage:
+								target.take_damage(self.owner,self.damage*ec)
+							if self.stuntime:
+								target.statuses.append(s.Stun(math.ceil(self.stuntime*ec)))
+							if self.poisontime and self.poisondamage:
+								target.statuses.append(s.Poison(math.ceil(self.poisontime*ec),self.poisondamage*ec))
+					self.owner.statuses.append(s.Cooldown(self,self.cooldown_time))
+				else:
+					print '%s is on cooldown!' % self.name
 
 	def to_str(self):
 		return 'a spell by the name of %s' % self.name

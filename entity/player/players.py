@@ -112,6 +112,7 @@ class Player(base.Entity):
 		self.name = name
 		self.party = None
 		self.action_points = 2
+		self.base_ap = 2
 		self.options = ['leave','examine','dev-examine','map']
 		self.alive = True
 		option = base.make_choice(RACES.keys(),'race')
@@ -156,7 +157,7 @@ class Player(base.Entity):
 
 	def return_options(self):
 		if not isinstance(self.owner.current_dungeon,dungeon.Hub):
-			self.options = ['leave','examine','dev-examine','map']
+			self.options = ['leave','examine','map']
 			return super(Player,self).return_options(True)
 
 		else:
@@ -177,19 +178,24 @@ class Player(base.Entity):
 
 		## This is the examine method.
 		if args == 'examine':
-			s = ''
-			for ind, a in enumerate(self.party.current_dungeon.active_room.identified_things):
-				if ind != len(self.party.current_dungeon.active_room.identified_things) - 1:
-					s+='a %s, ' % a.examine(self)
-				else:
-					s+='and a %s.' % a.examine(self)
-			if not s:
-				s = 'absolutely nothing.'
-			print 'you examine the room and notice %s' % s
+			p = base.make_choice(['examine','dev_examine','examine item'])
+			if p == 0:
+				s = ''
+				for ind, a in enumerate(self.party.current_dungeon.active_room.identified_things):
+					if ind != len(self.party.current_dungeon.active_room.identified_things) - 1:
+						s+='a %s, ' % a.examine(self)
+					else:
+						s+='and a %s.' % a.examine(self)
+				if not s:
+					s = 'absolutely nothing.'
+				print 'you examine the room and notice %s' % s
 
-		if args == 'dev-examine':
-			for a in self.party.current_dungeon.active_room.identified_things:
-				print a.dev_examine()
+			if p == 1:
+				for a in self.party.current_dungeon.active_room.identified_things:
+					print a.dev_examine()
+
+			if p == 2:
+				print 'you can\'t do that yet, lol'
 
 
 		if args == 'shop':
