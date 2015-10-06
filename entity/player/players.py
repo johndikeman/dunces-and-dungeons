@@ -1,6 +1,7 @@
 import base, math, time
 import entity.item.items as items
 import dungeon.dungeon as dungeon
+import entity.player.player_inventory as inv
 
 
 RACES = {
@@ -119,16 +120,18 @@ class Player(base.Entity):
 		self.race = RACES.keys()[option]
 		self.health = 0
 		self.max_health = 0
-		choices={}
 		self.armor = 1
 		self.gold = 25
-		self.equipment_chest=None
-		self.equipment_legs=None
-		self.equipment_boots=None
-		self.equipment_helmet=None
-		self.equipment_amulet=None
-		self.equipment_gauntlets=None
-		self.equipment_weapon=None
+		self.equipment = {
+			'weapon':None,
+			'helmet':None,
+			'chest':None,
+			'legs':None,
+			'boots':None,
+			'amulet':None,
+			'gauntlet':None,
+			'spell':None
+		}
 
 		#Please tell me i didn't mess this up.
 
@@ -160,7 +163,7 @@ class Player(base.Entity):
 
 		# THIS IS NOT FINAL- ITS A TEST
 		self.inventory.append(items.Sword(self.level))
-		self.inventory.append(items.Shield(self.level))
+		self.inventory.append(inv.InventoryHandler())
 
 	def return_options(self):
 		if not isinstance(self.owner.current_dungeon,dungeon.Hub):
@@ -185,7 +188,7 @@ class Player(base.Entity):
 
 		## This is the examine method.
 		if args == 'examine':
-			p = base.make_choice(['examine','dev_examine','examine item'])
+			p = base.make_choice(['examine','dev_examine'])
 			if p == 0:
 				s = ''
 				for ind, a in enumerate(self.party.current_dungeon.active_room.identified_things):
@@ -201,47 +204,12 @@ class Player(base.Entity):
 				for a in self.party.current_dungeon.active_room.identified_things:
 					print a.dev_examine()
 
-			if p == 2:
-				print 'you can\'t do that yet, lol'
+			# if p == 2:
+			# 	print 'you can\'t do that yet, lol'
 
 
 		if args == 'shop':
 			self.party.current_dungeon.enter_shop()
-		if args == 'inventory':
-			go=True
-			while(go):
-				r=base.make_choice(self.inventory)
-				t=self.inventory(r).item_options
-				g=base.make_choice(t)
-				q=t[g]
-				if q=='examine':
-					print 'Hey i need to finish this'
-				if q=='equip':
-					i=q.info
-					if i=='weapon':
-						equipment_weapon=i
-					elif i=='helmet':
-						equipment_helmet=i
-					elif i=='chest':
-						equipment_chest=i
-					elif i=='legs':
-						equipment_legs=i
-					elif i=='boots':
-						equipment_boots=i
-					elif i=='amulet':
-						equipment_amulet=i
-					elif i=='gaunlet':
-						equipment_gauntlets=i
-					else:
-						print "Hey! Unknown Class Field Bruh! Line 236 players.py"
-				print 'continue?'
-				ans = raw_input()
-				if ans=='yes':
-					go=True
-				else:
-					go=False
-
-
 
 
 		if args =='map':

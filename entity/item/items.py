@@ -10,11 +10,28 @@ class Item(base.Entity):
 		# THIS PROBABLY IS NOT FINAL
 		self.cost = random.randint(0,10)
 		self.name="item"
+		self.equipped = False
+
 	def to_str(self):
 		return self.name
 
 	def do_turn(self,options):
 		pass
+
+	def return_options(self):
+		if self.equipped:
+			return super(Item,self).return_options()
+		return []
+
+	def equip(self):
+		if self.owner.equipment[self.info]:
+			self.owner.equipment[self.info].unequip()
+		self.owner.equipment[self.info] = self
+		self.equipped = True
+
+	def unequip(self):
+		self.equipped = False
+
 
 class Sword(Item):
 	def __init__(self,level):
