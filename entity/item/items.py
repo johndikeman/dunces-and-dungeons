@@ -62,7 +62,7 @@ class Bow(Item):
 		self.name='bow'
 		self.level = level
 		self.options = ['%s' % self.to_str()]
-		self.damage=7.0 * self.level
+		self.damage=1.0 * (25 * math.log(self.level + 1, 2) + 3) / 50.0
 	def do_turn(self,option):
 		if option == self.options[0]:
 			p = make_choice(['Shoot with %s' % self.to_str(), 'Fully draw the %s' % self.to_str()])
@@ -77,9 +77,9 @@ class Bow(Item):
 
 	#an attempt to further increase the action points system. shoot would only cost 1 action point while aim would take 2
 	def shoot(self,target):
-		target.take_damage(self.owner,self.damage + self.owner.attributes['agility'] + self.owner.attributes['strength'] / 10.0 + base.D12.roll())
+		target.take_damage(self.owner,self.damage * self.owner.attributes['agility'] + self.owner.attributes['strength'] / 10.0 + base.D12.roll())
 	def aim(self,target):
-		target.take_damage(self.owner,self.damage + self.owner.attributes['agility'] * 1.8 + self.owner.attributes['strength']/4.0+base.D20.roll())
+		target.take_damage(self.owner,self.damage * self.owner.attributes['agility'] * 1.9 + self.owner.attributes['strength']/4.0+base.D20.roll())
 
 class Flail(Item):
 	def __init__(self,level):
@@ -287,7 +287,7 @@ class ItemController():
 		return weapon_instance
 
 	def get_armor(self):
-		armor_instance = random.choice(self.items['armor'])(self.party.get_avg_level())
+		armor_instance = self.applier.modify_item(random.choice(self.items['armor'])(self.party.get_avg_level()))
 		return armor_instance
 
 	def get_spells(self):

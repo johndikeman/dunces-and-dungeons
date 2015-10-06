@@ -132,7 +132,9 @@ class Inventory():
 # use this method when you have a list of things that the 
 # player needs to choose from. it will be handy later on 
 # i think
-def make_choice(choices,thing=None):
+def make_choice(choices,thing=None,backable=False):
+	if(backable):
+		choices.append("Back")
 	if len(choices) <= 0:
 		print 'nothing to choose from!'
 		return
@@ -149,6 +151,9 @@ def make_choice(choices,thing=None):
 		if ret > len(choices)-1:
 			print 'that wasn\'t a choice! try again.'
 			return make_choice(choices,thing)
+		if ret ==len(choices):
+			return None
+
 	except ValueError:
 		print 'that wasn\'t a choice! try again.'
 		return make_choice(choices,thing)
