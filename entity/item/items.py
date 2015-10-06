@@ -20,8 +20,10 @@ class Sword(Item):
 	def __init__(self,level):
 		super(Sword,self).__init__()
 		self.name = 'sword'
+		self.info='weapon'
 		self.level = level
 		self.options = ['%s' % self.to_str()]
+		self.item_options=['examine','equip']
 		self.damage = 10.0 * self.level
 		
 	def do_turn(self,options):
@@ -41,6 +43,8 @@ class Dagger(Item):
 		super(Dagger,self).__init__()
 		self.name = 'dagger'
 		self.level = level
+		self.info='weapon'
+		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
 		self.damage = 5.0 * self.level
 		
@@ -60,7 +64,9 @@ class Bow(Item):
 	def __init__(self,level):
 		super(Bow,self).__init__()
 		self.name='bow'
+		self.info='weapon'
 		self.level = level
+		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
 		self.damage=1.0 * (25 * math.log(self.level + 1, 2) + 3) / 50.0
 	def do_turn(self,option):
@@ -87,6 +93,8 @@ class Flail(Item):
 		self.level = level
 		super(Flail,self).__init__()
 		self.name = 'flail'
+		self.info='weapon'
+		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
 		self.damage = 4.0 * self.level
 
@@ -105,7 +113,9 @@ class Shield(Item):
 	def __init__(self,level):
 		super(Shield,self).__init__()
 		self.name = 'shield'
+		self.info='shield'
 		self.level = level
+		self.item_options=['examine','equip']
 		self.options=['%s' % self.to_str()]
 		self.armor=4*self.level
 		self.defendin=False
@@ -148,6 +158,8 @@ class Breastplate(Item):
 	def __init__(self,level):
 		super(Breastplate,self).__init__()
 		self.name = 'breastplate'
+		self.info='chest'
+		self.item_options=['examine','equip']
 		self.level = level
 		self.armor=20
 	def apply(self):
@@ -160,6 +172,8 @@ class Chainmail(Item):
 	def __init__(self,level):
 		super(Chainmail,self).__init__()
 		self.name = 'chainmail'
+		self.item_options=['examine','equip']
+		self.info='chest'
 		self.level = level
 		self.armor=15
 	def apply(self):
@@ -172,6 +186,8 @@ class Platelegs(Item):
 	def __init__(self,level):
 		super(Platelegs,self).__init__()
 		self.name = 'platelegs'
+		self.item_options=['examine','equip']
+		self.info='legs'
 		self.level = level
 		self.armor=12
 	def apply(self):
@@ -184,6 +200,8 @@ class Helmet(Item):
 	def __init__(self,level):
 		super(Helmet,self).__init__()
 		self.name = 'helmet'
+		self.info='helmet'
+		self.item_options=['examine','equip']
 		self.level = level
 		self.armor=13
 	def apply(self):

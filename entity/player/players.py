@@ -113,7 +113,7 @@ class Player(base.Entity):
 		self.party = None
 		self.action_points = 2
 		self.base_ap = 2
-		self.options = ['leave','examine','dev-examine','map']
+		self.options = ['leave','examine','dev-examine','map','inventory']
 		self.alive = True
 		option = base.make_choice(RACES.keys(),'race')
 		self.race = RACES.keys()[option]
@@ -122,6 +122,13 @@ class Player(base.Entity):
 		choices={}
 		self.armor = 1
 		self.gold = 25
+		self.equipment_chest=None
+		self.equipment_legs=None
+		self.equipment_boots=None
+		self.equipment_helmet=None
+		self.equipment_amulet=None
+		self.equipment_gauntlets=None
+		self.equipment_weapon=None
 
 		#Please tell me i didn't mess this up.
 
@@ -166,7 +173,7 @@ class Player(base.Entity):
 
 	def do_turn(self, args):
 
-		# print args
+		#print args
 
 		for x in self.statuses:
 			x.do_turn(args)
@@ -200,6 +207,43 @@ class Player(base.Entity):
 
 		if args == 'shop':
 			self.party.current_dungeon.enter_shop()
+		if args == 'inventory':
+			go=True
+			while(go):
+				r=base.make_choice(self.inventory)
+				t=self.inventory(r).item_options
+				g=base.make_choice(t)
+				q=t[g]
+				if q=='examine':
+					print 'Hey i need to finish this'
+				if q=='equip':
+					i=q.info
+					if i=='weapon':
+						equipment_weapon=i
+					elif i=='helmet':
+						equipment_helmet=i
+					elif i=='chest':
+						equipment_chest=i
+					elif i=='legs':
+						equipment_legs=i
+					elif i=='boots':
+						equipment_boots=i
+					elif i=='amulet':
+						equipment_amulet=i
+					elif i=='gaunlet':
+						equipment_gauntlets=i
+					else:
+						print "Hey! Unknown Class Field Bruh! Line 236 players.py"
+				print 'continue?'
+				ans = raw_input()
+				if ans=='yes':
+					go=True
+				else:
+					go=False
+
+
+
+
 		if args =='map':
 			ret = ''
 			for x, a in enumerate(self.party.current_dungeon.rooms):
