@@ -255,13 +255,14 @@ class Player(base.Entity):
 	def kill(self):
 		pass
 	def retaliate(self):
-		try:
-			if( isinstance(self.equipment['right'],items.Spellbook)||isinstance(self.equipment['right'],items.Spellbook)):
-				pass
-			else:
-				return self.equipment['weapon'].damage/2
-		except:
-			return self.attributes['strength']
+		if(self.equipment['left'].info2=='weapon' and self.equipment['right'].info2=='weapon'):
+			return self.equipment['left'].damage/3+self.equipment['right'].damage/3
+		elif(self.equipment['left'].info2=='weapon'):
+			return self.equipment['left'].damage/2
+		elif(self.equipment['right'].info2=='weapon'):
+			return self.equipment['right'].damage/2
+		else:
+			return self.attributes['strength']/4
 
 
 class Party(base.Entity):

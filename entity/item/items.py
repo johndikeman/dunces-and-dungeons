@@ -60,6 +60,7 @@ class Sword(Item):
 		super(Sword,self).__init__()
 		self.name = 'sword'
 		self.info='one-handed'
+		self.info2='weapon'
 		self.level = level
 		self.options = ['%s' % self.to_str()]
 		self.item_options=['examine','equip']
@@ -83,6 +84,7 @@ class Dagger(Item):
 		self.name = 'dagger'
 		self.level = level
 		self.info='one-handed'
+		self.info2='weapon'
 		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
 		self.damage = 5.0 * self.level
@@ -104,6 +106,7 @@ class Bow(Item):
 		super(Bow,self).__init__()
 		self.name='bow'
 		self.info='two-handed'
+		self.info2='weapon'
 		self.level = level
 		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
@@ -133,6 +136,7 @@ class Flail(Item):
 		super(Flail,self).__init__()
 		self.name = 'flail'
 		self.info='one-handed'
+		self.info2='weapon'
 		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
 		self.damage = 4.0 * self.level
@@ -153,6 +157,7 @@ class Shield(Item):
 		super(Shield,self).__init__()
 		self.name = 'shield'
 		self.info='one-handed'
+		self.info2='nope'
 		self.level = level
 		self.item_options=['examine','equip']
 		self.options=['%s' % self.to_str()]
@@ -252,7 +257,8 @@ class Helmet(Item):
 class SpellBook(Item):
 	def __init__(self,level):
 		super(SpellBook,self).__init__()
-		self.info = 'spell'
+		self.info = 'one-handed'
+		self.info2='nope'
 		self.cost = random.randint(0,10)
 		self.level = level
 		self.name = ''
