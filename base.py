@@ -65,7 +65,9 @@ class Entity(object):
 		time.sleep(1)
 
 	def to_str(self):
-		return 'some fuckin entity'
+		return 'some fun entity'
+	def retaliate(self):
+		return 1
 
 
 	# def process_options(self,*options):

@@ -22,7 +22,7 @@ class InventoryHandler(base.Entity):
 
 				print 'continue? (y/n)'
 				ans = raw_input()
-				if ans=='no':
+				if ans=='y':
 					go=True
 				else:
 					go=False

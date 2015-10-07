@@ -24,9 +24,26 @@ class Item(base.Entity):
 		return []
 
 	def equip(self):
-		if self.owner.equipment[self.info]:
+		if self.info == 'one-handed':
+			side=base.make_choice(['left','right'])
+			try:
+				self.owner.equipment[['left','right'][side]].unequip()
+			except:
+				pass
+			self.owner.equipment[['left','right'][side]] = self
+		elif self.info =='two-handed':
+			try:
+				self.owner.equipment['left'].unequip()
+			except:
+				try:
+					self.owner.equipment['right'].unequip()
+				except:
+					pass
+			self.owner.equipment['left']=self
+			self.owner.equipment['right']=self
+		elif self.owner.equipment[self.info]:
 			self.owner.equipment[self.info].unequip()
-		self.owner.equipment[self.info] = self
+			self.owner.equipment[self.info] = self
 		self.equipped = True
 
 	def unequip(self):
@@ -42,7 +59,7 @@ class Sword(Item):
 	def __init__(self,level):
 		super(Sword,self).__init__()
 		self.name = 'sword'
-		self.info='weapon'
+		self.info='one-handed'
 		self.level = level
 		self.options = ['%s' % self.to_str()]
 		self.item_options=['examine','equip']
@@ -65,7 +82,7 @@ class Dagger(Item):
 		super(Dagger,self).__init__()
 		self.name = 'dagger'
 		self.level = level
-		self.info='weapon'
+		self.info='one-handed'
 		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
 		self.damage = 5.0 * self.level
@@ -86,7 +103,7 @@ class Bow(Item):
 	def __init__(self,level):
 		super(Bow,self).__init__()
 		self.name='bow'
-		self.info='weapon'
+		self.info='two-handed'
 		self.level = level
 		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
@@ -115,14 +132,14 @@ class Flail(Item):
 		self.level = level
 		super(Flail,self).__init__()
 		self.name = 'flail'
-		self.info='weapon'
+		self.info='one-handed'
 		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
 		self.damage = 4.0 * self.level
 
 	def do_turn(self,option):
 		if option == self.options[0]:
-			p = make_choice(['attack with %s' % self.to_str()])
+			p = base.make_choice(['attack with %s' % self.to_str()])
 			if p == 0:
 				target = self.owner.select_target()
 				if target:
@@ -135,7 +152,7 @@ class Shield(Item):
 	def __init__(self,level):
 		super(Shield,self).__init__()
 		self.name = 'shield'
-		self.info='shield'
+		self.info='one-handed'
 		self.level = level
 		self.item_options=['examine','equip']
 		self.options=['%s' % self.to_str()]

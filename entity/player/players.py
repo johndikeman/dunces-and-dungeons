@@ -123,14 +123,14 @@ class Player(base.Entity):
 		self.armor = 1
 		self.gold = 25
 		self.equipment = {
-			'weapon':None,
+			'left':None,
+			'right':None,
 			'helmet':None,
 			'chest':None,
 			'legs':None,
 			'boots':None,
 			'amulet':None,
-			'gauntlet':None,
-			'spell':None
+			'gauntlet':None
 		}
 
 		#Please tell me i didn't mess this up.
@@ -245,7 +245,14 @@ class Player(base.Entity):
 
 	def kill(self):
 		pass
-
+	def retaliate(self):
+		try:
+			if( isinstance(self.equipment['right'],items.Spellbook)||isinstance(self.equipment['right'],items.Spellbook)):
+				pass
+			else:
+				return self.equipment['weapon'].damage/2
+		except:
+			return self.attributes['strength']
 
 
 class Party(base.Entity):
