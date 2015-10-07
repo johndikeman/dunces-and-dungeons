@@ -1,6 +1,7 @@
 import math, random, base
 import entity.monster.monsters as monsters
 import entity.item.items as items
+import entity.chest as chesteses
 
 # these words are from http://acreativemoment.com/2008/07/18/words-to-describe-smell-sound-taste-touch/
 # feel free to add some more that you don't see
@@ -124,7 +125,7 @@ class Room(object):
 		# this will identify the rooms to the players for now
 		self.id = random.getrandbits(32)
 		self.things = base.Inventory(self)
-		self.identified_things = base.Inventory(self)
+		# self.identified_things = base.Inventory(self)
 
 		self.party = party
 
@@ -135,6 +136,11 @@ class Room(object):
 	def generate(self):
 		for monstar in monsters.spawn(self.level):
 			self.things.append(monstar)
+
+		chest = chesteses.spawn(self.level)
+		if chest:
+			self.things.append(chest)
+				
 		for direction, dircords in self.directions.iteritems():
 			x,y = dircords
 			selfx,selfy = self.cords
@@ -153,7 +159,6 @@ class Room(object):
 	def get_neighbors(self):
 		# this returns a dictionary structured like {'direction':room_object}
 		neighbors = {}
-
 		for direction, coordpair in self.directions.iteritems():
 			x,y = coordpair
 			try:
@@ -208,9 +213,9 @@ class Room(object):
 		for thing in self.things:
 			if thing.alive:
 				thing.do_turn()
-		for thing in self.identified_things:
-			if thing.alive:
-				thing.do_turn()
+		# for thing in self.identified_things:
+		# 	if thing.alive:
+		# 		thing.do_turn()
 
 
 		

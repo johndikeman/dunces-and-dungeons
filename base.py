@@ -198,5 +198,6 @@ def make_choice(choices,thing=None,backable=False):
 
 D2 = Die(2)
 D6 = Die(6)
+D10 = Die(10)
 D12 = Die(12)
 D20 = Die(20)

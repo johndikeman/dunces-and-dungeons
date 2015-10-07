@@ -2,7 +2,8 @@ import base, math, time
 import entity.item.items as items
 import dungeon.dungeon as dungeon
 import entity.player.player_inventory as inv
-
+import entity.thing as thing
+import entity.monster.monsters as monster
 
 RACES = {
 	"Dwarf":{
@@ -168,6 +169,10 @@ class Player(base.Entity):
 	def return_options(self):
 		if not isinstance(self.owner.current_dungeon,dungeon.Hub):
 			self.options = ['leave','examine','map']
+			if self.party.current_dungeon.active_room:
+				for a in self.party.current_dungeon.active_room.things:
+					if isinstance(a,thing.InteractiveObject):
+						self.options += a.return_options()
 			return super(Player,self).return_options(True)
 
 		else:
@@ -191,8 +196,8 @@ class Player(base.Entity):
 			p = base.make_choice(['examine','dev_examine'])
 			if p == 0:
 				s = ''
-				for ind, a in enumerate(self.party.current_dungeon.active_room.identified_things):
-					if ind != len(self.party.current_dungeon.active_room.identified_things) - 1:
+				for ind, a in enumerate(self.party.current_dungeon.active_room.things):
+					if ind != len(self.party.current_dungeon.active_room.things) - 1:
 						s+='a %s, ' % a.examine(self)
 					else:
 						s+='and a %s.' % a.examine(self)
@@ -201,7 +206,7 @@ class Player(base.Entity):
 				print 'you examine the room and notice %s' % s
 
 			if p == 1:
-				for a in self.party.current_dungeon.active_room.identified_things:
+				for a in self.party.current_dungeon.active_room.things:
 					print a.dev_examine()
 
 			# if p == 2:
@@ -228,6 +233,10 @@ class Player(base.Entity):
 		if args == 'enter a dungeon':
 			self.party.current_dungeon.leave_dungeon()
 
+		for a in self.party.current_dungeon.active_room.things:
+			if isinstance(a,thing.InteractiveObject):
+				a.do_turn(args)
+
 		for a in self.inventory:
 			a.do_turn(args)
 
@@ -235,9 +244,9 @@ class Player(base.Entity):
 
 	# IMPORTANT- return value of select_target NEEDS to be validated before use to prevent crashes, cause sometimes it'll return None
 	def select_target(self):
-		target_ind = base.make_choice([a.to_str() for a in self.owner.current_dungeon.active_room.identified_things],'target')
+		target_ind = base.make_choice([a.to_str() for a in self.owner.current_dungeon.active_room.things if(isinstance(a,monster.Monster) and a.revealed)],'target')
 		if target_ind != None:
-			return self.owner.current_dungeon.active_room.identified_things[target_ind]
+			return self.owner.current_dungeon.active_room.things[target_ind]
 		return None
 		
 	def to_str(self):
