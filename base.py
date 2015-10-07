@@ -113,6 +113,13 @@ class Inventory():
 			object_to_remove.exit()
 			self.list.remove(object_to_remove)
 
+	def get_list(self,exclude = []):
+		ret = []
+		for a in self.list:
+			if a not in exclude:
+				ret.append(a)
+		return ret
+
 	def __getitem__(self,key):
 		return self.list[key]
 

@@ -32,6 +32,11 @@ class Item(base.Entity):
 	def unequip(self):
 		self.equipped = False
 
+	def examine(self):
+		if self.descr:
+			return self.descr
+		return 'this child of Item doesn\'t have a description variable!'
+
 
 class Sword(Item):
 	def __init__(self,level):
@@ -230,6 +235,7 @@ class Helmet(Item):
 class SpellBook(Item):
 	def __init__(self,level):
 		super(SpellBook,self).__init__()
+		self.info = 'spell'
 		self.cost = random.randint(0,10)
 		self.level = level
 		self.name = ''
@@ -245,6 +251,7 @@ class SpellBook(Item):
 		self.aoe = random.choice([True,False])
 		self.on_cooldown = False
 		self.cooldown_time = random.choice(range(4*level,7*level))
+		self.item_options = ['equip','examine']
 
 	def do_turn(self,option):
 		# effectiveness coefficient

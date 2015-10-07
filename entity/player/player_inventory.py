@@ -9,31 +9,17 @@ class InventoryHandler(base.Entity):
 		if option == self.options[0]:
 			go=True
 			while(go):
-				item_index=base.make_choice([a.to_str() for a in self.owner.inventory.list])
-				item_object=self.owner.inventory[item_index]
+				mod_list = self.owner.inventory.get_list([self])
+				item_index=base.make_choice([a.to_str() for a in mod_list])
+				item_object=mod_list[item_index]
 				option_index=base.make_choice(item_object.item_options)
 				item_opt=item_object.item_options[option_index]
 				if item_opt=='examine':
-					print 'Hey item_object.info need to finish this'
+					# each item needs to define self.descr, which is what will be printed here.
+					print item_object.examine()
 				if item_opt=='equip':						
-					if item_object.info=='weapon':
-						item_object.equip()
-					elif item_object.info=='helmet':
-						item_object.equip()
-					elif item_object.info=='chest':
-						item_object.equip()
-					elif item_object.info=='legs':
-						item_object.equip()
-					elif item_object.info=='boots':
-						item_object.equip()
-					elif item_object.info=='amulet':
-						item_object.equip()
-					elif item_object.info=='gauntlet':
-						item_object.equip()
-					elif item_object.info == 'spell':
-						item_object.equip()
-					else:
-						print "UNKNOWN ITEM CLASSIFICATION!!"
+					item_object.equip()
+
 				print 'continue? (y/n)'
 				ans = raw_input()
 				if ans=='no':
