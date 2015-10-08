@@ -233,9 +233,10 @@ class Player(base.Entity):
 		if args == 'enter a dungeon':
 			self.party.current_dungeon.leave_dungeon()
 
-		for a in self.party.current_dungeon.active_room.things:
-			if isinstance(a,thing.InteractiveObject):
-				a.do_turn(args)
+		if not isinstance(self.party.current_dungeon,dungeon.Hub):
+			for a in self.party.current_dungeon.active_room.things:
+				if isinstance(a,thing.InteractiveObject):
+					a.do_turn(args)
 
 		for a in self.inventory:
 			a.do_turn(args)
@@ -255,13 +256,16 @@ class Player(base.Entity):
 	def kill(self):
 		pass
 	def retaliate(self):
-		if(self.equipment['left'].info2=='weapon' and self.equipment['right'].info2=='weapon'):
-			return self.equipment['left'].damage/3+self.equipment['right'].damage/3
-		elif(self.equipment['left'].info2=='weapon'):
-			return self.equipment['left'].damage/2
-		elif(self.equipment['right'].info2=='weapon'):
-			return self.equipment['right'].damage/2
-		else:
+		try:
+			if(self.equipment['left'].info2=='weapon' and self.equipment['right'].info2=='weapon'):
+				return self.equipment['left'].damage/3+self.equipment['right'].damage/3
+			elif(self.equipment['left'].info2=='weapon'):
+				return self.equipment['left'].damage/2
+			elif(self.equipment['right'].info2=='weapon'):
+				return self.equipment['right'].damage/2
+			else:
+				return self.attributes['strength']/4
+		except:
 			return self.attributes['strength']/4
 
 
