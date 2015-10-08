@@ -197,7 +197,6 @@ class Monster(base.Entity):
 	def kill(self):
 		self.alive = False
 		self.owner.things.remove(self)
-		self.owner.identified_things.remove(self)
 
 def compute(comp,val):
 	fin = 1.0

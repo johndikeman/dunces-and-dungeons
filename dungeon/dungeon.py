@@ -2,6 +2,7 @@ import math, random, base
 import entity.monster.monsters as monsters
 import entity.item.items as items
 import entity.chest as chesteses
+import os.path
 
 # these words are from http://acreativemoment.com/2008/07/18/words-to-describe-smell-sound-taste-touch/
 # feel free to add some more that you don't see
@@ -99,6 +100,13 @@ class Hub(Dungeon):
 		self.party.current_dungeon.start()
 		# print self.party.current_dungeon
 
+	def save_game(self):
+		print 'Name your save file'
+		ans=raw_input()
+		f=open('Saves\\'+ans,'w')
+		f.write(str(len(self.party.Inventory))+'\n')
+		for index in range len(self.party.Inventory):
+			pass
 	def handle_monster_turn(self):
 		pass
 

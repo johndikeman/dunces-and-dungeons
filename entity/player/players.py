@@ -176,7 +176,7 @@ class Player(base.Entity):
 			return super(Player,self).return_options(True)
 
 		else:
-			self.options =  ['shop','enter a dungeon']
+			self.options =  ['shop','enter a dungeon','save']
 			return super(Player,self).return_options(False)
 
 	def do_turn(self, args):
@@ -185,6 +185,8 @@ class Player(base.Entity):
 
 		for x in self.statuses:
 			x.do_turn(args)
+		if args == 'save':
+			self.party.current_dungeon.save_game()
 
 		if args == 'leave':
 			# door should be the INDEX of the returned list, ie 0 1 2 3
