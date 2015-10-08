@@ -110,10 +110,23 @@ class Hub(Dungeon):
 	def save_game(self):
 		print 'Name your save file'
 		ans=raw_input()
-		f=open('Saves\\'+ans,'w')
-		f.write(str(len(self.party.Inventory))+'\n')
-		for index in range len(self.party.Inventory):
-			pass
+		f=open(ans+'.txt','w')
+		f.write(str(len(self.party.inventory))+'\n')
+		for currentplayer in self.party.inventory:
+			f.write(currentplayer.name+'\n')
+			#f.write(str(currentplayer.party)+'\n')
+			f.write(str(currentplayer.action_points)+'\n')
+			f.write(str(currentplayer.base_ap)+'\n')
+			f.write(str(currentplayer.options)+'\n')
+			f.write(str(currentplayer.alive)+'\n')
+			f.write(str(currentplayer.race)+'\n')
+			f.write(str(currentplayer.health)+'\n')
+			f.write(str(currentplayer.max_health)+'\n')
+			f.write(str(currentplayer.armor)+'\n')
+			f.write(str(currentplayer.gold)+'\n')
+			for disitem in currentplayer.inventory:
+				f.write(str(disitem)+'\n')
+			f.write(str(currentplayer.equipment)+'\n\n\n\n')
 	def handle_monster_turn(self):
 		pass
 

@@ -113,7 +113,7 @@ class Bow(Item):
 		self.damage=1.0 * (25 * math.log(self.level + 1, 2) + 3) / 50.0
 	def do_turn(self,option):
 		if option == self.options[0]:
-			p = make_choice(['Shoot with %s' % self.to_str(), 'Fully draw the %s' % self.to_str()])
+			p = base.make_choice(['Shoot with %s' % self.to_str(), 'Fully draw the %s' % self.to_str()])
 			if p == 0:	
 				target = self.owner.select_target()
 				if target:
