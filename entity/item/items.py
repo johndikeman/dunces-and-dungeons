@@ -319,27 +319,28 @@ class SpellBook(Item):
 
 
 class ItemController():
-	def __init__(self,party):
+	def __init__(self,level):
 		self.items = {
 			'weapons':[Sword,Dagger,Bow,Flail],
 			'armor':[Shield,Breastplate,Chainmail,Platelegs,Helmet],
 			'spells':[SpellBook]
 		}
-		self.party = party
+		self.level = level
 		self.applier = r.Apply()
 
-	def generate(self,kind):
-		if kind == 'weapons':
-			return self.get_weapon()
-		elif kind == 'armor':
-			return self.get_armor()
-		elif kind == 'spells':
-			return self.get_spells()
+	def generate(self,kind=None):
+		if kind:
+			if kind == 'weapons':
+				return self.get_weapon()
+			elif kind == 'armor':
+				return self.get_armor()
+			elif kind == 'spells':
+				return self.get_spells()
 		else:
-			return None
+			return random.choice([self.get_spells(),self.get_armor(),self.get_spells()])
 
 	def get_weapon(self):
-		weapon_instance = self.applier.modify_item(random.choice(self.items['weapons'])(self.party.get_avg_level()))
+		weapon_instance = self.applier.modify_item(random.choice(self.items['weapons'])(self.level))
 		# if base.D12.roll() > 9:
 		# 	word = random.choice(words.weapon_words)
 		# 	weapon_instance.name = '%s %s' % (word, weapon_instance.name)
@@ -352,10 +353,10 @@ class ItemController():
 		return weapon_instance
 
 	def get_armor(self):
-		armor_instance = self.applier.modify_item(random.choice(self.items['armor'])(self.party.get_avg_level()))
+		armor_instance = self.applier.modify_item(random.choice(self.items['armor'])(self.level))
 		return armor_instance
 
 	def get_spells(self):
-		spell_instance = SpellBook(self.party.get_avg_level())
+		spell_instance = SpellBook(self.level)
 		return spell_instance
 

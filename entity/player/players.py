@@ -257,6 +257,7 @@ class Player(base.Entity):
 
 	def kill(self):
 		pass
+		
 	def retaliate(self):
 		try:
 			if(self.equipment['left'].info2=='weapon' and self.equipment['right'].info2=='weapon'):

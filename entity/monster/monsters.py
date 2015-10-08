@@ -178,7 +178,7 @@ class Monster(base.Entity):
 	def attack(self,target):
 		self.reveal()
 		target.take_damage(self,self.power)
-		self.take_damage(self,target.retaliate())
+		self.take_damage(target,target.retaliate())
 
 	def to_str(self):
 		return self.name
