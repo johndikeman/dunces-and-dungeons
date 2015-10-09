@@ -81,13 +81,7 @@ class Hub(Dungeon):
 		
 
 	def enter_shop(self):
-		controller = items.ItemController(self.party.get_avg_level())
-		for category in self.shop.keys():
-			for b in range(random.randint(0,5)):
-				inst = controller.generate(category)
-				if inst:
-					self.shop[category].append(inst)
-
+		
 		shopping = base.make_choice(self.shop.keys())
 		item = base.make_choice( ['%s for %d' % (a.to_str(),a.cost) for a in self.shop[self.shop.keys()[shopping]]] )
 		if(item is None):
@@ -131,6 +125,12 @@ class Hub(Dungeon):
 		pass
 
 	def start(self):
+		controller = items.ItemController(self.party.get_avg_level())
+		for category in self.shop.keys():
+			for b in range(random.randint(0,5)):
+				inst = controller.generate(category)
+				if inst:
+					self.shop[category].append(inst)
 		print 'welcome to the hub!'
 		
 
