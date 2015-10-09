@@ -241,7 +241,10 @@ class Player(base.Entity):
 					a.do_turn(args)
 
 		for a in self.inventory:
-			a.do_turn(args)
+			if isinstance(a,items.Weapon):
+				if a.equipped: a.do_turn(args)
+			else:
+				a.do_turn(args)
 
 		self.action_points -= 1
 

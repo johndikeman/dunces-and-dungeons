@@ -1,6 +1,7 @@
 import base
 import entity.thing as t
 import entity.item.items as items
+import random
 
 class Chest(t.InteractiveObject):
 	def __init__(self,level):
@@ -8,7 +9,10 @@ class Chest(t.InteractiveObject):
 		self.level = level
 		self.options = ['open chest']
 		self.generator = items.ItemController(self.owner)
-		self.items = [[]]
+		self.items = []
+								# this shit got out of hand fast
+		for a in range(random.choice(range(int(round(self.level))))):
+			self.items.append(self.generator.generate())
 
 	def do_turn(self,option):
 		if option == self.options[0]:

@@ -3,6 +3,7 @@ from misc.words import arcane_words, weapon_words
 import entity.status.player_statuses as s
 import entity.monster.monsters as r
 
+
 class Item(base.Entity):
 	def __init__(self):
 		super(Item,self).__init__()
@@ -55,7 +56,13 @@ class Item(base.Entity):
 		return 'this child of Item doesn\'t have a description variable!'
 
 
-class Sword(Item):
+class Weapon(Item):
+	def __init__(self):
+		super(Weapon,self).__init__()
+
+
+
+class Sword(Weapon):
 	def __init__(self,level):
 		super(Sword,self).__init__()
 		self.name = 'sword'
@@ -78,7 +85,7 @@ class Sword(Item):
 	def swing(self,target):
 		target.take_damage(self.owner,self.damage + self.owner.attributes['strength'] + base.D12.roll())
 
-class Dagger(Item):
+class Dagger(Weapon):
 	def __init__(self,level):
 		super(Dagger,self).__init__()
 		self.name = 'dagger'
@@ -101,7 +108,7 @@ class Dagger(Item):
 	def swing(self,target):
 		target.take_damage(self.owner,self.damage + self.owner.attributes['strength'] / 2.0 + self.owner.attributes['agility'] / 2.0 + base.D20.roll())
 
-class Bow(Item):
+class Bow(Weapon):
 	def __init__(self,level):
 		super(Bow,self).__init__()
 		self.name='bow'
@@ -129,7 +136,7 @@ class Bow(Item):
 	def aim(self,target):
 		target.take_damage(self.owner,self.damage * self.owner.attributes['agility'] * 1.9 + self.owner.attributes['strength']/4.0+base.D20.roll())
 
-class Flail(Item):
+class Flail(Weapon):
 	def __init__(self,level):
 		
 		self.level = level
@@ -260,20 +267,22 @@ class SpellBook(Item):
 		self.info = 'one-handed'
 		self.info2='nope'
 		self.cost = random.randint(0,10)
-		self.level = level
+		print type(level)
+
+		self.level = math.ceil(level)
 		self.name = ''
 		# hahahahahaha this is so fucking stupid
-		level = int(math.ceil(level))
+		# level = int(math.ceil(level))
 		for a in range(int(math.ceil(level))):
 			self.name += " %s" % random.choice(arcane_words)
 		self.options = ['%s' % self.name]
-		self.stuntime = random.choice(range(level * 4))
-		self.poisontime = random.choice(range(level * 4))
-		self.damage = random.choice(range(-20*level,20*level))
-		self.poisondamage = random.choice(range(-5*level,5*level))
+		self.stuntime = random.choice(range(int(self.level * 4)))
+		self.poisontime = random.choice(range(int(self.level * 4)))
+		self.damage = random.choice(range(int(-20*self.level),int(20*self.level)))
+		self.poisondamage = random.choice(range(int(-5*self.level),int(5*self.level)))
 		self.aoe = random.choice([True,False])
 		self.on_cooldown = False
-		self.cooldown_time = random.choice(range(4*level,7*level))
+		self.cooldown_time = random.choice(range(int(4*self.level),int(7*self.level)))
 		self.item_options = ['equip','examine']
 
 	def do_turn(self,option):
@@ -284,6 +293,7 @@ class SpellBook(Item):
 			if p == 1:
 				name = raw_input('enter a new name for %s' % self.name)
 				self.name = name
+				self.options = ['%s' % self.to_str()]
 
 			if p == 2:
 				print self.descr()
@@ -337,7 +347,7 @@ class ItemController():
 			elif kind == 'spells':
 				return self.get_spells()
 		else:
-			return random.choice([self.get_spells(),self.get_armor(),self.get_spells()])
+			return random.choice([self.get_spells(),self.get_armor(),self.get_weapon()])
 
 	def get_weapon(self):
 		weapon_instance = self.applier.modify_item(random.choice(self.items['weapons'])(self.level))
