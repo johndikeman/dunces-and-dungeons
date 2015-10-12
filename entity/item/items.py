@@ -272,17 +272,16 @@ class SpellBook(Item):
 		self.level = math.ceil(level)
 		self.name = ''
 		# hahahahahaha this is so fucking stupid
-		# level = int(math.ceil(level))
 		for a in range(int(math.ceil(level))):
 			self.name += " %s" % random.choice(arcane_words)
 		self.options = ['%s' % self.name]
-		self.stuntime = random.choice(range(int(self.level * 4)))
-		self.poisontime = random.choice(range(int(self.level * 4)))
-		self.damage = random.choice(range(int(-20*self.level),int(20*self.level)))
-		self.poisondamage = random.choice(range(int(-5*self.level),int(5*self.level)))
+		self.stuntime = random.random() * (level * 4)
+		self.poisontime = random.random() * (level * 4)
+		self.damage = (random.random() * (40*level)) - (20 * level)
+		self.poisondamage = (random.random() * (10*level)) - (5 * level)
 		self.aoe = random.choice([True,False])
 		self.on_cooldown = False
-		self.cooldown_time = random.choice(range(int(4*self.level),int(7*self.level)))
+		self.cooldown_time = random.random() * (7 * level)
 		self.item_options = ['equip','examine']
 
 	def do_turn(self,option):
