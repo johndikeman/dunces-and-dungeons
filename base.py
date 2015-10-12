@@ -36,7 +36,7 @@ class Entity(object):
 			self.xp -= self.level_up_threshold
 			self.level += 1
 			print "%s has leveled up to level %d!" % (self.to_str(),self.level)
-			self.level_up_threshold = level * 10
+			self.level_up_threshold = self.level * 10
 			self.check_for_levelup()
 
 	def examine(self):
