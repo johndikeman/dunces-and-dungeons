@@ -166,6 +166,10 @@ class Player(base.Entity):
 		self.inventory.append(items.Sword(self.level))
 		self.inventory.append(inv.InventoryHandler())
 
+	def level_up(self):
+		for attribute_str in self.attributes.keys():
+			self.attributes[attribute_str] += RACES[self.race]['LvlGains'][attribute_str]
+
 	def return_options(self):
 		if not isinstance(self.owner.current_dungeon,dungeon.Hub):
 			self.options = ['leave','examine','map']
@@ -241,7 +245,10 @@ class Player(base.Entity):
 					a.do_turn(args)
 
 		for a in self.inventory:
-			a.do_turn(args)
+			if isinstance(a,items.Weapon):
+				if a.equipped: a.do_turn(args)
+			else:
+				a.do_turn(args)
 
 		self.action_points -= 1
 
@@ -255,7 +262,7 @@ class Player(base.Entity):
 	def to_str(self):
 		return self.name
 
-	def kill(self):
+	def kill(self,attacker=None):
 		pass
 		
 	def retaliate(self):

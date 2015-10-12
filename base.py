@@ -17,14 +17,35 @@ class Entity(object):
 		self.owner = None
 		self.armor = 1
 		self.id = random.random() * 100000000
+		self.xp = 0
+		self.level_up_threshold = self.level * 10
+		self.xp_reward = 0
+
 	def do_turn(self,options):
 		pass
 
+	def update_xp(self,val):
+		print '%s has gained %d xp!' % (self.to_str(),val)
+		self.xp += val
+		self.check_for_levelup()
+		
+
+	def check_for_levelup(self):
+		if self.xp >= self.level_up_threshold:
+			self.level_up()
+			self.xp -= self.level_up_threshold
+			self.level += 1
+			print "%s has leveled up to level %d!" % (self.to_str(),self.level)
+			self.level_up_threshold = self.level * 10
+			self.check_for_levelup()
 
 	def examine(self):
 		pass
 	# def kill(self):
 	# 	self.alive = False
+
+	def level_up(self):
+		pass
 
 	def return_options(self,inv=True):
 		li = []
@@ -61,7 +82,7 @@ class Entity(object):
 		if self.health <= 0:
 			self.alive = False
 			print "(%s) has died by the hand of (%s)" % (self.to_str(),attacker.to_str())
-			self.kill()
+			self.kill(attacker)
 		time.sleep(1)
 
 	def to_str(self):

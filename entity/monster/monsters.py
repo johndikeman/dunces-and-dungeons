@@ -150,6 +150,7 @@ class Monster(base.Entity):
 		self.statuses = base.Inventory(self)
 		self.owner = None
 		self.revealed = False
+		self.xp_reward = self.level * 10
 
 
 	def set_level(self,val):
@@ -194,8 +195,10 @@ class Monster(base.Entity):
 	def dev_examine(self):
 		print 'name: %s health: %d, attributes: %s, power: %s, level: %d' % (self.name, self.health,str(self.attributes),self.power,self.level)
 
-	def kill(self):
+	def kill(self,killa=None):
 		self.alive = False
+		if killa:
+			killa.update_xp(self.xp_reward)
 		self.owner.things.remove(self)
 
 def compute(comp,val):
