@@ -8,7 +8,7 @@ class Chest(t.InteractiveObject):
 		super(Chest,self).__init__()
 		self.level = level
 		self.options = ['open chest']
-		self.generator = items.ItemController(self.owner)
+		self.generator = items.ItemController(self.level)
 		self.items = []
 								# this shit got out of hand fast
 		for a in range(random.choice(range(int(round(self.level))))):

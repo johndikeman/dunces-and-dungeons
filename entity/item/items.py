@@ -269,11 +269,11 @@ class SpellBook(Item):
 		self.cost = random.randint(0,10)
 		print type(level)
 
-		self.level = math.ceil(level)
+		self.level = level
 		self.name = ''
 		# hahahahahaha this is so fucking stupid
-		for a in range(int(math.ceil(level))):
-			self.name += " %s" % random.choice(arcane_words)
+		for a in range(int(self.level)):
+			self.name += "%s " % random.choice(arcane_words)
 		self.options = ['%s' % self.name]
 		self.stuntime = random.random() * (level * 4)
 		self.poisontime = random.random() * (level * 4)
