@@ -129,11 +129,36 @@ class Bow(Item):
 	def aim(self,target):
 		target.take_damage(self.owner,self.damage * self.owner.attributes['agility'] * 1.9 + self.owner.attributes['strength']/4.0+base.D20.roll())
 
+class Rapier(Item):
+	def __init__(self,level):
+		super(Rapier,self).__init__()
+		self.level=level
+		self.name='rapier'
+		self.info='one-handed'
+		self.info2='weapon'
+		self.item_options=['examine','equip']
+		self.options = ['%s' % self.to_str()]
+		self.damage = 2 * self.level
+
+	def do_turn(self,option):
+		if option == self.options[0]:
+			p = base.make_choice(['attack with %s' % self.to_str()])
+			if p == 0:
+				target = self.owner.select_target()
+				if target:
+					self.pierce(target)
+
+
+	def pierce(self,target):
+		hold=target.armor
+		target.armor=0
+		target.take_damage(self.owner,self.damage + self.owner.attributes['strength'] / 5.0 + self.owner.attributes['agility']*2 + self.owner.attributes['intelligence']/5.0 + base.D20.roll())
+		target.armor=hold
 class Flail(Item):
 	def __init__(self,level):
-		
-		self.level = level
 		super(Flail,self).__init__()
+		self.level = level
+		
 		self.name = 'flail'
 		self.info='one-handed'
 		self.info2='weapon'
