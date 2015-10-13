@@ -120,24 +120,29 @@ class Bow(Weapon):
 		self.damage=1.0 * (25 * math.log(self.level + 1, 2) + 3) / 50.0
 	def do_turn(self,option):
 		if option == self.options[0]:
-			p = base.make_choice(['Shoot with %s' % self.to_str(), 'Fully draw the %s' % self.to_str()])
+			p = base.make_choice(['Shoot with %s' % self.to_str(), 'Fully draw the %s' % self.to_str(), 'Launch Volley'])
 			if p == 0:	
 				target = self.owner.select_target()
 				if target:
 					self.shoot(target)
-			if p == 1:
+			elif p == 1:
 				target = self.owner.select_target()
 				if target:
 					self.aim(target)
+			elif p == 2:
+				for a in self.owner.party.current_dungeon.active_room.things: 
+					if(isinstance(a,r.Monster) and a.revealed):
+						self.volley(a)
 
 	#an attempt to further increase the action points system. shoot would only cost 1 action point while aim would take 2
 	def shoot(self,target):
 		target.take_damage(self.owner,self.damage * self.owner.attributes['agility'] + self.owner.attributes['strength'] / 10.0 + base.D12.roll())
 	def aim(self,target):
 		target.take_damage(self.owner,self.damage * self.owner.attributes['agility'] * 1.9 + self.owner.attributes['strength']/4.0+base.D20.roll())
+	def volley(self,target):
+		target.take_damage(self.owner,self.damage*.1 + self.owner.attributes['agility']*.1+self.owner.attributes['strength']*.1+self.owner.attributes['intelligence']*.1+self.owner.attributes['luck']*.1)
 
-<<<<<<< HEAD
-class Rapier(Item):
+class Rapier(Weapon):
 	def __init__(self,level):
 		super(Rapier,self).__init__()
 		self.level=level
@@ -150,22 +155,25 @@ class Rapier(Item):
 
 	def do_turn(self,option):
 		if option == self.options[0]:
-			p = base.make_choice(['attack with %s' % self.to_str()])
+			p = base.make_choice(['Slash with %s' % self.to_str(),'Pierce Armor with %s'%self.to_str()])
 			if p == 0:
+				target = self.owner.select_target()
+				if target:
+					self.slash(target)
+			elif p==1:
 				target = self.owner.select_target()
 				if target:
 					self.pierce(target)
 
-
+	def slash(self,target):
+		target.take_damage(self.owner,self.damage+self.owner.attributes['agility'])
 	def pierce(self,target):
 		hold=target.armor
 		target.armor=0
-		target.take_damage(self.owner,self.damage + self.owner.attributes['strength'] / 5.0 + self.owner.attributes['agility']*2 + self.owner.attributes['intelligence']/5.0 + base.D20.roll())
+		target.take_damage(self.owner,self.damage + self.owner.attributes['strength'] / 5.0 + self.owner.attributes['agility']/2.0 + self.owner.attributes['intelligence']/4.0 +hold+ base.D20.roll())
 		target.armor=hold
-class Flail(Item):
-=======
+
 class Flail(Weapon):
->>>>>>> origin/master
 	def __init__(self,level):
 		super(Flail,self).__init__()
 		self.level = level
@@ -359,7 +367,7 @@ class SpellBook(Item):
 class ItemController():
 	def __init__(self,level):
 		self.items = {
-			'weapons':[Sword,Dagger,Bow,Flail],
+			'weapons':[Sword,Dagger,Bow,Flail,Rapier],
 			'armor':[Shield,Breastplate,Chainmail,Platelegs,Helmet],
 			'spells':[SpellBook]
 		}
