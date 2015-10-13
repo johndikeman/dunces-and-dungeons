@@ -122,7 +122,7 @@ class Player(base.Entity):
 		self.health = 0
 		self.max_health = 0
 		self.armor = 1
-		self.gold = 25
+		self.gold = 200
 		self.equipment = {
 			'left':None,
 			'right':None,
@@ -169,6 +169,14 @@ class Player(base.Entity):
 	def level_up(self):
 		for attribute_str in self.attributes.keys():
 			self.attributes[attribute_str] += RACES[self.race]['LvlGains'][attribute_str]
+
+	def buy_item(self,item):
+		if self.gold >= item.get_cost():
+			self.gold -= item.get_cost()
+			self.inventory.append(item)
+			return True
+		print "you don't have enough gold for that!"
+		return False
 
 	def return_options(self):
 		if not isinstance(self.owner.current_dungeon,dungeon.Hub):

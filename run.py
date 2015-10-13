@@ -1,12 +1,16 @@
 from dungeon.dungeon import Dungeon, Hub
 from entity.player.players import Player, Party
 import entity.item.items as items
+import sys
 
 PARTY = Party()
 class Manager:
 	def main(self):
 		print "------WELCOME TO DUNCES AND DUNGEONS------"
 		party_size = raw_input('enter the size of your party: ')
+		if int(party_size) is 0:
+			print "you can't play with zero people, dingus"
+			sys.exit()
 
 		# creating all the players in the party
 		for a in range(int(party_size)):

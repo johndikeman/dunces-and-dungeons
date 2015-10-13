@@ -9,7 +9,7 @@ class Item(base.Entity):
 		super(Item,self).__init__()
 		self.consumes_inventory_space = True
 		# THIS PROBABLY IS NOT FINAL
-		self.cost = random.randint(0,10)
+		self.cost = 5
 		self.name="item"
 		self.equipped = False
 
@@ -55,12 +55,16 @@ class Item(base.Entity):
 			return self.descr
 		return 'this child of Item doesn\'t have a description variable!'
 
+	def get_cost(self):
+		return self.cost
+
 
 class Weapon(Item):
 	def __init__(self):
 		super(Weapon,self).__init__()
 
-
+	def get_cost(self):
+		return self.damage * self.cost
 
 class Sword(Weapon):
 	def __init__(self,level):
@@ -72,7 +76,8 @@ class Sword(Weapon):
 		self.options = ['%s' % self.to_str()]
 		self.item_options=['examine','equip']
 		self.damage = 10.0 * self.level
-		
+		self.cost = 10
+
 	def do_turn(self,options):
 		# print options
 		if self.options[0] in options:
@@ -136,7 +141,6 @@ class Bow(Weapon):
 	def aim(self,target):
 		target.take_damage(self.owner,self.damage * self.owner.attributes['agility'] * 1.9 + self.owner.attributes['strength']/4.0+base.D20.roll())
 
-<<<<<<< HEAD
 class Rapier(Item):
 	def __init__(self,level):
 		super(Rapier,self).__init__()
@@ -162,10 +166,8 @@ class Rapier(Item):
 		target.armor=0
 		target.take_damage(self.owner,self.damage + self.owner.attributes['strength'] / 5.0 + self.owner.attributes['agility']*2 + self.owner.attributes['intelligence']/5.0 + base.D20.roll())
 		target.armor=hold
-class Flail(Item):
-=======
+
 class Flail(Weapon):
->>>>>>> origin/master
 	def __init__(self,level):
 		super(Flail,self).__init__()
 		self.level = level
@@ -233,6 +235,10 @@ class Shield(Item):
 	def exit(self):
 		self.owner.armor -= self.armor
 
+	def get_cost(self):
+		return self.cost * self.armor
+
+
 
 class Breastplate(Item):
 	def __init__(self,level):
@@ -248,6 +254,10 @@ class Breastplate(Item):
 	def exit(self):
 		self.owner.armor -= self.armor
 
+	def get_cost(self):
+		return self.cost * self.armor
+
+
 class Chainmail(Item):
 	def __init__(self,level):
 		super(Chainmail,self).__init__()
@@ -261,6 +271,10 @@ class Chainmail(Item):
 
 	def exit(self):
 		self.owner.armor -= self.armor
+
+	def get_cost(self):
+		return self.cost * self.armor
+
 
 class Platelegs(Item):
 	def __init__(self,level):
@@ -276,6 +290,10 @@ class Platelegs(Item):
 	def exit(self):
 		self.owner.armor -= self.armor
 
+	def get_cost(self):
+		return self.cost * self.armor
+
+
 class Helmet(Item):
 	def __init__(self,level):
 		super(Helmet,self).__init__()
@@ -290,13 +308,17 @@ class Helmet(Item):
 	def exit(self):
 		self.owner.armor -= self.armor
 
+	def get_cost(self):
+		return self.cost * self.armor
+
+
 class SpellBook(Item):
 	def __init__(self,level):
 		super(SpellBook,self).__init__()
 		self.info = 'one-handed'
 		self.info2='nope'
 		self.cost = random.randint(0,10)
-		print type(level)
+		# print type(level)
 
 		self.level = level
 		self.name = ''
@@ -354,6 +376,10 @@ class SpellBook(Item):
 		else:
 			ret += 'to a single target.'
 		return ret		
+
+	def get_cost(self):
+		return 20 * (10/self.cooldown_time)
+
 
 
 class ItemController():

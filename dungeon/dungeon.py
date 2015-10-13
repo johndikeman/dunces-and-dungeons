@@ -81,18 +81,22 @@ class Hub(Dungeon):
 		
 
 	def enter_shop(self):
-		
+		print 'you have %d gold!' % (self.party.inventory[self.party.index].gold)
 		shopping = base.make_choice(self.shop.keys())
-		item = base.make_choice( ['%s for %d' % (a.to_str(),a.cost) for a in self.shop[self.shop.keys()[shopping]]] )
+		item = base.make_choice( ['%s for %d' % (a.to_str(),a.get_cost()) for a in self.shop[self.shop.keys()[shopping]]] )
 		if(item is None):
 			print 'You bought nothing!'
 		else:
 			item_object = self.shop[self.shop.keys()[shopping]][item]
 			# remove the item from the shop afterwards
-			self.shop[self.shop.keys()[shopping]].remove(item_object)
-			self.party.inventory[self.party.index].inventory.append(item_object)
-			self.party.inventory[self.party.index].gold -= item_object.cost
-			print 'successfully purchased a %s' % item_object.to_str()
+			# self.shop[self.shop.keys()[shopping]].remove(item_object)
+			success = self.party.inventory[self.party.index].buy_item(item_object)
+			if success:
+				self.shop[self.shop.keys()[shopping]].remove(item_object)
+				print 'successfully purchased a %s' % item_object.to_str()
+			# inventory.append(item_object)
+			# self.party.inventory[self.party.index].gold -= item_object.cost
+			
 
 	def leave_dungeon(self):
 		he = [5,8,15,25]
