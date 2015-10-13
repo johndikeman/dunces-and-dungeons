@@ -21,6 +21,8 @@ class Manager:
 
 		dungeon = Hub(PARTY)
 
+		PARTY.hub = dungeon
+
 		PARTY.current_dungeon = dungeon
 
 		PARTY.current_dungeon.start()

@@ -3,6 +3,8 @@ import entity.monster.monsters as monsters
 import entity.item.items as items
 import entity.chest as chesteses
 import os.path
+import entity.thing as thing
+
 
 # these words are from http://acreativemoment.com/2008/07/18/words-to-describe-smell-sound-taste-touch/
 # feel free to add some more that you don't see
@@ -46,7 +48,19 @@ class Dungeon(object):
 		self.rooms[0][0] = self.starting_room
 		self.rooms[0][0].generate()
 
-			
+		temp = []
+		for a in self.rooms:
+			for b in a:
+				if b:
+					temp.append(b)
+
+		random.choice(temp).things.append(LeaveOption())
+
+		# self.rooms[0][0].things.append(LeaveOption())
+
+	def leave_dungeon(self):
+		self.party.current_dungeon = self.party.hub
+		self.party.current_dungeon.start()
 
 	def handle_monster_turn(self):
 		self.active_room.handle_monster_turn()
@@ -246,4 +260,13 @@ class Room(object):
 		# 		thing.do_turn()
 
 
-		
+
+
+class LeaveOption(thing.InteractiveObject):
+	def __init__(self):
+		super(LeaveOption,self).__init__()
+		self.options = ['leave the dungeon']
+
+	def do_turn(self,arg):
+		if arg == self.options[0]:
+			self.owner.containing_dungeon.leave_dungeon()
