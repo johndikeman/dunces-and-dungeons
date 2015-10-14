@@ -240,7 +240,7 @@ class Player(base.Entity):
 					elif(isinstance(b,dungeon.Room) and self.party.current_dungeon.roomsmap[x][y]=='?'):
 						ret+='? '
 					else:
-						ret += '  ' 
+						ret += 'E ' 
 				ret += '\n'
 			print ret
 

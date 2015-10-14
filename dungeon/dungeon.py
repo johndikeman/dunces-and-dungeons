@@ -236,7 +236,11 @@ class Room(object):
 		
 
 	def enter(self):
-		self.party.current_dungeon.roomsmap[self.cords[0]][self.cords[1]]='T'
+		for a in self.things:
+			if(isinstance(a,LeaveOption) ):
+				self.party.current_dungeon.roomsmap[self.cords[0]][self.cords[1]]='E'
+			else:
+				self.party.current_dungeon.roomsmap[self.cords[0]][self.cords[1]]='T'
 		g=self.cords[0]
 		h=self.cords[1]
 		if((str(g+1)+' '+str(h)) in self.containing_dungeon.roomslist and self.party.current_dungeon.roomsmap[g+1][h]!="T"):
