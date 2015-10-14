@@ -62,7 +62,7 @@ class Entity(object):
 		if self.armor < 1:
 			self.armor = 1
 
-	# these methods are going to be used for armor and shit to apply their augments
+	# these methods are going to be used for armor and shtuff to apply their augments
 	def apply(self):
 		pass
 

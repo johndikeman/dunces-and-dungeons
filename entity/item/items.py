@@ -26,7 +26,19 @@ class Item(base.Entity):
 
 	def equip(self):
 		if self.info == 'one-handed':
-			side=base.make_choice(['left','right'])
+			# this gets the name of the item in both hands, to let the player
+			# know what they are going to equip
+			if self.owner.equipment['left']:
+				left = self.owner.equipment['left'].to_str()
+			else:
+				left = 'Nothing'
+
+			if self.owner.equipment['right']:
+				right = self.owner.equipment['right'].to_str()
+			else:
+				right = 'Nothing'
+
+			side=base.make_choice(['left (%s)' % left,'right (%s)' % right])
 			try:
 				self.owner.equipment[['left','right'][side]].unequip()
 			except:
@@ -51,9 +63,10 @@ class Item(base.Entity):
 		self.equipped = False
 
 	def examine(self):
-		if self.descr:
+		try:
 			return self.descr
-		return 'this child of Item doesn\'t have a description variable!'
+		except:
+			return 'a %s' % self.to_str()
 
 	def get_cost(self):
 		return self.cost
@@ -387,7 +400,10 @@ class SpellBook(Item):
 			ret += 'in an area of effect.'
 		else:
 			ret += 'to a single target.'
-		return ret		
+		return ret
+
+	def examine(self):
+		return self.descr()		
 
 	def get_cost(self):
 		return 20 * (10/self.cooldown_time)

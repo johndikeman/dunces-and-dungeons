@@ -318,6 +318,9 @@ class Party(base.Entity):
 			ind +=1
 		return math.ceil(num/ind)
 
+	def get_active_player(self):
+		return self.inventory[self.index]
+
 
 	def do_turn(self,options):
 		self.inventory[self.index].do_turn(options)
