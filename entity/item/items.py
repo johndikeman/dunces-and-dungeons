@@ -92,6 +92,7 @@ class Sword(Weapon):
 		self.cost = 10
 
 	def do_turn(self,options):
+		self.options = ['%s' % self.to_str()]
 		# print options
 		if self.options[0] in options:
 			p = base.make_choice(['swing %s' % self.to_str()])
@@ -113,9 +114,11 @@ class Dagger(Weapon):
 		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
 		self.damage = 5.0 * self.level
-		
+
 
 	def do_turn(self,option):
+		self.options = ['%s' % self.to_str()]
+
 		if option == self.options[0]:
 			p = base.make_choice(['attack with %s'])
 			if p == 0:
@@ -137,9 +140,10 @@ class Bow(Weapon):
 		self.options = ['%s' % self.to_str()]
 		self.damage=1.0 * (25 * math.log(self.level + 1, 2) + 3) / 50.0
 	def do_turn(self,option):
+		self.options = ['%s' % self.to_str()]
 		if option == self.options[0]:
 			p = base.make_choice(['Shoot with %s' % self.to_str(), 'Fully draw the %s' % self.to_str(), 'Launch Volley'])
-			if p == 0:	
+			if p == 0:
 				target = self.owner.select_target()
 				if target:
 					self.shoot(target)
@@ -148,7 +152,7 @@ class Bow(Weapon):
 				if target:
 					self.aim(target)
 			elif p == 2:
-				for a in self.owner.party.current_dungeon.active_room.things: 
+				for a in self.owner.party.current_dungeon.active_room.things:
 					if(isinstance(a,r.Monster) and a.revealed):
 						self.volley(a)
 
@@ -173,6 +177,7 @@ class Rapier(Weapon):
 		self.damage = 2 * self.level
 
 	def do_turn(self,option):
+		self.options = ['%s' % self.to_str()]
 		if option == self.options[0]:
 			p = base.make_choice(['Slash with %s' % self.to_str(),'Pierce Armor with %s'%self.to_str()])
 			if p == 0:
@@ -196,7 +201,7 @@ class Flail(Weapon):
 	def __init__(self,level):
 		super(Flail,self).__init__()
 		self.level = level
-		
+
 		self.name = 'flail'
 		self.info='one-handed'
 		self.info2='weapon'
@@ -205,6 +210,7 @@ class Flail(Weapon):
 		self.damage = 4.0 * self.level
 
 	def do_turn(self,option):
+		self.options = ['%s' % self.to_str()]
 		if option == self.options[0]:
 			p = base.make_choice(['attack with %s' % self.to_str()])
 			if p == 0:
@@ -226,10 +232,11 @@ class Shield(Item):
 		self.options=['%s' % self.to_str()]
 		self.armor=4*self.level
 		self.defendin=False
-		self.blockin=False 
+		self.blockin=False
 
 	#I am not sure how to do the do_turn method.
 	def do_turn(self,option):
+		self.options = ['%s' % self.to_str()]
 		if self.defendin:
 			for a in self.owner.party.inventory:
 				a.armor-=(self.level*2)
@@ -273,6 +280,7 @@ class Breastplate(Item):
 		self.item_options=['examine','equip']
 		self.level = level
 		self.armor=20
+
 	def apply(self):
 		self.owner.armor += self.armor
 
@@ -353,12 +361,12 @@ class SpellBook(Item):
 		self.options = ['%s' % self.name]
 		self.stuntime = random.random() * (level * 4)
 		self.poisontime = random.random() * (level * 4)
-		self.damage = (random.random() * (40*level)) - (20 * level)
+		self.damage = (random.random() * (20*level))
 		self.poisondamage = (random.random() * (10*level)) - (5 * level)
 		self.aoe = random.choice([True,False])
 		self.on_cooldown = False
 		self.cooldown_time = random.random() * (7 * level)
-		self.item_options = ['equip','examine']
+		self.item_options=['equip','examine']
 
 	def do_turn(self,option):
 		# effectiveness coefficient
@@ -368,7 +376,7 @@ class SpellBook(Item):
 			if p == 1:
 				name = raw_input('enter a new name for %s' % self.name)
 				self.name = name
-				self.options = ['%s' % self.to_str()]
+				self.options = ['%s' % self.name]
 
 			if p == 2:
 				print self.descr()
@@ -380,7 +388,8 @@ class SpellBook(Item):
 					else:
 						targets = self.owner.party.current_dungeon.active_room.things
 					for target in targets:
-						if target:
+						# we have to make sure that the targets are monsters, because otherwise we would hit chests and leaveoptions
+						if target and isinstance(target,r.Monster):
 							if self.damage:
 								target.take_damage(self.owner,self.damage*ec)
 							if self.stuntime:
@@ -395,7 +404,7 @@ class SpellBook(Item):
 		return 'a spell by the name of %s' % self.name
 
 	def descr(self):
-		ret =  "%s does %.2f damage, stuns for %d turns and does %.2f of poison damage every turn for %d turns " % (self.name,self.damage,self.stuntime,self.poisondamage,self.poisontime)
+		ret =  "%s does %.2f damage, stuns for %d turns and does %.2f of poison damage every turn for %d turns, with a cooldown of %d turns" % (self.name,self.damage,self.stuntime,self.poisondamage,self.poisontime,self.cooldown_time)
 		if self.aoe:
 			ret += 'in an area of effect.'
 		else:
@@ -403,7 +412,7 @@ class SpellBook(Item):
 		return ret
 
 	def examine(self):
-		return self.descr()		
+		return self.descr()
 
 	def get_cost(self):
 		return 20 * (10/self.cooldown_time)
@@ -440,7 +449,7 @@ class ItemController():
 		# 		weapon_instance.damage *= 1.3
 		# 	if word == 'quick':
 		# 		weapon_instance.damage *= 1.5
-		# 	if word == 
+		# 	if word ==
 		# else:
 		return weapon_instance
 
@@ -451,4 +460,3 @@ class ItemController():
 	def get_spells(self):
 		spell_instance = SpellBook(self.level)
 		return spell_instance
-

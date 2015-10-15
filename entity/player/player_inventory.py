@@ -17,8 +17,15 @@ class InventoryHandler(base.Entity):
 				if item_opt=='examine':
 					# each item needs to define self.descr, which is what will be printed here.
 					print item_object.examine()
-				if item_opt=='equip':						
+				if item_opt=='equip':
 					item_object.equip()
+
+
+				# this isn't quiote implemented
+				if item_opt == 'give':
+					choice = base.make_choice(self.owner.party.inventory.get_list([self.owner]))
+					other_player = self.owner.party.inventory.get_list([self.owner])[choice]
+
 
 				print 'continue? (y/n)'
 				ans = raw_input()
@@ -26,5 +33,3 @@ class InventoryHandler(base.Entity):
 					go=True
 				else:
 					go=False
-
-

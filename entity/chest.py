@@ -31,5 +31,5 @@ class Chest(t.InteractiveObject):
 
 
 def spawn(level):
-	if base.D10.roll() <= 10:
+	if base.D10.roll() <= 2:
 		return Chest(level)
