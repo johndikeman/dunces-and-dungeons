@@ -188,7 +188,7 @@ class Player(base.Entity):
 			return super(Player,self).return_options(True)
 
 		else:
-			self.options =  ['shop','enter a dungeon','save']
+			self.options =  ['shop','enter a dungeon']
 			return super(Player,self).return_options(False)
 
 	def do_turn(self, args):
