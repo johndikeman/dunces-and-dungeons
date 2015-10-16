@@ -3,9 +3,16 @@ from entity.player.players import Player, Party
 import entity.item.items as items
 import sys
 
+RELEASE_ID = 1
+
 PARTY = Party()
 class Manager:
 	def main(self):
+		# latest = requests.get('https://api.github.com/repos/microwaveabletoaster/dunces-and-dungeons/releases/latest').json()['id']
+
+		# if latest > RELEASE_ID:
+		# 	print "---------------===========-----------\nan update to dunces and dungeons has been released! go download it now from here: https://github.com/microwaveabletoaster/dunces-and-dungeons/releases it probably contains super important bugfixes and or more neat features, so don't dawdle!"
+		
 		print "------WELCOME TO DUNCES AND DUNGEONS------"
 		party_size = raw_input('enter the size of your party: ')
 		if int(party_size) is 0:
