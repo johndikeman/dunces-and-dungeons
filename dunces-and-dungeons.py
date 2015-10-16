@@ -4,14 +4,14 @@ import entity.item.items as items
 import sys
 import requests
 
-RELEASE_ID = 1
+RELEASE_ID = 'v1.0'
 
 PARTY = Party()
 class Manager:
 	def main(self):
 		print 'checking for update...'
 		try:
-			latest = requests.get('https://api.github.com/repos/microwaveabletoaster/dunces-and-dungeons/releases/latest').json()['id']
+			latest = requests.get('https://api.github.com/repos/microwaveabletoaster/dunces-and-dungeons/releases/latest').json()['tag_name']
 			if latest == RELEASE_ID:
 				print 'you\'re up to date!'
 
@@ -28,10 +28,10 @@ class Manager:
 
 		# creating all the players in the party
 		for a in range(int(party_size)):
-			name = raw_input('enter the name of player %d: ' % a) 
+			name = raw_input('enter the name of player %d: ' % a)
 			PARTY.add_player(Player(name))
 		print 'Game Start'
-		print PARTY.to_str()	
+		print PARTY.to_str()
 
 		dungeon = Hub(PARTY)
 
@@ -62,5 +62,3 @@ class Manager:
 if __name__ == '__main__':
 	game = Manager()
 	game.main()
-
-
