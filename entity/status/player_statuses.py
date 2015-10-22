@@ -10,6 +10,23 @@ class Burrow(base.Entity):
 
 # TODO- implement Stun(turns_to_be_stunned)
 
+class Healing(base.Entity):
+	def __init__(self):
+		super(Healing,self).__init__()
+		self.turns = 5
+
+	def do_turn(self,options):
+		if self.turns > 0:
+			hp_restored = self.owner.max_health * .10
+			self.owner.health += hp_restored
+			if self.owner.health > self.owner.max_health:
+				self.owner.health = self.owner.max_health
+			print "healed %s for %d" % (self.owner.name, hp_restored)
+			self.turns -= 1
+		else:
+			self.owner.statuses.remove(self)
+
+
 
 class Stun(base.Entity):
 	def __init__(self,turns):

@@ -25,7 +25,7 @@ class Dungeon(object):
 		self.starting_room.test = 0
 		self.rooms = []
 		self.roomsmap=[]
-		
+
 		self.size = size
 		self.room_num = 1
 		# okso current_room is only used in generation. to access the ACTIVE room, use self.active_room instead.
@@ -77,7 +77,7 @@ class Dungeon(object):
 				if isinstance(b,Room):
 					ret += 'ROOM '
 				else:
-					ret += '____ ' 
+					ret += '____ '
 			ret += '\n'
 		return ret
 
@@ -89,15 +89,15 @@ class Hub(Dungeon):
 			"health":[],
 			"weapons":[],
 			"armor":[],
-			"spells":[],
-			"utility":[]
+			"spells":[], # potions for errybody
+			"utility":[items.HealthPotion() for a in self.party.inventory]
 		}
-		
+
 
 	def enter_shop(self):
 		print 'you have %d gold!' % (self.party.inventory[self.party.index].gold)
-		shopping = base.make_choice(self.shop.keys())
-		item = base.make_choice( ['%s for %d' % (a.to_str(),a.get_cost()) for a in self.shop[self.shop.keys()[shopping]]] )
+		shopping = base.make_choice(self.shop.keys(),'category')
+		item = base.make_choice( ['%s for %d' % (a.to_str(),a.get_cost()) for a in self.shop[self.shop.keys()[shopping]]],'item',True)
 		if(item is None):
 			print 'You bought nothing!'
 		else:
@@ -110,7 +110,7 @@ class Hub(Dungeon):
 				print 'successfully purchased a %s' % item_object.to_str()
 			# inventory.append(item_object)
 			# self.party.inventory[self.party.index].gold -= item_object.cost
-			
+
 
 	def leave_dungeon(self):
 		he = [5,8,15,25]
@@ -150,7 +150,7 @@ class Hub(Dungeon):
 				if inst:
 					self.shop[category].append(inst)
 		print 'welcome to the hub!'
-		
+
 
 
 
@@ -182,7 +182,7 @@ class Room(object):
 		chest = chesteses.spawn(self.level)
 		if chest:
 			self.things.append(chest)
-				
+
 		for direction, dircords in self.directions.iteritems():
 			x,y = dircords
 			selfx,selfy = self.cords
@@ -231,9 +231,9 @@ class Room(object):
 	def move_to(self,ind):
 		self.containing_dungeon.active_room = self.get_neighbors()[self.get_neighbors().keys()[ind]]
 		self.containing_dungeon.active_room.enter()
-		
-		##HELP! i need to put all possible neighbors adjacent to a room already in to be ? 
-		
+
+		##HELP! i need to put all possible neighbors adjacent to a room already in to be ?
+
 
 	def enter(self):
 		for a in self.things:

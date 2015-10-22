@@ -138,7 +138,7 @@ class Player(base.Entity):
 
 		# options will be the list all the potential dictionarys will be added to
 		options = []
-		for x in range(3): 
+		for x in range(3):
 			more_choices={}
 			for attribute, dice in RACES[self.race]['rolls'].iteritems():
 				rolls = [dice.roll() for a in range(1)]
@@ -157,8 +157,8 @@ class Player(base.Entity):
 
 		# haha this looks so disgusting
 		print self.race +' '+self.name+ '\'s final attributes:\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t' % ('agility',self.attributes['agility'],'intelligence',self.attributes['intelligence'],'strength',self.attributes['strength'],'luck',self.attributes['luck'],'mana',self.attributes['mana'])
-		
-		self.max_health = self.attributes['strength'] * 10		
+
+		self.max_health = self.attributes['strength'] * 10
 		self.health = self.max_health
 
 
@@ -240,7 +240,7 @@ class Player(base.Entity):
 					elif(isinstance(b,dungeon.Room) and self.party.current_dungeon.roomsmap[x][y]=='?'):
 						ret+='? '
 					else:
-						ret += 'E ' 
+						ret += 'E '
 				ret += '\n'
 			print ret
 
@@ -266,13 +266,13 @@ class Player(base.Entity):
 		if target_ind != None:
 			return self.owner.current_dungeon.active_room.things[target_ind]
 		return None
-		
+
 	def to_str(self):
 		return self.name
 
 	def kill(self,attacker=None):
 		pass
-		
+
 	def retaliate(self):
 		try:
 			if(self.equipment['left'].info2=='weapon' and self.equipment['right'].info2=='weapon'):
@@ -335,7 +335,8 @@ class Party(base.Entity):
 		for a in range(len(self.inventory)):
 			if(self.end):
 				print "------====%s's turn====------" % self.inventory[self.index].name
-				while((self.inventory[self.index].action_points > 0) & (self.inventory[self.index].alive==True)):
+				print 'you have %d hp left' % self.inventory[self.index].health
+				while((self.inventory[self.index].action_points > 0) and (self.inventory[self.index].alive==True)):
 					selection = base.make_choice(self.return_options(),'option')
 					self.do_turn(self.return_options()[selection])
 
@@ -349,4 +350,4 @@ class Party(base.Entity):
 		bob=""
 		for a in self.inventory:
 			bob+= a.race +' '+a.name+ '\'s final attributes:\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t\n' % ('agility',a.attributes['agility'],'intelligence',a.attributes['intelligence'],'strength',a.attributes['strength'],'luck',a.attributes['luck'],'mana',a.attributes['mana'])
-		return bob			
+		return bob

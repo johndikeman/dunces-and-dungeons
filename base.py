@@ -28,7 +28,7 @@ class Entity(object):
 		print '%s has gained %d xp!' % (self.to_str(),val)
 		self.xp += val
 		self.check_for_levelup()
-		
+
 
 	def check_for_levelup(self):
 		if self.xp >= self.level_up_threshold:
@@ -51,7 +51,7 @@ class Entity(object):
 		li = []
 		li += self.options
 		if inv:
-			for a in self.inventory: 
+			for a in self.inventory:
 				li += a.return_options()
 			return li
 		return li
@@ -111,12 +111,12 @@ class Trap(object):
 class Die(object):
 	def __init__(self,num):
 		self.num = num
-	
+
 	def roll(self):
 		return random.randint(1,self.num)
 
 
-# inventory is the exact same thing as list, except it 
+# inventory is the exact same thing as list, except it
 # installs a backref to itself (and therefore the player/entity)
 # to everything that is added to it
 class Inventory():
@@ -143,6 +143,13 @@ class Inventory():
 				ret.append(a)
 		return ret
 
+	# this checks if a specific type of entity is in the inventory
+	def contains_type(self,t):
+		for a in self.list:
+			if isinstance(a,t):
+				return True
+		return False
+
 	def __getitem__(self,key):
 		return self.list[key]
 
@@ -162,12 +169,12 @@ class Inventory():
 		return len(self.list)
 
 
-# use this method when you have a list of things that the 
-# player needs to choose from. it will be handy later on 
+# use this method when you have a list of things that the
+# player needs to choose from. it will be handy later on
 # i think
 def make_choice(choices,thing=None,backable=False):
 	if(backable):
-		choices.append("Back")
+		choices.append("exit")
 	if len(choices) <= 0:
 		print 'nothing to choose from!'
 		return
@@ -181,12 +188,11 @@ def make_choice(choices,thing=None,backable=False):
 	ans = raw_input()
 	try:
 		ret = int(ans)
-		if ret > len(choices)-1:
+		if ret > len(choices) - 1:
 			print 'that wasn\'t a choice! try again.'
 			return make_choice(choices,thing)
-		if ret ==len(choices):
+		if backable and ret == len(choices) - 1:
 			return None
-
 	except ValueError:
 		print 'that wasn\'t a choice! try again.'
 		return make_choice(choices,thing)

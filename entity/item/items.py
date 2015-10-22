@@ -417,7 +417,27 @@ class SpellBook(Item):
 	def get_cost(self):
 		return 20 * (10/self.cooldown_time)
 
+# this extends item but overrides return_options to allow it to return an option
+# if it isnt equipped
+class Consumable(Item):
+	def __init__(self):
+		super(Consumable,self).__init__()
 
+	def return_options(self):
+		return self.options
+
+class HealthPotion(Consumable):
+	def __init__(self):
+		super(HealthPotion,self).__init__()
+		self.options = ['drink health potion']
+		self.name = 'health potion'
+		self.cost = 20
+	def do_turn(self,option):
+		# the player can only have one health potion active at a time
+		if option == self.options[0] and not self.owner.statuses.contains_type(s.Healing):
+			print "%s consumes a health potion!" % self.owner.name
+			self.owner.statuses.append(s.Healing())
+			self.owner.inventory.remove(self)
 
 class ItemController():
 	def __init__(self,level):
