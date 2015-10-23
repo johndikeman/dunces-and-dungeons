@@ -86,11 +86,11 @@ class Hub(Dungeon):
 		#self.shop = []
 		self.party = party
 		self.shop = {
-			"health":[],
+			"health":[items.HealthPotion() for a in self.party.inventory],
 			"weapons":[],
 			"armor":[],
 			"spells":[], # potions for errybody
-			"utility":[items.HealthPotion() for a in self.party.inventory]
+			"utility":[]
 		}
 
 
@@ -257,7 +257,8 @@ class Room(object):
 		# print "THINGS: %s" % str(self.things)
 		# print 'ID: %s' % str(self.identified_things)
 		for thing in self.things:
-			if thing.alive:
+			thing.action_points = thing.base_ap
+			while thing.alive and thing.action_points > 0:
 				thing.do_turn()
 		# for thing in self.identified_things:
 		# 	if thing.alive:

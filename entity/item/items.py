@@ -344,7 +344,6 @@ class Helmet(Item):
 	def get_cost(self):
 		return self.cost * self.armor
 
-
 class SpellBook(Item):
 	def __init__(self,level):
 		super(SpellBook,self).__init__()
@@ -439,12 +438,29 @@ class HealthPotion(Consumable):
 			self.owner.statuses.append(s.Healing())
 			self.owner.inventory.remove(self)
 
+class Sack(Consumable):
+	def __init__(self,contents):
+		super(Sack,self).__init__()
+		self.contents = contents
+		self.options = ['open sack']
+		self.name = 'a rugged sack'
+
+	def do_turn(self,option):
+		if option == 'open sack':
+			de = ''
+			for a in self.contents:
+				self.owner.inventory.append(a)
+				de += '%s, ' % a.name
+			print 'you open the sack and find %s' % de[:-2]
+			self.owner.inventory.remove(self)
+
 class ItemController():
 	def __init__(self,level):
 		self.items = {
 			'weapons':[Sword,Dagger,Bow,Flail,Rapier],
 			'armor':[Shield,Breastplate,Chainmail,Platelegs,Helmet],
-			'spells':[SpellBook]
+			'spells':[SpellBook],
+			'health':[HealthPotion]
 		}
 		self.level = level
 		self.applier = r.Apply()
@@ -458,7 +474,7 @@ class ItemController():
 			elif kind == 'spells':
 				return self.get_spells()
 		else:
-			return random.choice([self.get_spells(),self.get_armor(),self.get_weapon()])
+			return random.choice([self.get_spells(),self.get_armor(),self.get_weapon(),self.get_health()])
 
 	def get_weapon(self):
 		weapon_instance = self.applier.modify_item(random.choice(self.items['weapons'])(self.level))
@@ -480,3 +496,7 @@ class ItemController():
 	def get_spells(self):
 		spell_instance = SpellBook(self.level)
 		return spell_instance
+
+	def get_health(self):
+		pot = Sack([HealthPotion(),HealthPotion(),HealthPotion()])
+		return pot

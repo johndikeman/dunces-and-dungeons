@@ -192,36 +192,35 @@ class Player(base.Entity):
 			return super(Player,self).return_options(False)
 
 	def do_turn(self, args):
-
-		#print args
-
 		for x in self.statuses:
 			x.do_turn(args)
-		if args == 'save':
-			self.party.current_dungeon.save_game()
+		# since action points can be removed in the statuses, we need to check it here
+		if self.action_points > 0:
+			if args == 'save':
+				self.party.current_dungeon.save_game()
 
-		if args == 'leave':
-			# door should be the INDEX of the returned list, ie 0 1 2 3
-			door = base.make_choice([a for a in self.party.current_dungeon.active_room.get_neighbors().keys()],'room')
-			self.party.current_dungeon.active_room.move_to(door)
+			if args == 'leave':
+				# door should be the INDEX of the returned list, ie 0 1 2 3
+				door = base.make_choice([a for a in self.party.current_dungeon.active_room.get_neighbors().keys()],'room')
+				self.party.current_dungeon.active_room.move_to(door)
 
-		## This is the examine method.
-		if args == 'examine':
-			p = base.make_choice(['examine','dev_examine'])
-			if p == 0:
-				s = ''
-				for ind, a in enumerate(self.party.current_dungeon.active_room.things):
-					if ind != len(self.party.current_dungeon.active_room.things) - 1:
-						s+='a %s, ' % a.examine(self)
-					else:
-						s+='and a %s.' % a.examine(self)
-				if not s:
-					s = 'absolutely nothing.'
-				print 'you examine the room and notice %s' % s
+			## This is the examine method.
+			if args == 'examine':
+				p = base.make_choice(['examine','dev_examine'])
+				if p == 0:
+					s = ''
+					for ind, a in enumerate(self.party.current_dungeon.active_room.things):
+						if ind != len(self.party.current_dungeon.active_room.things) - 1:
+							s+='a %s, ' % a.examine(self)
+						else:
+							s+='and a %s.' % a.examine(self)
+					if not s:
+						s = 'absolutely nothing.'
+					print 'you examine the room and notice %s' % s
 
-			if p == 1:
-				for a in self.party.current_dungeon.active_room.things:
-					print a.dev_examine()
+				if p == 1:
+					for a in self.party.current_dungeon.active_room.things:
+						print a.dev_examine()
 
 			# if p == 2:
 			# 	print 'you can\'t do that yet, lol'

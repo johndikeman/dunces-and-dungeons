@@ -142,9 +142,9 @@ class Monster(base.Entity):
 		self.power=self.level*10.0
 		self.multiplier=1
 		# base ap is what the ap should be restored to after a turn is complete
-		self.base_ap = 3
+		self.base_ap = 1
 		self.alive = True
-		self.action_points = 3
+		self.action_points = 1
 		self.options = []
 		self.inventory = base.Inventory(self)
 		self.statuses = base.Inventory(self)
@@ -172,9 +172,10 @@ class Monster(base.Entity):
 		if self.action_points > 0:
 			if not self.aggroed:
 				self.select_aggro()
-					
+
 			if self.aggro.alive:
 				self.attack(self.aggro)
+			self.action_points -= 1
 
 	def attack(self,target):
 		self.reveal()
@@ -191,7 +192,7 @@ class Monster(base.Entity):
 	def reveal(self):
 		if not self.revealed:
 			self.revealed = True
-		
+
 	def dev_examine(self):
 		print 'name: %s health: %d, attributes: %s, power: %s, level: %d' % (self.name, self.health,str(self.attributes),self.power,self.level)
 
@@ -402,7 +403,7 @@ MONSTERLIST = {
 	},
 	WaterElemental:{
 		'probability':12.0,
-		'groupsize':3	
+		'groupsize':3
 	},
 	FireElemental:{
 		'probability':10.0,
@@ -425,4 +426,3 @@ MONSTERLIST = {
 		'groupsize':3
 	}
 }
-
