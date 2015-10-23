@@ -14,7 +14,7 @@ class Common(ModifyItems):
 	def __init__(self):
 		pass
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -24,7 +24,7 @@ class Basic(Common):
 	def __init__(self,item):
 		item.pow*=1
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -34,7 +34,7 @@ class Iron(Common):
 	def __init__(self,item):
 		item.pow*=1.1
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -44,7 +44,7 @@ class Rusty(Common):
 	def __init__(self,item):
 		item.pow*=.5
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -54,7 +54,7 @@ class Used(Common):
 	def __init__(self,item):
 		item.pow*=.8
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -64,7 +64,7 @@ class Weathered(Common):
 	def __init__(self,item):
 		item.pow*=.7
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -74,7 +74,7 @@ class Wooden(Common):
 	def __init__(self,item):
 		item.pow*=.5
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -84,7 +84,7 @@ class Notched(Common):
 	def __init__(self,item):
 		item.pow*=.9
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -94,7 +94,7 @@ class Scratched(Common):
 	def __init__(self,item):
 		item.pow*=.9
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -104,7 +104,7 @@ class Uncommon(ModifyItems):
 	def __init__(self,item):
 		pass
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -114,7 +114,7 @@ class Good(Uncommon):
 	def __init__(self,item):
 		item.pow*=1.3
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -124,7 +124,7 @@ class Shining(Uncommon):
 	def __init__(self,item):
 		item.pow*=1.4
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -134,7 +134,7 @@ class Steel(Uncommon):
 	def __init__(self,item):
 		item.pow*=1.6
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -144,7 +144,7 @@ class Archaic(Uncommon):
 	def __init__(self,item):
 		item.pow*=1.3
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -154,7 +154,7 @@ class Brutal(Uncommon):
 	def __init__(self,item):
 		item.pow*=2
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -164,7 +164,7 @@ class Rare(ModifyItems):
 	def __init__(self,item):
 		pass
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -174,7 +174,7 @@ class Ceremonial(Rare):
 	def __init__(self,item):
 		item.pow*=2.5
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -184,7 +184,7 @@ class Silver(Rare):
 	def __init__(self,item):
 		item.pow*=2.4
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -194,7 +194,7 @@ class Killing(Rare):
 	def __init__(self,item):
 		item.pow*=3
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -204,7 +204,7 @@ class Blessed(Rare):
 	def __init__(self,item):
 		item.pow*=3.2
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -214,7 +214,7 @@ class Legendary(ModifyItems):
 	def __init__(self,item):
 		pass
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -224,7 +224,7 @@ class Kingly(Legendary):
 	def __init__(self,item):
 		item.pow*=4
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -234,7 +234,7 @@ class Enchanted(Legendary):
 	def __init__(self,item):
 		item.pow*=3.8
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -244,7 +244,7 @@ class Master(Legendary):
 	def __init__(self,item):
 		item.pow*=4.6
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -254,7 +254,7 @@ class Divined(ModifyItems):
 	def __init__(self,item):
 		pass
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -264,7 +264,7 @@ class Celestial(Divined):
 	def __init__(self,item):
 		item.pow*=6
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -274,7 +274,7 @@ class Divine(Divined):
 	def __init__(self,item):
 		item.pow*=6.8
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -284,7 +284,7 @@ class Heavenly(Divined):
 	def __init__(self,item):
 		item.pow*=6.4
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):
@@ -294,7 +294,7 @@ class Arch(Divined):
 	def __init__(self,item):
 		item.pow*=8
 
-	def do_trun(self):
+	def do_turn(self):
 		pass
 
 	def to_str(self):

@@ -224,6 +224,8 @@ def make_choice(choices,thing=None,backable=False):
 # 	return choices[ret]
 
 D2 = Die(2)
+D3 = Die(3)
+D4 = Die(4)
 D6 = Die(6)
 D10 = Die(10)
 D12 = Die(12)

@@ -1,4 +1,5 @@
 import base, random, time
+import status.player_statuses as s
 
 class ModifyMons(object):
 	def __init__(self):
@@ -16,8 +17,10 @@ class Acidic(ModifyMons):
 		monster.power*=1.1
 
 	def do_turn(self,target):
-		pass
-		#need to instantiate a poison that is based on the monsters level.
+		chance=base.D20.roll()
+		if chance > 10:
+			target.statuses.append(s.Poison(3,(chance*self.level-10*self.level)/4))
+			print target.name +"has been poisoned by" + self.name
 
 	def to_str(self):
 		return "Acidic"
@@ -39,7 +42,10 @@ class Caustic(ModifyMons):
 		monster.health*=.5
 
 	def do_turn(self,target):
-		pass
+		chance=base.D20.roll()
+		if chance>16:
+			target.stasuses.append(s.Poison(2,self.level*base.D2.roll()))
+			print target.name + " has been poisoned by "+self.name
 
 	def to_str(self):
 		return "Caustic"
@@ -51,7 +57,18 @@ class Dank(ModifyMons):
 		monster.ap+=2
 
 	def do_turn(self,target):
-		pass
+		chance=base.D20.roll()
+		if chance > 18:
+			target.stasuses.append(s.Stun(base.D2.roll()))
+			print target.name +" has been stunned by " + self.name
+		chance2=base.D20.roll()
+		if chance2 > 19:
+			target.stasuses.append(s.Poison(base.D4.roll(),base.D6.roll()*self.level))
+			print target.name +" has been poisoned by " + self.name
+		chance3=base.D20.roll()
+		if chance3>18:
+			target.stasuses.append(s.Burn(base.D6.roll(),self.level*base.D2.roll()))
+			print target.name + " has been burned by "+self.name
 
 	def to_str(self):
 		return "Dank"
@@ -63,7 +80,7 @@ class Decaying(ModifyMons):
 		monster.ap+=1
 
 	def do_turn(self,target):
-		pass
+		self.health-=10;
 
 	def to_str(self):
 		return "Decaying"
@@ -74,7 +91,10 @@ class Destructive(ModifyMons):
 		monster.power*=3
 
 	def do_turn(self,target):
-		pass
+		chance = base.D20.roll()
+		if chance>19:
+			target.stasuses.append(s.Stun(base.D6.roll()))
+			print target.name + " has been stunned by "+self.name
 
 	def to_str(self):
 		return "Destructive"
@@ -85,7 +105,7 @@ class Dieing(ModifyMons):
 		monster.power*=.05
 
 	def do_turn(self,target):
-		pass
+		self.health-=5;
 
 	def to_str(self):
 		return "Dieing"
@@ -96,7 +116,10 @@ class Dusty(ModifyMons):
 		monster.power*=.5
 
 	def do_turn(self,target):
-		pass
+		chance=base.D20.roll()
+		if chance>19:
+			target.stasuses.append(s.Poison(base.D2.roll(),3))
+			print target.name + " has been poisoned by "+self.name
 
 	def to_str(self):
 		return "Dusty"
@@ -118,7 +141,10 @@ class Flowery(ModifyMons):
 		monster.power=1
 
 	def do_turn(self,target):
-		pass
+		chance=base.D20.roll()
+		if chance>19:
+			target.stasuses.append(s.Healing())
+			print target.name + " has been healed by "+self.name
 
 	def to_str(self):
 		return "Flowery"
@@ -140,7 +166,10 @@ class Foul(ModifyMons):
 		monster.power-=12
 
 	def do_turn(self,target):
-		pass
+		chance=base.D20.roll()
+		if chance>16:
+			target.stasuses.append(s.Poison(2,self.level*base.D2.roll()))
+			print target.name + " has been poisoned by "+self.name
 
 	def to_str(self):
 		return "Foul"
@@ -164,7 +193,10 @@ class Lightning(ModifyMons):
 		monster.ap*=2
 
 	def do_turn(self,target):
-		pass
+		chance =base.D20.roll()
+		if chance > 12:
+			self.ap+=1
+			print self.name+" can attack again!"
 
 	def to_str(self):
 		return "Lightning"
@@ -188,7 +220,10 @@ class Musky(ModifyMons):
 		monster.ap+=2
 
 	def do_turn(self,target):
-		pass
+		chance=base.D20.roll()
+		if chance>19:
+			target.stasuses.append(s.Stun(base.D3.roll()))
+			print target.name + " has been stunned by "+self.name
 
 	def to_str(self):
 		return "Musky"
@@ -200,7 +235,10 @@ class Nasty(ModifyMons):
 		monster.ap*=2
 
 	def do_turn(self,target):
-		pass
+		chance=base.D20.roll()
+		if chance>12:
+			target.stasuses.append(s.Stun(2))
+			print target.name + " has been stunned by "+self.name
 
 	def to_str(self):
 		return "Nasty"
@@ -233,7 +271,10 @@ class Rancid(ModifyMons):
 		monster.ap*=2
 
 	def do_turn(self,target):
-		pass
+		chance=base.D20.roll()
+		if chance>16:
+			target.stasuses.append(s.Poison(2,self.level*base.D2.roll()))
+			print target.name + " has been poisoned by "+self.name
 
 	def to_str(self):
 		return "Rancid"
@@ -244,7 +285,10 @@ class Scorched(ModifyMons):
 		monster.power*=.5
 
 	def do_turn(self,target):
-		pass
+		chance=base.D20.roll()
+		if chance>14:
+			target.stasuses.append(s.Poison(1,self.level*base.D3.roll()))
+			print target.name + " has been burned by "+self.name
 
 	def to_str(self):
 		return "Scorched"

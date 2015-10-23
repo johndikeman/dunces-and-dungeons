@@ -60,6 +60,24 @@ class Poison(base.Entity):
 	def to_str(self):
 		return self.name
 
+class Burn(base.Entity):
+	def __init__(self,turns,damage):
+		super(Burn,self).__init__()
+		self.turns = turns
+		self.damage = damage
+		self.name = 'burn'
+
+	def do_turn(self,option):
+		if self.turns > 0:
+			self.owner.health -= self.damage
+			print '%s takes %f burn damage' % (self.owner.name,self.damage)
+			self.turns -= 1
+		else:
+			self.owner.statuses.remove(self)
+
+	def to_str(self):
+		return self.name
+
 class Cooldown(base.Entity):
 	def __init__(self,spell,turns):
 		super(Cooldown,self).__init__()

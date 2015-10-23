@@ -1,83 +1,83 @@
 import base, random, time
 
 class Apply(object):
-	def __init__(self):
-		pass
-	def modify_monster(self,Monster):
-		Mod={"Acidic":{"health":"*.5","power":"*1.1"},
-	 	"Camphoric":{"health":"*.5", "power":"*2","ap":"+1"},
-	 	"Caustic":{"health":"*.5"},
-	 	"Dank":{"health":"*1.5","power":"*2","ap":"+2"},
-	 	"Decaying":{"health":"*.3","power":"*.5","ap":"+-1"},
-	 	"Destructive":{"health":"*1.2","power":"*3"},
-	 	"Dieing":{"health":"*.05","power":"/20"},
-	 	"Dusty":{"health":"*.7","power":"/2"},
-	 	"Fetid":{"health":"*.2","power":"/2"},
-		"Flowery":{"health":"=1","power":"=1","level":"=1","ap":"=1","baseap":"=1"},
-		"Forgotten":{"health":"1.1","power":"/2"},
-		"Foul":{"health":"*.8","power":"+-12"},
-		"Funky":{"health":'+'+str(random.randint(1,150)),"power":random.choice('+*')+str(random.randint(1,10)),"level":random.choice('+=')+str(random.randint(1,10)),"ap":random.choice('+=')+str(random.randint(1,2))},
-		"Lightning":{"health":"*.1","power":"*3","ap":"*2"},
-		"Lowly":{"health":"*.4","power":"/2","ap":"=1"},
-		"Musky":{"health":"*2","power":"*1.2","ap":"+2"},
-		"Nasty":{"health":"*.9","power":"*1.2"},
-		"Normal":{},
-		"Putrid":{"health":"*.6","power":"/10"},
-		"Rancid":{"health":"+-20","power":"+-5"},
-		"Scorched":{"health":"*.4","power":"/2"},
-		"Tiny":{"health":"*.3","power":"/3"},
-		"Weak":{"health":"*.1","power":"/5"}}
-		namer = random.choice(Mod.keys())
-		run = Mod[namer]
+ 	def __init__(self):
+ 		pass
+# 	def modify_monster(self,Monster):
+# 		Mod={"Acidic":{"health":"*.5","power":"*1.1"},
+# 	 	"Camphoric":{"health":"*.5", "power":"*2","ap":"+1"}, 
+# 	 	"Caustic":{"health":"*.5"},
+# 	 	"Dank":{"health":"*1.5","power":"*2","ap":"+2"},
+# 	 	"Decaying":{"health":"*.3","power":"*.5","ap":"+-1"},
+# 	 	"Destructive":{"health":"*1.2","power":"*3"},
+# 	 	"Dieing":{"health":"*.05","power":"/20"},
+# 	 	"Dusty":{"health":"*.7","power":"/2"},
+# 	 	"Fetid":{"health":"*.2","power":"/2"},
+# 		"Flowery":{"health":"=1","power":"=1","level":"=1","ap":"=1","baseap":"=1"},
+# 		"Forgotten":{"health":"1.1","power":"/2"},
+# 		"Foul":{"health":"*.8","power":"+-12"},
+# 		"Funky":{"health":'+'+str(random.randint(1,150)),"power":random.choice('+*')+str(random.randint(1,10)),"level":random.choice('+=')+str(random.randint(1,10)),"ap":random.choice('+=')+str(random.randint(1,2))},
+# 		"Lightning":{"health":"*.1","power":"*3","ap":"*2"},
+# 		"Lowly":{"health":"*.4","power":"/2","ap":"=1"},
+# 		"Musky":{"health":"*2","power":"*1.2","ap":"+2"},
+# 		"Nasty":{"health":"*.9","power":"*1.2"},
+# 		"Normal":{},
+# 		"Putrid":{"health":"*.6","power":"/10"},
+# 		"Rancid":{"health":"+-20","power":"+-5"},
+# 		"Scorched":{"health":"*.4","power":"/2"},
+# 		"Tiny":{"health":"*.3","power":"/3"},
+# 		"Weak":{"health":"*.1","power":"/5"}}
+# 		namer = random.choice(Mod.keys())
+# 		run = Mod[namer]
 
-		for a in run:
-			if(a=="health"):
-				if(run[a][0]=="+"):
-					Monster.health=Monster.health+float(run[a][1:len(run[a])])
-				elif(run[a][0]=="*"):
-					Monster.health=Monster.health*float(run[a][1:len(run[a])])
-				elif(run[a][0]=="="):
-					Monster.health=float(run[a][1:len(run[a])])
-				elif(run[a][0]=="/"):
-					Monster.health=Monster.health/int(run[a][1:len(run[a])])
-			elif(a=="power"):
-				if(run[a][0]=="+"):
-					Monster.power=Monster.power+int(run[a][1:len(run[a])])
-				elif(run[a][0]=="*"):
-					Monster.power=Monster.power*float(run[a][1:len(run[a])])
-				elif(run[a][0]=="="):
-					Monster.power=int(run[a][1:len(run[a])])
-				elif(run[a][0]=="/"):
-					Monster.power=Monster.power/int(run[a][1:len(run[a])])
-			elif(a=="level"):
-				if(run[a][0]=="+"):
-					Monster.level=Monster.level+int(run[a][1:len(run[a])])
-				elif(run[a][0]=="*"):
-					Monster.level=Monster.level*int(run[a][1:len(run[a])])
-				elif(run[a][0]=="="):
-					Monster.level=int(run[a][1:len(run[a])])
-				elif(run[a][0]=="/"):
-					Monster.level=Monster.level/int(run[a][1:len(run[a])])
-			elif(a=="ap"):
-				if(run[a][0]=="+"):
-					Monster.action_points=Monster.action_points+int(run[a][1:len(run[a])])
-				elif(run[a][0]=="*"):
-					Monster.action_points=Monster.action_points*int(run[a][1:len(run[a])])
-				elif(run[a][0]=="="):
-					Monster.action_points=int(run[a][1:len(run[a])])
-				elif(run[a][0]=="/"):
-					Monster.action_points=Monster.action_points/int(run[a][1:len(run[a])])
-			elif(a=="baseap"):
-				if(run[a][0]=="+"):
-					Monster.base_ap=Monster.base_ap+int(run[a][1:len(run[a])])
-				elif(run[a][0]=="*"):
-					Monster.base_ap=Monster.base_ap*int(run[a][1:len(run[a])])
-				elif(run[a][0]=="="):
-					Monster.base_ap=int(run[a][1:len(run[a])])
-				elif(run[a][0]=="/"):
-					Monster.baseap=Monster.baseap/int(run[a][1:len(run[a])])
-		Monster.name=namer+" "+ Monster.name
-		return Monster
+# 		for a in run:
+# 			if(a=="health"):
+# 				if(run[a][0]=="+"):
+# 					Monster.health=Monster.health+float(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="*"):
+# 					Monster.health=Monster.health*float(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="="):
+# 					Monster.health=float(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="/"):
+# 					Monster.health=Monster.health/int(run[a][1:len(run[a])])
+# 			elif(a=="power"):
+# 				if(run[a][0]=="+"):
+# 					Monster.power=Monster.power+int(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="*"):
+# 					Monster.power=Monster.power*float(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="="):
+# 					Monster.power=int(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="/"):
+# 					Monster.power=Monster.power/int(run[a][1:len(run[a])])
+# 			elif(a=="level"):
+# 				if(run[a][0]=="+"):
+# 					Monster.level=Monster.level+int(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="*"):
+# 					Monster.level=Monster.level*int(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="="):
+# 					Monster.level=int(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="/"):
+# 					Monster.level=Monster.level/int(run[a][1:len(run[a])])
+# 			elif(a=="ap"):
+# 				if(run[a][0]=="+"):
+# 					Monster.action_points=Monster.action_points+int(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="*"):
+# 					Monster.action_points=Monster.action_points*int(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="="):
+# 					Monster.action_points=int(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="/"):
+# 					Monster.action_points=Monster.action_points/int(run[a][1:len(run[a])])
+# 			elif(a=="baseap"):
+# 				if(run[a][0]=="+"):
+# 					Monster.base_ap=Monster.base_ap+int(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="*"):
+# 					Monster.base_ap=Monster.base_ap*int(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="="):
+# 					Monster.base_ap=int(run[a][1:len(run[a])])
+# 				elif(run[a][0]=="/"):
+# 					Monster.baseap=Monster.baseap/int(run[a][1:len(run[a])])
+# 		Monster.name=namer+" "+ Monster.name
+# 		return Monster
 
 	def modify_item(self,Item):
 		Mod={"Common": {"Common ":1,
@@ -213,6 +213,7 @@ def spawn(level):
 	app=Apply()
 	ret = []
 	compound = []
+	modifiers ="Acidic,Camphoric,Caustic,Dank,Decaying,Destructive,Dieing,Dusty,Fetid,Flowery,Forgotten,Foul,Funky,Lightning,Lowly,Musky,Nasty,Normal,Putrid,Rancid,Scorched,Tiny,Weak".split(",")
 	while ind < len(MONSTERLIST.keys()):
 		key = random.choice(MONSTERLIST.keys())
 		val = MONSTERLIST[key]
