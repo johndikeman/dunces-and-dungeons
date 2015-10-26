@@ -4,6 +4,7 @@ import entity.item.items as items
 import entity.chest as chesteses
 import os.path
 import entity.thing as thing
+import entity.item.consumable as consumable
 
 
 # these words are from http://acreativemoment.com/2008/07/18/words-to-describe-smell-sound-taste-touch/
@@ -86,7 +87,7 @@ class Hub(Dungeon):
 		#self.shop = []
 		self.party = party
 		self.shop = {
-			"health":[items.HealthPotion() for a in self.party.inventory],
+			"health":[consumable.HealthPotion() for a in self.party.inventory],
 			"weapons":[],
 			"armor":[],
 			"spells":[], # potions for errybody

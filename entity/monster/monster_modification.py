@@ -1,20 +1,24 @@
 import base, random, time
-import status.player_statuses as s
+import entity.status.player_statuses as s
 
-class ModifyMons(object):
+class ModifyMons(base.Entity):
 	def __init__(self):
-		pass
-		
+		super(ModifyMons,self).__init__()
+
 	def do_turn(self):
 		pass
 
 	def to_str(self):
 		return "Modified"
 
+# hey altering just the ap variable only gives them the extra for one turn,
+# cause it gets reset to base_ap. im not sure that this was your intent
+
+# these should inherit their constructors from the superclass? right? right?
 class Acidic(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.5
-		monster.power*=1.1
+	def apply(self):
+		self.owner.health*=.5
+		self.owner.power*=1.1
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -26,10 +30,10 @@ class Acidic(ModifyMons):
 		return "Acidic"
 
 class Camphoric(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.5
-		monster.power*=2
-		monster.ap+=1
+	def apply(self):
+		self.owner.health*=.5
+		self.owner.power*=2
+		self.owner.ap+=1
 
 	def do_turn(self,target):
 		pass
@@ -38,8 +42,8 @@ class Camphoric(ModifyMons):
 		return "Camphoric"
 
 class Caustic(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.5
+	def apply(self):
+		self.owner.health*=.5
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -51,10 +55,10 @@ class Caustic(ModifyMons):
 		return "Caustic"
 
 class Dank(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=1.5
-		monster.power*=2
-		monster.ap+=2
+	def apply(self):
+		self.owner.health*=1.5
+		self.owner.power*=2
+		self.owner.ap+=2
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -74,10 +78,10 @@ class Dank(ModifyMons):
 		return "Dank"
 
 class Decaying(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.3
-		monster.power*=.5
-		monster.ap+=1
+	def apply(self):
+		self.owner.health*=.3
+		self.owner.power*=.5
+		self.owner.ap+=1
 
 	def do_turn(self,target):
 		self.health-=10;
@@ -86,9 +90,9 @@ class Decaying(ModifyMons):
 		return "Decaying"
 
 class Destructive(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=1.2
-		monster.power*=3
+	def apply(self):
+		self.owner.health*=1.2
+		self.owner.power*=3
 
 	def do_turn(self,target):
 		chance = base.D20.roll()
@@ -98,11 +102,11 @@ class Destructive(ModifyMons):
 
 	def to_str(self):
 		return "Destructive"
-	
+
 class Dieing(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.05
-		monster.power*=.05
+	def apply(self):
+		self.owner.health*=.05
+		self.owner.power*=.05
 
 	def do_turn(self,target):
 		self.health-=5;
@@ -111,9 +115,9 @@ class Dieing(ModifyMons):
 		return "Dieing"
 
 class Dusty(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.7
-		monster.power*=.5
+	def apply(self):
+		self.owner.health*=.7
+		self.owner.power*=.5
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -125,9 +129,9 @@ class Dusty(ModifyMons):
 		return "Dusty"
 
 class Fetid(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.2
-		monster.power*=.5
+	def apply(self):
+		self.owner.health*=.2
+		self.owner.power*=.5
 
 	def do_turn(self,target):
 		pass
@@ -136,9 +140,9 @@ class Fetid(ModifyMons):
 		return "Fetid"
 
 class Flowery(ModifyMons):
-	def __init__(self,monster):
-		monster.health=1
-		monster.power=1
+	def apply(self):
+		self.owner.health=1
+		self.owner.power=1
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -150,9 +154,9 @@ class Flowery(ModifyMons):
 		return "Flowery"
 
 class Forgotten(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=1.1
-		monster.power*=.5
+	def apply(self):
+		self.owner.health*=1.1
+		self.owner.power*=.5
 
 	def do_turn(self,target):
 		pass
@@ -161,9 +165,9 @@ class Forgotten(ModifyMons):
 		return "Forgotten"
 
 class Foul(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.8
-		monster.power-=12
+	def apply(self):
+		self.owner.health*=.8
+		self.owner.power-=12
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -175,10 +179,10 @@ class Foul(ModifyMons):
 		return "Foul"
 
 class Funky(ModifyMons):
-	def __init__(self,monster):
-		monster.health+=random.randint(1,150)
-		monster.power*=random.randint(1,4)
-		monster.ap+=1
+	def apply(self):
+		self.owner.health+=random.randint(1,150)
+		self.owner.power*=random.randint(1,4)
+		self.owner.ap+=1
 
 	def do_turn(self,target):
 		pass
@@ -187,10 +191,10 @@ class Funky(ModifyMons):
 		return "Funky"
 
 class Lightning(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.1
-		monster.power*=3
-		monster.ap*=2
+	def apply(self):
+		self.owner.health*=.1
+		self.owner.power*=3
+		self.owner.ap*=2
 
 	def do_turn(self,target):
 		chance =base.D20.roll()
@@ -202,10 +206,10 @@ class Lightning(ModifyMons):
 		return "Lightning"
 
 class Lowly(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.4
-		monster.power*=.5
-		monster.ap=1
+	def apply(self):
+		self.owner.health*=.4
+		self.owner.power*=.5
+		self.owner.ap=1
 
 	def do_turn(self,target):
 		pass
@@ -214,10 +218,10 @@ class Lowly(ModifyMons):
 		return "Lowly"
 
 class Musky(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=2
-		monster.power*=1.2
-		monster.ap+=2
+	def apply(self):
+		self.owner.health*=2
+		self.owner.power*=1.2
+		self.owner.ap+=2
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -229,10 +233,10 @@ class Musky(ModifyMons):
 		return "Musky"
 
 class Nasty(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.9
-		monster.power*=1.2
-		monster.ap*=2
+	def apply(self):
+		self.owner.health*=.9
+		self.owner.power*=1.2
+		self.owner.ap*=2
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -244,7 +248,7 @@ class Nasty(ModifyMons):
 		return "Nasty"
 
 class Normal(ModifyMons):
-	def __init__(self,monster):
+	def apply(self):
 		pass
 
 	def do_turn(self,target):
@@ -254,9 +258,9 @@ class Normal(ModifyMons):
 		return "Normal"
 
 class Putrid(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.6
-		monster.power*=.1
+	def apply(self):
+		self.owner.health*=.6
+		self.owner.power*=.1
 
 	def do_turn(self,target):
 		pass
@@ -265,10 +269,10 @@ class Putrid(ModifyMons):
 		return "Putrid"
 
 class Rancid(ModifyMons):
-	def __init__(self,monster):
-		monster.health-=20
-		monster.power*=3
-		monster.ap*=2
+	def apply(self):
+		self.owner.health-=20
+		self.owner.power*=3
+		self.owner.ap*=2
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -280,9 +284,9 @@ class Rancid(ModifyMons):
 		return "Rancid"
 
 class Scorched(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.4
-		monster.power*=.5
+	def apply(self):
+		self.owner.health*=.4
+		self.owner.power*=.5
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -294,9 +298,9 @@ class Scorched(ModifyMons):
 		return "Scorched"
 
 class Tiny(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.3
-		monster.power*=.3
+	def apply(self):
+		self.owner.health*=.3
+		self.owner.power*=.3
 
 	def do_turn(self,target):
 		pass
@@ -305,9 +309,9 @@ class Tiny(ModifyMons):
 		return "Tiny"
 
 class Weak(ModifyMons):
-	def __init__(self,monster):
-		monster.health*=.1
-		monster.power*=.2
+	def apply(self):
+		self.owner.health*=.1
+		self.owner.power*=.2
 
 	def do_turn(self,target):
 		pass

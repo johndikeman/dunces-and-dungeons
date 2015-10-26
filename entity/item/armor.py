@@ -1,4 +1,5 @@
-import entity.item.items.Item
+import entity.item.items
+
 
 # this is basically to identify what is armor and what isn't
 class Armor(entity.item.items.Item):

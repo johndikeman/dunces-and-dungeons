@@ -1,4 +1,4 @@
-import entity.item.items.Item
+import entity.item.items
 
 class Weapon(entity.item.items.Item):
 	def __init__(self):

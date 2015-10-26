@@ -2,6 +2,9 @@ import base,random,math
 from misc.words import arcane_words, weapon_words
 import entity.status.player_statuses as s
 import entity.monster.monsters as r
+import entity.item.weapon as weapon
+import entity.item.consumable as consumable
+import entity.item.armor as armor
 
 
 class Item(base.Entity):
@@ -146,10 +149,10 @@ class SpellBook(Item):
 class ItemController():
 	def __init__(self,level):
 		self.items = {
-			'weapons':[Sword,Dagger,Bow,Flail,Rapier],
-			'armor':[Shield,Breastplate,Chainmail,Platelegs,Helmet],
+			'weapons':[weapon.Sword,weapon.Dagger,weapon.Bow,weapon.Flail,weapon.Rapier],
+			'armor':[armor.Shield,armor.Breastplate,armor.Chainmail,armor.Platelegs,armor.Helmet],
 			'spells':[SpellBook],
-			'health':[HealthPotion]
+			'health':[consumable.HealthPotion]
 		}
 		self.level = level
 		self.applier = r.Apply()
@@ -187,5 +190,5 @@ class ItemController():
 		return spell_instance
 
 	def get_health(self):
-		pot = Sack([HealthPotion(),HealthPotion(),HealthPotion()])
+		pot = Sack([entity.item.consumable.HealthPotion(),entity.item.consumable.HealthPotion(),entity.item.consumable.HealthPotion()])
 		return pot

@@ -1,6 +1,4 @@
-import entity.item.items.Item
-
-
+import entity.item.items
 # this extends item but overrides return_options to allow it to return an option
 # if it isnt equipped
 class Consumable(entity.item.items.Item):

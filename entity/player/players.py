@@ -1,5 +1,5 @@
 import base, math, time
-import entity.item.items as items
+import entity.item.weapon as weapons
 import dungeon.dungeon as dungeon
 import entity.player.player_inventory as inv
 import entity.thing as thing
@@ -163,7 +163,7 @@ class Player(base.Entity):
 
 
 		# THIS IS NOT FINAL- ITS A TEST
-		self.inventory.append(items.Sword(self.level))
+		self.inventory.append(weapons.Sword(self.level))
 		self.inventory.append(inv.InventoryHandler())
 
 	def level_up(self):
