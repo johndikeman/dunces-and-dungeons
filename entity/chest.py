@@ -1,15 +1,16 @@
 import base
 import entity.thing as t
-import entity.item.items as items
+import entity.item.controller as control
 import random
 import math
+
 
 class Chest(t.InteractiveObject):
 	def __init__(self,level):
 		super(Chest,self).__init__()
 		self.level = level
 		self.options = ['open chest']
-		self.generator = items.ItemController(self.level)
+		self.generator = control.ItemController(self.level)
 		self.items = []
 								# this got out of hand fast
 		for a in range((int(math.ceil(self.level)))):

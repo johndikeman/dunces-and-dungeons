@@ -1,4 +1,5 @@
 import entity.item.items
+import base,random,math
 
 
 # this is basically to identify what is armor and what isn't

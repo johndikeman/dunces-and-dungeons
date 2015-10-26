@@ -11,8 +11,6 @@ class ModifyMons(base.Entity):
 	def to_str(self):
 		return "Modified"
 
-# hey altering just the ap variable only gives them the extra for one turn,
-# cause it gets reset to base_ap. im not sure that this was your intent
 
 # these should inherit their constructors from the superclass? right? right?
 class Acidic(ModifyMons):
@@ -33,7 +31,7 @@ class Camphoric(ModifyMons):
 	def apply(self):
 		self.owner.health*=.5
 		self.owner.power*=2
-		self.owner.ap+=1
+		self.owner.base_ap+=1
 
 	def do_turn(self,target):
 		pass
@@ -58,7 +56,7 @@ class Dank(ModifyMons):
 	def apply(self):
 		self.owner.health*=1.5
 		self.owner.power*=2
-		self.owner.ap+=2
+		self.owner.base_ap+=2
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -81,7 +79,7 @@ class Decaying(ModifyMons):
 	def apply(self):
 		self.owner.health*=.3
 		self.owner.power*=.5
-		self.owner.ap+=1
+		self.owner.base_ap+=1
 
 	def do_turn(self,target):
 		self.health-=10;
@@ -182,7 +180,7 @@ class Funky(ModifyMons):
 	def apply(self):
 		self.owner.health+=random.randint(1,150)
 		self.owner.power*=random.randint(1,4)
-		self.owner.ap+=1
+		self.owner.base_ap+=1
 
 	def do_turn(self,target):
 		pass
@@ -194,12 +192,12 @@ class Lightning(ModifyMons):
 	def apply(self):
 		self.owner.health*=.1
 		self.owner.power*=3
-		self.owner.ap*=2
+		self.owner.base_ap*=2
 
 	def do_turn(self,target):
 		chance =base.D20.roll()
 		if chance > 12:
-			self.ap+=1
+			self.base_ap+=1
 			print self.name+" can attack again!"
 
 	def to_str(self):
@@ -209,7 +207,7 @@ class Lowly(ModifyMons):
 	def apply(self):
 		self.owner.health*=.4
 		self.owner.power*=.5
-		self.owner.ap=1
+		self.owner.base_ap=1
 
 	def do_turn(self,target):
 		pass
@@ -221,7 +219,7 @@ class Musky(ModifyMons):
 	def apply(self):
 		self.owner.health*=2
 		self.owner.power*=1.2
-		self.owner.ap+=2
+		self.owner.base_ap+=2
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -236,12 +234,12 @@ class Nasty(ModifyMons):
 	def apply(self):
 		self.owner.health*=.9
 		self.owner.power*=1.2
-		self.owner.ap*=2
+		self.owner.base_ap*=2
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
 		if chance>12:
-			target.stasuses.append(s.Stun(2))
+			target.statuses.append(s.Stun(2))
 			print target.name + " has been stunned by "+self.name
 
 	def to_str(self):
@@ -272,7 +270,7 @@ class Rancid(ModifyMons):
 	def apply(self):
 		self.owner.health-=20
 		self.owner.power*=3
-		self.owner.ap*=2
+		self.owner.base_ap*=2
 
 	def do_turn(self,target):
 		chance=base.D20.roll()

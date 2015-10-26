@@ -5,6 +5,7 @@ import entity.chest as chesteses
 import os.path
 import entity.thing as thing
 import entity.item.consumable as consumable
+import entity.item.controller as control
 
 
 # these words are from http://acreativemoment.com/2008/07/18/words-to-describe-smell-sound-taste-touch/
@@ -144,7 +145,7 @@ class Hub(Dungeon):
 		pass
 
 	def start(self):
-		controller = items.ItemController(self.party.get_avg_level())
+		controller = control.ItemController(self.party.get_avg_level())
 		for category in self.shop.keys():
 			for b in range(random.randint(0,5)):
 				inst = controller.generate(category)

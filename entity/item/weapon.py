@@ -1,4 +1,6 @@
 import entity.item.items
+import base,random,math
+
 
 class Weapon(entity.item.items.Item):
 	def __init__(self):

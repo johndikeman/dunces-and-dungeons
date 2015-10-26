@@ -252,7 +252,7 @@ class Player(base.Entity):
 					a.do_turn(args)
 
 		for a in self.inventory:
-			if isinstance(a,items.Weapon):
+			if isinstance(a,weapons.Weapon):
 				if a.equipped: a.do_turn(args)
 			else:
 				a.do_turn(args)
