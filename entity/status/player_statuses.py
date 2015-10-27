@@ -104,10 +104,10 @@ class Sleep(base.Entity):
 	def do_turn(self,options):
 		
 		chance=base.D20.roll()
-		if chance>16
+		if chance > 16:
 			self.owner.statuses.remove(self)
 			print '%s has awoken!' % (self.owner.to_str())
-		else
+		else:
 			print '%s is asleep, and cannot move!' % (self.owner.to_str())
 			self.owner.action_points =0
 
