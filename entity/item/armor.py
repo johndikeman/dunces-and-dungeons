@@ -7,6 +7,9 @@ class Armor(entity.item.items.Item):
 	def __init__(self):
 		super(Armor,self).__init__()
 
+	def equip(self):
+		super(Armor,self).equip()
+		self.apply()
 
 class Shield(Armor):
 	def __init__(self,level):

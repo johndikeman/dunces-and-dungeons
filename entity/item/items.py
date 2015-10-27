@@ -1,6 +1,7 @@
 import base,random,math
 from misc.words import arcane_words, weapon_words
 import entity.status.player_statuses as s
+import entity.monster.monsters as r
 
 
 

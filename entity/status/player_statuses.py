@@ -34,7 +34,7 @@ class Stun(base.Entity):
 		self.turns = turns
 
 	def do_turn(self,options):
-		print '%s is stunned, and cannot move!' % self.owner.to_str()
+		print '%s is stunned, and cannot move for another %d turns' % (self.owner.to_str(),self.turns)
 		if self.turns > 0:
 			self.owner.action_points = 0
 			self.turns -= 1

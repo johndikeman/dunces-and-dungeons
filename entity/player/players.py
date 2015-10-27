@@ -109,7 +109,7 @@ RACES = {
 }
 
 class Player(base.Entity):
-	def __init__(self,name):
+	def __init__(self,name,test_stats=None): # starting is for test cases
 		super(Player,self).__init__()
 		self.name = name
 		self.party = None
@@ -117,8 +117,7 @@ class Player(base.Entity):
 		self.base_ap = 2
 		self.options = ['leave','examine','dev-examine','map','inventory']
 		self.alive = True
-		option = base.make_choice(RACES.keys(),'race')
-		self.race = RACES.keys()[option]
+
 		self.health = 0
 		self.max_health = 0
 		self.armor = 1
@@ -135,28 +134,33 @@ class Player(base.Entity):
 		}
 
 		#Please tell me i didn't mess this up.
+		if not test_stats:
+			option = base.make_choice(RACES.keys(),'race')
+			self.race = RACES.keys()[option]
+			# options will be the list all the potential dictionarys will be added to
+			options = []
+			for x in range(3):
+				more_choices={}
+				for attribute, dice in RACES[self.race]['rolls'].iteritems():
+					rolls = [dice.roll() for a in range(1)]
+					selection=0;
 
-		# options will be the list all the potential dictionarys will be added to
-		options = []
-		for x in range(3):
-			more_choices={}
-			for attribute, dice in RACES[self.race]['rolls'].iteritems():
-				rolls = [dice.roll() for a in range(1)]
-				selection=0;
+					selection = rolls[0]+RACES[self.race]['BaseStats'][attribute]
+					# update more choices with the attribute value
+					more_choices.update({attribute:selection})
+				# when more choices is full, add it to options
+				options.append(more_choices)
+			# print str(options)
 
-				selection = rolls[0]+RACES[self.race]['BaseStats'][attribute]
-				# update more choices with the attribute value
-				more_choices.update({attribute:selection})
-			# when more choices is full, add it to options
-			options.append(more_choices)
-		# print str(options)
+			ret = base.make_choice(options,'character setup!')
+			#need your help displaying the choices for the player to pick his character.
+			self.attributes = options[ret]
 
-		ret = base.make_choice(options,'character setup!')
-		#need your help displaying the choices for the player to pick his character.
-		self.attributes = options[ret]
-
-		# haha this looks so disgusting
-		print self.race +' '+self.name+ '\'s final attributes:\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t' % ('agility',self.attributes['agility'],'intelligence',self.attributes['intelligence'],'strength',self.attributes['strength'],'luck',self.attributes['luck'],'mana',self.attributes['mana'])
+			# haha this looks so disgusting
+			print self.race +' '+self.name+ '\'s final attributes:\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t' % ('agility',self.attributes['agility'],'intelligence',self.attributes['intelligence'],'strength',self.attributes['strength'],'luck',self.attributes['luck'],'mana',self.attributes['mana'])
+		else:
+			self.race = test_stats['race']
+			self.attributes = test_stats['attributes']
 
 		self.max_health = self.attributes['strength'] * 10
 		self.health = self.max_health
@@ -226,37 +230,38 @@ class Player(base.Entity):
 			# 	print 'you can\'t do that yet, lol'
 
 
-		if args == 'shop':
-			self.party.current_dungeon.enter_shop()
+			if args == 'shop':
+				self.party.current_dungeon.enter_shop()
 
 
-		if args =='map':
-			ret = ''
-			for x, a in enumerate(self.party.current_dungeon.rooms):
-				for y,b in enumerate(a):
-					if isinstance(b,dungeon.Room) and self.party.current_dungeon.roomsmap[x][y]=='T':
-						ret += 'R '
-					elif(isinstance(b,dungeon.Room) and self.party.current_dungeon.roomsmap[x][y]=='?'):
-						ret+='? '
-					else:
-						ret += 'E '
-				ret += '\n'
-			print ret
+			if args =='map':
+				ret = ''
+				for x, a in enumerate(self.party.current_dungeon.rooms):
+					for y,b in enumerate(a):
+						if isinstance(b,dungeon.Room) and self.party.current_dungeon.roomsmap[x][y]=='T':
+							ret += 'R '
+						elif(isinstance(b,dungeon.Room) and self.party.current_dungeon.roomsmap[x][y]=='?'):
+							ret+='? '
+						else:
+							ret += 'E '
+					ret += '\n'
+				print ret
 
-		if args == 'enter a dungeon':
-			self.party.current_dungeon.leave_dungeon()
+			if args == 'enter a dungeon':
+				self.party.current_dungeon.leave_dungeon()
+
+
+
+			for a in self.inventory:
+				if isinstance(a,weapons.Weapon):
+					if a.equipped: a.do_turn(args)
+				else:
+					a.do_turn(args)
 
 		if not isinstance(self.party.current_dungeon,dungeon.Hub):
 			for a in self.party.current_dungeon.active_room.things:
 				if isinstance(a,thing.InteractiveObject):
 					a.do_turn(args)
-
-		for a in self.inventory:
-			if isinstance(a,weapons.Weapon):
-				if a.equipped: a.do_turn(args)
-			else:
-				a.do_turn(args)
-
 		self.action_points -= 1
 
 	# IMPORTANT- return value of select_target NEEDS to be validated before use to prevent crashes, cause sometimes it'll return None
