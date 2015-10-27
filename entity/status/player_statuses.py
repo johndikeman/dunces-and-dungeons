@@ -54,6 +54,7 @@ class Poison(base.Entity):
 			self.owner.health -= self.damage
 			print '%s takes %f poison damage' % (self.owner.name,self.damage)
 			self.turns -= 1
+			self.damage *= 1.2
 		else:
 			self.owner.statuses.remove(self)
 
@@ -62,7 +63,7 @@ class Poison(base.Entity):
 
 class Bleeding(base.Entity):
 	def __init__(self,turns,damage):
-		super(Poison,self).__init__()
+		super(Bleeding,self).__init__()
 		self.turns = turns
 		self.damage = damage
 		self.name = 'bleeding'
@@ -81,7 +82,7 @@ class Bleeding(base.Entity):
 
 class Maim(base.Entity):
 	def __init__(self,turns,amount):
-		super(Poison,self).__init__()
+		super(Maim,self).__init__()
 		self.turns = turns
 		self.amount = amount
 		self.name = 'maim'
@@ -95,6 +96,21 @@ class Maim(base.Entity):
 
 	def to_str(self):
 		return self.name
+
+class Sleep(base.Entity):
+	def __init__(self):
+		super(Sleep,self).__init__()
+
+	def do_turn(self,options):
+		
+		chance=base.D20.roll()
+		if chance>16
+			self.owner.statuses.remove(self)
+			print '%s has awoken!' % (self.owner.to_str())
+		else
+			print '%s is asleep, and cannot move!' % (self.owner.to_str())
+			self.owner.action_points =0
+
 
 class Blind(base.Entity):
 	def __init__(self,turns):
