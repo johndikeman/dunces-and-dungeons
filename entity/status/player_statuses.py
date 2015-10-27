@@ -60,6 +60,55 @@ class Poison(base.Entity):
 	def to_str(self):
 		return self.name
 
+class Bleeding(base.Entity):
+	def __init__(self,turns,damage):
+		super(Poison,self).__init__()
+		self.turns = turns
+		self.damage = damage
+		self.name = 'bleeding'
+
+	def do_turn(self,option):
+		if self.turns > 0:
+			self.owner.health -= self.damage
+			self.damage /=2
+			print '%s takes %f bleed damage' % (self.owner.name,self.damage)
+			self.turns -= 1
+		else:
+			self.owner.statuses.remove(self)
+
+	def to_str(self):
+		return self.name
+
+class Maim(base.Entity):
+	def __init__(self,turns,amount):
+		super(Poison,self).__init__()
+		self.turns = turns
+		self.amount = amount
+		self.name = 'maim'
+
+	def do_turn(self,option):
+		if self.turns > 0:
+			self.owner.action_points -= amount
+			self.turns -= 1
+		else:
+			self.owner.statuses.remove(self)
+
+	def to_str(self):
+		return self.name
+
+class Blind(base.Entity):
+	def __init__(self,turns):
+		super(Stun,self).__init__()
+		self.turns = turns
+
+	def do_turn(self,options):
+		print '%s is blinded, and will not hit!' % self.owner.to_str()
+		if self.turns > 0:
+			self.owner.action_points = 0
+			self.turns -= 1
+		else:
+			self.owner.statuses.remove(self)
+
 class Burn(base.Entity):
 	def __init__(self,turns,damage):
 		super(Burn,self).__init__()
