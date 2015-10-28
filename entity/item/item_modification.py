@@ -377,7 +377,7 @@ class Arch(Divined):
 			target.statuses.append(s.Stun(self.level/2))
 			target.statuses.append(s.Sleep())
 			target.statuses.append(s.Blind(self.level*2))
-			for a in self.owner.owner.party:
+			for a in self.owner.owner.party.inventory:
 				a.statuses.append(s.Healing())
 			damage*=10
 		target.take_damage(damage)

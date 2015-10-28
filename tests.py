@@ -1,7 +1,24 @@
-import unittest, math
+import unittest, math, inspect, base
 import dungeon.dungeon as d
-import entity.player.players as p
-import entity.item.armor as a
+# player imports
+import entity.player.players as player
+import entity.player.player_inventory as player_inv
+# item imports
+import entity.item.armor as armor
+import entity.item.weapon as weapon
+import entity.item.consumable as consumable
+import entity.item.items as items
+import entity.item.controller as control
+import entity.item.item_modification as item_mods
+# monster imports
+import entity.monster.monster_modification as monster_mods
+import entity.monster.monsters as monsters
+# statuses
+import entity.status.player_statuses as statuses
+# other
+import entity.thing
+import entity.chest
+
 
 class DungeonTest(unittest.TestCase):
     def setUp(self):
@@ -19,8 +36,8 @@ class DungeonTest(unittest.TestCase):
 
 class PlayerTest(unittest.TestCase):
     def setUp(self):
-        self.party = p.Party()
-        self.player = p.Player('john was here',{'race':'Dwarf','attributes':{
+        self.party = player.Party()
+        self.player = player.Player('john was here',{'race':'Dwarf','attributes':{
             'agility': 2,
             'intelligence': 5,
             'strength': 8,
@@ -34,7 +51,7 @@ class PlayerTest(unittest.TestCase):
         self.player = None
 
     def test_armor(self):
-        legs = a.Platelegs(2)
+        legs = armor.Platelegs(2)
         self.player.inventory.append(legs)
         legs.equip()
 
@@ -52,8 +69,12 @@ class PlayerTest(unittest.TestCase):
 
         self.assertEquals(self.player.armor,1)
 
-        self.player.take_damage(self.player,damage)
+        self.player.take_damage(self.player,damage,False)
         self.assertEquals(round(start - self.player.health),round(damage - (damage * ((25 * math.log(1+1, 11) + 3) / 100.0))))
+
+# class WeaponMods(unittest.TestCase):
+#     def setUp(self):
+#         for a in inspect.getmembers(item_mods)
 
 
 if __name__ == '__main__':
