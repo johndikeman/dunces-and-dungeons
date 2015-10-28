@@ -109,7 +109,7 @@ RACES = {
 }
 
 class Player(base.Entity):
-	def __init__(self,name,test_stats=None): # starting is for test cases
+	def __init__(self,name,test_stats=None): # for test cases
 		super(Player,self).__init__()
 		self.name = name
 		self.party = None

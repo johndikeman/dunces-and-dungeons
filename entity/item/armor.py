@@ -11,6 +11,10 @@ class Armor(entity.item.items.Item):
 		super(Armor,self).equip()
 		self.apply()
 
+	def unequip(self):
+		super(Armor,self).unequip()
+		self.exit()
+
 class Shield(Armor):
 	def __init__(self,level):
 		super(Shield,self).__init__()

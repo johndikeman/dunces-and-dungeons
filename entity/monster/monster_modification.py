@@ -184,7 +184,7 @@ class Funky(ModifyMons):
 
 	def do_turn(self,target):
 		chance =  base.D20.roll()
-		if chance > 19
+		if chance > 19:
 			print "The %s regenerates health!" %self.owner.name
 			self.owner.health*=2
 

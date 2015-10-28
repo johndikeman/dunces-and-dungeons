@@ -70,7 +70,7 @@ class Entity(object):
 		pass
 
 
-	def take_damage(self,attacker,damage):
+	def take_damage(self,attacker,damage,wait=True):
 		damage = float(damage)
 		# compute damage resistance based on the armor
 		res = (25 * math.log(self.armor + 1, 11) + 3) / 100.0
@@ -83,7 +83,8 @@ class Entity(object):
 			self.alive = False
 			print "(%s) has died by the hand of (%s)" % (self.to_str(),attacker.to_str())
 			self.kill(attacker)
-		time.sleep(1)
+		if wait:
+			time.sleep(1)
 
 	def to_str(self):
 		return 'some fun entity'
@@ -127,7 +128,7 @@ class Inventory():
 
 	def append(self,thing):
 		thing.owner = self.owner
-		thing.apply()
+		# thing.apply()
 
 		self.list.append(thing)
 
