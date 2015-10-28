@@ -115,7 +115,7 @@ class Player(base.Entity):
 		self.party = None
 		self.action_points = 2
 		self.base_ap = 2
-		self.options = ['leave','examine','dev-examine','map','inventory']
+		self.options = ['exit room','examine','dev-examine','map','inventory']
 		self.alive = True
 
 		self.health = 0
@@ -184,7 +184,7 @@ class Player(base.Entity):
 
 	def return_options(self):
 		if not isinstance(self.owner.current_dungeon,dungeon.Hub):
-			self.options = ['leave','examine','map']
+			self.options = ['exit room','examine','map']
 			if self.party.current_dungeon.active_room:
 				for a in self.party.current_dungeon.active_room.things:
 					if isinstance(a,thing.InteractiveObject):
@@ -203,7 +203,7 @@ class Player(base.Entity):
 			if args == 'save':
 				self.party.current_dungeon.save_game()
 
-			if args == 'leave':
+			if args == 'exit room':
 				# door should be the INDEX of the returned list, ie 0 1 2 3
 				door = base.make_choice([a for a in self.party.current_dungeon.active_room.get_neighbors().keys()],'room')
 				self.party.current_dungeon.active_room.move_to(door)
