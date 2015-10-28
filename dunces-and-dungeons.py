@@ -15,7 +15,7 @@ class Manager:
 			if latest == RELEASE_ID:
 				print 'you\'re up to date!'
 
-			elif latest > RELEASE_ID:
+			else:
 				print "---------------===========-----------\nan update to dunces and dungeons has been released! go download it now from here: https://github.com/microwaveabletoaster/dunces-and-dungeons/releases it probably contains super important bugfixes and or more neat features, so don't dawdle!! \n\n<3 the team\n"
 		except:
 			print 'could not check for update :('
