@@ -1,7 +1,8 @@
 import base
-import entity.monster.monster_modification
+import entity.monster.monster_modification as mo
 import entity.item.weapon_modification
 import entity.item.armor_modification
+import random
 
 class Apply(object):
 	def __init__(self):

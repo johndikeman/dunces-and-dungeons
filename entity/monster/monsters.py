@@ -85,7 +85,7 @@ def compute(comp,val):
 
 def spawn(level):
 	ind = 0
-	app=Apply()
+	app=mo.Apply()
 	ret = []
 	compound = []
 	while ind < len(MONSTERLIST.keys()):
