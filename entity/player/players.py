@@ -279,15 +279,16 @@ class Player(base.Entity):
 
 	def retaliate(self):
 		try:
-			if(self.equipment['left'].info2=='weapon' and self.equipment['right'].info2=='weapon'):
+			if(isinstance(self.equipment['left'],weapons.Weapon) and isinstance(self.equipment['right'],weapons.Weapon)):
 				return self.equipment['left'].damage/3+self.equipment['right'].damage/3
-			elif(self.equipment['left'].info2=='weapon'):
+			elif(isinstance(self.equipment['left'],weapons.Weapon)):
 				return self.equipment['left'].damage/2
-			elif(self.equipment['right'].info2=='weapon'):
+			elif(isinstance(self.equipment['right'],weapons.Weapon)):
 				return self.equipment['right'].damage/2
 			else:
 				return self.attributes['strength']/4
 		except:
+			print "error here, 291 monsters.py"
 			return self.attributes['strength']/4
 
 
