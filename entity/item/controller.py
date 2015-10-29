@@ -4,6 +4,7 @@ import entity.item.consumable as consumable
 import entity.item.armor as armor
 import entity.item.items as item
 import entity.monster.monsters as r
+import entity.modifier as m
 
 
 
@@ -16,7 +17,7 @@ class ItemController():
 			'health':[consumable.HealthPotion]
 		}
 		self.level = level
-		self.applier = r.Apply()
+		self.applier = m.Apply()
 
 	def generate(self,kind=None):
 		if kind:

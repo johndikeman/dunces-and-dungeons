@@ -9,7 +9,7 @@ import entity.item.weapon as weapon
 import entity.item.consumable as consumable
 import entity.item.items as items
 import entity.item.controller as control
-import entity.item.item_modification as item_mods
+import entity.item.weapon_modification as item_mods
 # monster imports
 import entity.monster.monster_modification as monster_mods
 import entity.monster.monsters as monsters
