@@ -1,6 +1,6 @@
 import base, random, time
 import entity.modifier as mo
-
+import entity.monster.monster_modification as mod
 class Monster(base.Entity):
 	def __init__(self,level):
 		super(Monster,self).__init__()
@@ -195,6 +195,7 @@ class WaterElemental(Elemental):
 class FireElemental(Elemental):
 	def __init__(self,level):
 		super(FireElemental,self).__init__(level)
+		self.modif=[mod.Scorched, mod.Dank]
 		self.health=10+self.level*12
 		self.power=18+(self.level-1)*12
 		self.name="Fire Elemental"
@@ -204,6 +205,7 @@ class FireElemental(Elemental):
 class EarthElemental(Elemental):
 	def __init__(self,level):
 		super(EarthElemental,self).__init__(level)
+		self.modif=[mod.Acidic, mod.Caustic, mod.Decaying, mod.Destructive, mod.Dieing, mod.Flowery, mod.Forgotten, mod.Foul, mod.Musky, mod.Nasty, mod.Normal, mod.Rancid, mod.Scorched]
 		self.health=100+self.level*20
 		self.power=4+(self.level-1)*8
 		self.name="Earth Elemental"
@@ -211,6 +213,7 @@ class EarthElemental(Elemental):
 class Demigod(Monster):
 	def __init__(self,level):
 		super(Demigod,self).__init__(level)
+		self.modif=[mod.Camphoric, mod.Dank, mod.Destructive, mod.Forgotten, mod.Funky, mod.Lightning, mod.Nasty]
 		self.multiplier=1.6
 		self.health=100+self.level*18
 		self.power=20+(self.level-1)*14
@@ -220,6 +223,7 @@ class Demigod(Monster):
 class Overcharger(Monster):
 	def __init__(self,level):
 		super(Overcharger,self).__init__(level)
+		self.modif=[mod.Dank, mod.Destructive, mod.Forgotten, mod.Funky, mod.Lightning, mod.Nasty]
 		self.multiplier=1.05
 		self.health=5+self.level*5
 		self.power=30+(self.level-1)*40
@@ -230,6 +234,7 @@ class Overcharger(Monster):
 class Cyclops(Monster):
 	def __init__(self,level):
 		super(Cyclops,self).__init__(level)
+		self.modif=[mod.Tiny, mod.Camphoric, mod.Caustic, mod.Dank, mod.Destructive, mod.Dieing, mod.Forgotten, mod.Lowly, mod.Musky, mod.Nasty, mod.Normal, mod.Weak]
 		self.health=60+self.level*15
 		self.power=6+(self.level-1)*10
 		self.name="Cyclops"
