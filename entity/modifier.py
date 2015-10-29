@@ -1,6 +1,6 @@
-import base
-import entity.monster.monster_modification
-import entity.item.weapon_modification
+import base,random
+import entity.monster.monster_modification as mo
+import entity.item.weapon_modification as wm
 import entity.item.armor_modification
 
 class Apply(object):
@@ -15,51 +15,52 @@ class Apply(object):
 		return Monster
 
 	def modify_item(self,Item):
-		Mod={"Common": {"Common ":1,
-						"Iron ":1.1,
-						"Rusty ":.5,
-						"Used ":.8,
-						"Weathered ":.7,
-						"Wooden ":.5,
-						"Notched ":.9,
-						"Scratched ":.9},
-			 "Uncommon":{"Good ":1.3,
-			 			 "Shining ":1.4,
-			 			 "Steel ":1.6,
-			 			 "Archaic ":1.3,
-			 			 "Brutal ":2},
-			 "Rare":{"Ceremonial ":2.5,
-			 		 "Silver ":2.4,
-			 		 "Killing ":3,
-			 		 "Blessed ":3.2},
-			 "Legendary":{"Kingly ":4,
-			 			  "Enchanted ":3.8,
-			 			  "Master ":4.6},
-			 "Divine": {"Celestial ":6,
-			 			"Divine ":6.8,
-			 			"Heavenly ":6.4,
-			 			"Arch":8}
+		Mod = {
+			"Common":
+				[wm.Common,
+				wm.Iron,
+				wm.Rusty,
+				wm.Used,
+				wm.Weathered,
+				wm.Wooden,
+				wm.Notched,
+				wm.Scratched],
+			 "Uncommon":
+				[wm.Good,
+				 wm.Shining,
+				 wm.Steel,
+				 wm.Archaic,
+				 wm.Brutal],
+			 "Rare":
+				[wm.Ceremonial,
+				 wm.Silver,
+				 wm.Killing,
+				 wm.Blessed],
+			 "Legendary":
+				[wm.Kingly,
+				 wm.Enchanted,
+				 wm.Master],
+			 "Divined":
+				[wm.Celestial,
+				wm.Divine,
+				wm.Heavenly,
+				wm.Arch]
 			 }
 		rander=random.random()*100
-		mymap={}
+		mylist = []
 		if(rander<76):
-			mymap=Mod["Common"]
+			mylist=Mod["Common"]
 		elif(rander<91):
-			mymap=Mod["Uncommon"]
+			mylist=Mod["Uncommon"]
 		elif(rander<99):
-			mymap=Mod["Rare"]
+			mylist=Mod["Rare"]
 		elif(rander<99.99):
-			mymap=Mod["Legendary"]
+			mylist=Mod["Legendary"]
 		else:
-			mymap=Mod['Divine']
-		namer = random.choice(mymap.keys())
-		run = mymap[namer]
-		try:
-			Item.damage=Item.damage*run
-		except:
-			try:
-				Item.armor=Item.armor*run
-			except:
-				print "HELP ME BOBBY"
-		Item.name=namer+Item.name
+			mylist=Mod['Divine']
+		namer = random.choice(mylist)
+		modification_instance = namer()
+		Item.modifiers.append(modification_instance)
+
+		Item.name="%s %s" % (modification_instance.to_str(), Item.name)
 		return Item

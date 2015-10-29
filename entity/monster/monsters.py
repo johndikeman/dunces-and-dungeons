@@ -20,7 +20,6 @@ class Monster(base.Entity):
 		self.options = []
 		self.inventory = base.Inventory(self)
 		self.statuses = base.Inventory(self)
-		self.modifiers = base.Inventory(self)
 		self.owner = None
 		self.revealed = False
 		self.xp_reward = self.level * 10
@@ -85,7 +84,7 @@ def compute(comp,val):
 
 def spawn(level):
 	ind = 0
-	app=Apply()
+	app=mo.Apply()
 	ret = []
 	compound = []
 	while ind < len(MONSTERLIST.keys()):

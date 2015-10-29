@@ -14,6 +14,8 @@ class Entity(object):
 		self.options = []
 		self.inventory = Inventory(self)
 		self.statuses = Inventory(self)
+		self.modifiers = Inventory(self)
+
 		self.owner = None
 		self.armor = 1
 		self.id = random.random() * 100000000
@@ -39,7 +41,7 @@ class Entity(object):
 			self.level_up_threshold = self.level * 10
 			self.check_for_levelup()
 
-	def examine(self):
+	def examine(self,arg):
 		pass
 	# def kill(self):
 	# 	self.alive = False
