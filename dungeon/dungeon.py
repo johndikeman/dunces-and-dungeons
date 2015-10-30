@@ -29,6 +29,7 @@ class Dungeon(object):
 		self.roomsmap=[]
 
 		self.size = size
+		self.gold_reward = (self.level * 100) * self.size
 		self.room_num = 1
 		# okso current_room is only used in generation. to access the ACTIVE room, use self.active_room instead.
 
@@ -276,4 +277,8 @@ class LeaveOption(thing.InteractiveObject):
 
 	def do_turn(self,arg):
 		if arg == self.options[0]:
+			for player in self.owner.containing_dungeon.party.inventory:
+				player.gold += (self.owner.containing_dungeon.gold_reward / 5)
+			print 'each player is awarded %d gold!' % (self.owner.containing_dungeon.gold_reward / 5)
+
 			self.owner.containing_dungeon.leave_dungeon()

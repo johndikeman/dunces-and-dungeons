@@ -1,4 +1,5 @@
 import entity.item.items
+import entity.status.player_statuses as s
 # this extends item but overrides return_options to allow it to return an option
 # if it isnt equipped
 class Consumable(entity.item.items.Item):
