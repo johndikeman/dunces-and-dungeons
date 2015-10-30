@@ -31,7 +31,7 @@ class ItemController():
 			return random.choice([self.get_spells(),self.get_armor(),self.get_weapon(),self.get_health()])
 
 	def get_weapon(self):
-		weapon_instance = self.applier.modify_item(random.choice(self.items['weapons'])(self.level))
+		weapon_instance = self.applier.modify_weapon(random.choice(self.items['weapons'])(self.level))
 		# if base.D12.roll() > 9:
 		# 	word = random.choice(words.weapon_words)
 		# 	weapon_instance.name = '%s %s' % (word, weapon_instance.name)
@@ -44,7 +44,7 @@ class ItemController():
 		return weapon_instance
 
 	def get_armor(self):
-		armor_instance = self.applier.modify_item(random.choice(self.items['armor'])(self.level))
+		armor_instance = self.applier.modify_armor(random.choice(self.items['armor'])(self.level))
 		return armor_instance
 
 	def get_spells(self):

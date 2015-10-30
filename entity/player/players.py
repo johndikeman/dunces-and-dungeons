@@ -165,9 +165,6 @@ class Player(base.Entity):
 		self.max_health = self.attributes['strength'] * 10
 		self.health = self.max_health
 
-
-		# THIS IS NOT FINAL- ITS A TEST
-		self.inventory.append(weapons.Sword(self.level))
 		self.inventory.append(inv.InventoryHandler())
 
 	def level_up(self):
@@ -181,6 +178,14 @@ class Player(base.Entity):
 			return True
 		print "you don't have enough gold for that!"
 		return False
+
+	# this method had to be overridden to make armor modifiers work
+	def take_damage(self,attacker,damage,wait=True):
+		for slot, instance in self.equipment.iteritems():
+			if slot is not "left" and slot is not "right":
+				if instance:
+					instance.do_turn(attacker,damage)
+		super(Player,self).take_damage(attacker,damage,wait)
 
 	def return_options(self):
 		if not isinstance(self.owner.current_dungeon,dungeon.Hub):

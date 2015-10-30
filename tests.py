@@ -10,6 +10,8 @@ import entity.item.consumable as consumable
 import entity.item.items as items
 import entity.item.controller as control
 import entity.item.weapon_modification as item_mods
+import entity.item.armor_modification as armor_mods
+import entity.modifier
 # monster imports
 import entity.monster.monster_modification as monster_mods
 import entity.monster.monsters as monsters
@@ -71,6 +73,22 @@ class PlayerTest(unittest.TestCase):
 
         self.player.take_damage(self.player,damage,False)
         self.assertEquals(round(start - self.player.health),round(damage - (damage * ((25 * math.log(1+1, 11) + 3) / 100.0))))
+
+    def test_armor_modifiers(self):
+        legs = armor.Platelegs(2)
+        begin = legs.armor
+
+        mod = armor_mods.Good()
+        legs.modifiers.append(mod)
+        mod.apply()
+        self.assertEquals(legs.armor,begin * 1.3)
+        self.player.inventory.append(legs)
+        legs.equip()
+
+        self.assertEquals(self.player.armor,(legs.armor) + 1)
+
+        self.player.take_damage(self.player,10,False)
+
 
 # class WeaponMods(unittest.TestCase):
 #     def setUp(self):

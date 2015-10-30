@@ -1,7 +1,8 @@
 import base,random
 import entity.monster.monster_modification as mo
 import entity.item.weapon_modification as wm
-import entity.item.armor_modification
+import entity.item.armor_modification as ar
+
 
 class Apply(object):
 	def __init__(self):
@@ -11,10 +12,49 @@ class Apply(object):
 	def modify_monster(self,Monster):
 		mod = random.choice(self.monster_modifiers)()
 		Monster.modifiers.append(mod)
+		mod.apply()
 		Monster.name = "%s %s" % (mod.to_str(),Monster.name)
 		return Monster
 
-	def modify_item(self,Item):
+	# lol this method will work for armor too cause theyre the exact same modifiers
+	def modify_armor(self,Item):
+		Mod = {}
+		# i sincerely apologize about this 
+		Mod = {
+			"Common":
+				[ar.Common,
+				ar.Iron,
+				ar.Rusty,
+				ar.Used,
+				ar.Weathered,
+				ar.Wooden,
+				ar.Notched,
+				ar.Scratched],
+			 "Uncommon":
+				[ar.Good,
+				 ar.Shining,
+				 ar.Steel,
+				 ar.Archaic,
+				 ar.Brutal],
+			 "Rare":
+				[ar.Ceremonial,
+				 ar.Silver,
+				 ar.Killing,
+				 ar.Blessed],
+			 "Legendary":
+				[ar.Kingly,
+				 ar.Enchanted,
+				 ar.Master],
+			 "Divined":
+				[ar.Celestial,
+				ar.Divine,
+				ar.Heavenly,
+				ar.Arch]
+			 }
+			
+		return self.decide(Mod,Item)
+
+	def modify_weapon(self,Item):
 		Mod = {
 			"Common":
 				[wm.Common,
@@ -46,6 +86,9 @@ class Apply(object):
 				wm.Heavenly,
 				wm.Arch]
 			 }
+		return self.decide(Mod,Item)
+
+	def decide(self,Mod,Item):
 		rander=random.random()*100
 		mylist = []
 		if(rander<76):
@@ -61,6 +104,6 @@ class Apply(object):
 		namer = random.choice(mylist)
 		modification_instance = namer()
 		Item.modifiers.append(modification_instance)
-
+		modification_instance.apply()
 		Item.name="%s %s" % (modification_instance.to_str(), Item.name)
 		return Item

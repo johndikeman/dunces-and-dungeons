@@ -2,7 +2,7 @@ import base, random, time
 import entity.status.player_statuses as s
 import math
 
-class ModifyItems(object):
+class ModifyItems(base.Entity):
 	def __init__(self):
 		pass
 
@@ -13,7 +13,7 @@ class ModifyItems(object):
 		return "Modified"
 
 class Common(ModifyItems):
-	def __init__(self):
+	def apply(self):
 		pass
 
 	def do_turn(self,target,damage):

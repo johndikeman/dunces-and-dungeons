@@ -2,7 +2,7 @@ import base, random, time
 import entity.status.player_statuses as s
 import math
 
-class ModifyItems(object):
+class ModifyItems(base.Entity):
 	def __init__(self):
 		pass
 
@@ -13,7 +13,7 @@ class ModifyItems(object):
 		return "Modified"
 
 class Common(ModifyItems):
-	def __init__(self):
+	def apply(self):
 		pass
 
 	def do_turn(self,target,damage):
@@ -23,8 +23,8 @@ class Common(ModifyItems):
 		return "Common"
 
 class Basic(Common):
-	def __init__(self,item):
-		item.armor*=1
+	def apply(self):
+		self.owner.armor*=1
 
 	def do_turn(self,target,damage):
 		return damage
@@ -33,8 +33,8 @@ class Basic(Common):
 		return "Basic"
 
 class Iron(Common):
-	def __init__(self,item):
-		item.armor*=1.1
+	def apply(self):
+		self.owner.armor*=1.1
 
 	def do_turn(self,target,damage):
 		chance=base.D20.roll()
@@ -46,8 +46,8 @@ class Iron(Common):
 		return "Iron"
 
 class Rusty(Common):
-	def __init__(self,item):
-		item.armor*=.5
+	def apply(self):
+		self.owner.armor*=.5
 
 	def do_turn(self,target,damage):
 		chance=base.D20.roll()
@@ -59,8 +59,8 @@ class Rusty(Common):
 		return "Rusty"
 
 class Used(Common):
-	def __init__(self,item):
-		item.armor*=.8
+	def apply(self):
+		self.owner.armor*=.8
 
 	def do_turn(self,target,damage):
 		return damage
@@ -69,8 +69,8 @@ class Used(Common):
 		return "Used"
 
 class Weathered(Common):
-	def __init__(self,item):
-		item.armor*=.7
+	def apply(self):
+		self.owner.armor*=.7
 
 	def do_turn(self,target,damage):
 		return damage
@@ -79,8 +79,8 @@ class Weathered(Common):
 		return "Weathered"
 
 class Wooden(Common):
-	def __init__(self,item):
-		item.armor*=.5
+	def apply(self):
+		self.owner.armor*=.5
 
 	def do_turn(self,target,damage):
 		return damage
@@ -89,8 +89,8 @@ class Wooden(Common):
 		return "Wooden"
 
 class Notched(Common):
-	def __init__(self,item):
-		item.armor*=.9
+	def apply(self):
+		self.owner.armor*=.9
 
 	def do_turn(self,target,damage):
 		chance=base.D20.roll()
@@ -102,8 +102,8 @@ class Notched(Common):
 		return "Notched"
 
 class Scratched(Common):
-	def __init__(self,item):
-		item.armor*=.9
+	def apply(self):
+		self.owner.armor*=.9
 
 	def do_turn(self,target,damage):
 		return damage
@@ -112,7 +112,7 @@ class Scratched(Common):
 		return "Scratched"
 
 class Uncommon(ModifyItems):
-	def __init__(self,item):
+	def apply(self):
 		pass
 
 	def do_turn(self,target,damage):
@@ -122,8 +122,8 @@ class Uncommon(ModifyItems):
 		return "Uncommon"
 
 class Good(Uncommon):
-	def __init__(self,item):
-		item.armor*=1.3
+	def apply(self):
+		self.owner.armor*=1.3
 
 	def do_turn(self,target,damage):
 		return damage
@@ -132,8 +132,8 @@ class Good(Uncommon):
 		return "Good"
 
 class Shining(Uncommon):
-	def __init__(self,item):
-		item.armor*=1.6
+	def apply(self):
+		self.owner.armor*=1.6
 
 	def do_turn(self,target,damage):
 		return damage
@@ -142,8 +142,8 @@ class Shining(Uncommon):
 		return "Shining"
 
 class Steel(Uncommon):
-	def __init__(self,item):
-		item.armor*=1.3
+	def apply(self):
+		self.owner.armor*=1.3
 
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
@@ -158,8 +158,8 @@ class Steel(Uncommon):
 		return "Steel"
 
 class Archaic(Uncommon):
-	def __init__(self,item):
-		item.armor*=1.3
+	def apply(self):
+		self.owner.armor*=1.3
 
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
@@ -171,8 +171,8 @@ class Archaic(Uncommon):
 		return "Archaic"
 
 class Brutal(Uncommon):
-	def __init__(self,item):
-		item.armor*=1.5
+	def apply(self):
+		self.owner.armor*=1.5
 
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
@@ -187,7 +187,7 @@ class Brutal(Uncommon):
 		return "Brutal"
 
 class Rare(ModifyItems):
-	def __init__(self,item):
+	def apply(self):
 		pass
 
 	def do_turn(self,target,damage):
@@ -197,8 +197,8 @@ class Rare(ModifyItems):
 		return "Rare"
 
 class Ceremonial(Rare):
-	def __init__(self,item):
-		item.armor*=2.5
+	def apply(self):
+		self.owner.armor*=2.5
 
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
@@ -210,8 +210,8 @@ class Ceremonial(Rare):
 		return "Ceremonial"
 
 class Silver(Rare):
-	def __init__(self,item):
-		item.armor*=2.4
+	def apply(self):
+		self.owner.armor*=2.4
 
 	def do_turn(self,target,damage):
 		#not finished, make wolves weak to it.
@@ -221,8 +221,8 @@ class Silver(Rare):
 		return "Silver"
 
 class Killing(Rare):
-	def __init__(self,item):
-		item.armor*=3
+	def apply(self):
+		self.owner.armor*=3
 
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
@@ -234,8 +234,8 @@ class Killing(Rare):
 		return "Killing"
 
 class Blessed(Rare):
-	def __init__(self,item):
-		item.armor*=3.2
+	def apply(self):
+		self.owner.armor*=3.2
 
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
@@ -247,7 +247,7 @@ class Blessed(Rare):
 		return "Blessed"
 
 class Legendary(ModifyItems):
-	def __init__(self,item):
+	def apply(self):
 		pass
 
 	def do_turn(self,target,damage):
@@ -257,8 +257,8 @@ class Legendary(ModifyItems):
 		return "Legendary"
 
 class Kingly(Legendary):
-	def __init__(self,item):
-		item.armor*=4
+	def apply(self):
+		self.owner.armor*=4
 
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
@@ -270,8 +270,8 @@ class Kingly(Legendary):
 		return "Kingly"
 
 class Enchanted(Legendary):
-	def __init__(self,item):
-		item.armor*=4.2
+	def apply(self):
+		self.owner.armor*=4.2
 
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
@@ -283,8 +283,8 @@ class Enchanted(Legendary):
 		return "Enchanted"
 
 class Master(Legendary):
-	def __init__(self,item):
-		item.armor*=4.6
+	def apply(self):
+		self.owner.armor*=4.6
 
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
@@ -302,7 +302,7 @@ class Master(Legendary):
 		return "Master"
 
 class Divined(ModifyItems):
-	def __init__(self,item):
+	def apply(self):
 		pass
 
 	def do_turn(self,target,damage):
@@ -312,8 +312,8 @@ class Divined(ModifyItems):
 		return "Divine"
 
 class Celestial(Divined):
-	def __init__(self,item):
-		item.armor*=6
+	def apply(self):
+		self.owner.armor*=6
 
 	def do_turn(self,target,damage):
 		chance=base.D40.roll()
@@ -329,8 +329,8 @@ class Celestial(Divined):
 		return "Celestial"
 
 class Divine(Divined):
-	def __init__(self,item):
-		item.armor*=6.8
+	def apply(self):
+		self.owner.armor*=6.8
 
 	def do_turn(self,target,damage):
 		chance = base.D40.roll()
@@ -344,8 +344,8 @@ class Divine(Divined):
 		return "Divine"
 
 class Heavenly(Divined):
-	def __init__(self,item):
-		item.armor*=6.4
+	def apply(self):
+		self.owner.armor*=6.4
 
 	def do_turn(self,target,damage):
 		chance = base.D40.roll()
@@ -363,8 +363,8 @@ class Heavenly(Divined):
 		return "Heavenly"
 
 class Arch(Divined):
-	def __init__(self,item):
-		item.armor*=8
+	def apply(self):
+		self.owner.armor*=8
 
 	def do_turn(self,target,damage):
 		chance=base.D100.roll()
