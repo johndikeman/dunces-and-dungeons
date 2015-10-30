@@ -89,6 +89,14 @@ class PlayerTest(unittest.TestCase):
 
         self.player.take_damage(self.player,10,False)
 
+    # def test_stun(self):
+    #     dung = d.Dungeon(20,3,self.party)
+    #     self.party.current_dungeon = dung
+    #     dung.start()
+    #     self.player.statuses.append(statuses.Stun(2))
+    #     for a in range(3):
+    #         self.party.handle_player_turn()
+
 
 # class WeaponMods(unittest.TestCase):
 #     def setUp(self):
