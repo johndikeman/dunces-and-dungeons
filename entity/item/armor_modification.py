@@ -52,7 +52,7 @@ class Rusty(Common):
 	def do_turn(self,target,damage):
 		chance=base.D20.roll()
 		if chance>19:
-			target.statuses.append(s.Poison(2,2*self.level))
+			target.statuses.append(s.Poison(2,2*self.owner.level))
 		return damage
 
 	def to_str(self):
@@ -95,7 +95,7 @@ class Notched(Common):
 	def do_turn(self,target,damage):
 		chance=base.D20.roll()
 		if chance>19:
-			target.statuses.append(s.Bleeding(2,4*self.level))
+			target.statuses.append(s.Bleeding(2,4*self.owner.level))
 		return damage
 
 	def to_str(self):
@@ -148,7 +148,7 @@ class Steel(Uncommon):
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
 		if chance > 16:
-			target.statuses.append(s.Bleeding(3,3*self.level))
+			target.statuses.append(s.Bleeding(3,3*self.owner.level))
 		chance2 = base.D20.roll()
 		if chance2 > 18:
 			target.statuses.append(s.Maim(2,2))
@@ -164,7 +164,7 @@ class Archaic(Uncommon):
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
 		if chance > 16:
-			target.statuses.append(s.Poison(3,3*self.level))
+			target.statuses.append(s.Poison(3,3*self.owner.level))
 		return damage
 
 	def to_str(self):
@@ -177,7 +177,7 @@ class Brutal(Uncommon):
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
 		if chance > 16:
-			target.statuses.append(s.Bleeding(3,3*self.level))
+			target.statuses.append(s.Bleeding(3,3*self.owner.level))
 		chance2 = base.D20.roll()
 		if chance2 > 16:
 			target.statuses.append(s.Maim(1,3))
@@ -203,7 +203,7 @@ class Ceremonial(Rare):
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
 		if chance > 16:
-			self.owner.owner.gold+=self.level
+			self.owner.owner.gold+=self.owner.level
 		return damage
 
 	def to_str(self):
@@ -240,7 +240,7 @@ class Blessed(Rare):
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
 		if chance > 18:
-			target.statuses.append(s.Blind(math.round(math.pow(1.1,self.level))))
+			target.statuses.append(s.Blind(math.round(math.pow(1.1,self.owner.level))))
 		return damage
 
 	def to_str(self):
@@ -263,7 +263,7 @@ class Kingly(Legendary):
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
 		if chance > 16:
-			self.owner.owner.gold+=self.level*1.5
+			self.owner.owner.gold+=self.owner.level*1.5
 		return damage
 
 	def to_str(self):
@@ -295,7 +295,7 @@ class Master(Legendary):
 			target.statuses.append(s.Maim(2))
 		chance3 = base.D20.roll()
 		if chance3 > 16:
-			target.statuses.append(s.Bleeding(2,self.level*6))
+			target.statuses.append(s.Bleeding(2,self.owner.level*6))
 		return damage
 
 	def to_str(self):
@@ -354,10 +354,10 @@ class Heavenly(Divined):
 			print 'Hey if there is an error its on 354 of item_modification.py'
 			for a in self.owner.owner.party.current_dungeon.active_room.things:
 				if isinstance(a,Monster):
-					a.take_damage(self.owner,20*self.level)
+					a.take_damage(self.owner,20*self.owner.level)
 					chance2=base.D20.roll()
 					if chance2>14:
-						a.statuses.append(s.Burn(self.level,self.level*8))
+						a.statuses.append(s.Burn(self.owner.level,self.owner.level*8))
 
 	def to_str(self):
 		return "Heavenly"
@@ -371,13 +371,13 @@ class Arch(Divined):
 		if chance >99:
 			print 'The Arch Powers of the World infuse your body!'
 			print 'Mortal Blast!'
-			target.statuses.append(s.Burn(self.level,100))
-			target.statuses.append(s.Poison(self.level,120))
-			target.statuses.append(s.Bleeding(self.level,1000))
-			target.statuses.append(s.Maim(self.level))
-			target.statuses.append(s.Stun(self.level/2))
+			target.statuses.append(s.Burn(self.owner.level,100))
+			target.statuses.append(s.Poison(self.owner.level,120))
+			target.statuses.append(s.Bleeding(self.owner.level,1000))
+			target.statuses.append(s.Maim(self.owner.level))
+			target.statuses.append(s.Stun(self.owner.level/2))
 			target.statuses.append(s.Sleep())
-			target.statuses.append(s.Blind(self.level*2))
+			target.statuses.append(s.Blind(self.owner.level*2))
 			for a in self.owner.owner.party.inventory:
 				a.statuses.append(s.Healing())
 			damage/=10
