@@ -203,7 +203,7 @@ class Ceremonial(Rare):
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
 		if chance > 16:
-			self.owner.owner.gold+=self.level
+			self.owner.owner.gold+=self.owner.level
 		target.take_damage(self.owner.owner,damage)
 
 	def to_str(self):
@@ -263,7 +263,7 @@ class Kingly(Legendary):
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
 		if chance > 16:
-			self.owner.owner.gold+=self.level*1.5
+			self.owner.owner.gold+=self.owner.level*1.5
 		target.take_damage(self.owner.owner,damage)
 
 	def to_str(self):

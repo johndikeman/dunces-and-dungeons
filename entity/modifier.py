@@ -22,8 +22,7 @@ class Apply(object):
 		# i sincerely apologize about this 
 		Mod = {
 			"Common":
-				[ar.Common,
-				ar.Iron,
+				[ar.Iron,
 				ar.Rusty,
 				ar.Used,
 				ar.Weathered,
@@ -57,8 +56,7 @@ class Apply(object):
 	def modify_weapon(self,Item):
 		Mod = {
 			"Common":
-				[wm.Common,
-				wm.Iron,
+				[wm.Iron,
 				wm.Rusty,
 				wm.Used,
 				wm.Weathered,
