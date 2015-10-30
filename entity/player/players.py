@@ -285,11 +285,11 @@ class Player(base.Entity):
 	def retaliate(self):
 		try:
 			if(isinstance(self.equipment['left'],weapons.Weapon) and isinstance(self.equipment['right'],weapons.Weapon)):
-				return self.equipment['left'].damage/3+self.equipment['right'].damage/3
+				return (self.equipment['left'].damage/3+self.equipment['right'].damage/3)*self.attributes['strength']/4
 			elif(isinstance(self.equipment['left'],weapons.Weapon)):
-				return self.equipment['left'].damage/2
+				return (self.equipment['left'].damage/2)*self.attributes['strength']/4
 			elif(isinstance(self.equipment['right'],weapons.Weapon)):
-				return self.equipment['right'].damage/2
+				return (self.equipment['right'].damage/2)*self.attributes['strength']/4
 			else:
 				return self.attributes['strength']/4
 		except:
