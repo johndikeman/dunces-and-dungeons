@@ -1,5 +1,7 @@
 import random, math, time
 
+INSTRUCTION_QUEUE = []
+
 class Entity(object):
 	def __init__(self):
 		# ATTRIBUTES
@@ -188,7 +190,14 @@ def make_choice(choices,thing=None,backable=False):
 	for ind, a in enumerate(choices):
 		print "\t%s (%d)\n" % (a, ind)
 
-	ans = raw_input()
+	# the instruction queue is used in tests to make choices for the player.
+	if len(INSTRUCTION_QUEUE) != 0:
+		try:
+			ans = choices.index(INSTRUCTION_QUEUE.pop())
+		except:
+			raise Exception("the value in the instruction queue wasn't an option, bud.")
+	else:
+		ans = raw_input()
 	try:
 		ret = int(ans)
 		if ret > len(choices) - 1:

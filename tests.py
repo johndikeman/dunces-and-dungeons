@@ -38,6 +38,7 @@ class DungeonTest(unittest.TestCase):
 
 class PlayerTest(unittest.TestCase):
     def setUp(self):
+        base.INSTRUCTION_QUEUE = []
         self.party = player.Party()
         self.player = player.Player('john was here',{'race':'Dwarf','attributes':{
             'agility': 2,
@@ -49,6 +50,7 @@ class PlayerTest(unittest.TestCase):
         self.party.add_player(self.player)
 
     def tearDown(self):
+        base.INSTRUCTION_QUEUE = []
         self.party = None
         self.player = None
 
@@ -89,13 +91,23 @@ class PlayerTest(unittest.TestCase):
 
         self.player.take_damage(self.player,10,False)
 
-    # def test_stun(self):
-    #     dung = d.Dungeon(20,3,self.party)
-    #     self.party.current_dungeon = dung
-    #     dung.start()
-    #     self.player.statuses.append(statuses.Stun(2))
-    #     for a in range(3):
-    #         self.party.handle_player_turn()
+    def test_armor_mods(self):
+        for name, obj in inspect.getmembers(armor_mods):
+            if inspect.isclass(obj):
+                if name not in ['ModifyItems','Common','Uncommon','Rare','Legendary','Divined']: # divined will cause problems
+                    self.setUp()
+                    legs = armor.Platelegs(2)
+                    mod = obj()
+                    legs.modifiers.append(mod)
+                    mod.apply()
+                    self.player.inventory.append(legs)
+                    legs.equip()
+                    print name
+                    self.player.take_damage(self.player,30,False)
+                    self.tearDown()
+
+
+        
 
 
 # class WeaponMods(unittest.TestCase):

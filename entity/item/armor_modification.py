@@ -337,7 +337,7 @@ class Divine(Divined):
 		if chance > 39:
 			print 'Power surges through your body giving you increased armor and health!'
 			self.owner.owner.health*=3
-			self.damage/=4
+			damage/=4
 		return damage
 
 	def to_str(self):

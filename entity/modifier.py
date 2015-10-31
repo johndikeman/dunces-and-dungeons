@@ -98,7 +98,7 @@ class Apply(object):
 		elif(rander<99.99):
 			mylist=Mod["Legendary"]
 		else:
-			mylist=Mod['Divine']
+			mylist=Mod['Divined']
 		namer = random.choice(mylist)
 		modification_instance = namer()
 		Item.modifiers.append(modification_instance)
