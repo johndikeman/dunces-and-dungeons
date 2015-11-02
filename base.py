@@ -1,5 +1,7 @@
 import random, math, time
 
+IS_TEST = False
+
 INSTRUCTION_QUEUE = []
 
 class Entity(object):
@@ -118,7 +120,10 @@ class Die(object):
 		self.num = num
 
 	def roll(self):
-		return random.randint(1,self.num)
+		if not IS_TEST:
+			return random.randint(1,self.num)
+		# i don't want anything to proc if it's a test.
+		return -1
 
 
 # inventory is the exact same thing as list, except it

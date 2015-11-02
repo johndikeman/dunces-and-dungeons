@@ -7,6 +7,10 @@ class Armor(entity.item.items.Item):
 	def __init__(self):
 		super(Armor,self).__init__()
 
+	def register_damage(self,attacker,damage):
+		for a in self.modifiers:
+			a.do_turn(attacker,damage)
+
 	def equip(self):
 		super(Armor,self).equip()
 		self.apply()

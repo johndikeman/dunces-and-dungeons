@@ -39,6 +39,7 @@ class DungeonTest(unittest.TestCase):
 class PlayerTest(unittest.TestCase):
     def setUp(self):
         base.INSTRUCTION_QUEUE = []
+        base.IS_TEST = True
         self.party = player.Party()
         self.player = player.Player('john was here',{'race':'Dwarf','attributes':{
             'agility': 2,
@@ -102,7 +103,8 @@ class PlayerTest(unittest.TestCase):
                     mod.apply()
                     self.player.inventory.append(legs)
                     legs.equip()
-                    print name
+                    self.assertEquals(self.player.equipment['legs'],legs)
+                    # print name
                     self.player.take_damage(self.player,30,False)
                     self.tearDown()
 

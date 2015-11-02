@@ -351,7 +351,7 @@ class Heavenly(Divined):
 		chance = base.D40.roll()
 		if chance > 39:
 			print 'Heavenly Fire leaps from the body of your enemy, striking all enemies in the room'
-			print 'Hey if there is an error its on 354 of item_modification.py'
+			# print 'Hey if there is an error its on 354 of item_modification.py'
 			for a in self.owner.owner.party.current_dungeon.active_room.things:
 				if isinstance(a,Monster):
 					a.take_damage(self.owner,20*self.owner.level)

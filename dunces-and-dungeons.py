@@ -4,11 +4,14 @@ import entity.item.items as items
 import sys
 import requests
 
-RELEASE_ID = 'v1.0.2'
+RELEASE_ID = 'v1.0.3'
 
 PARTY = Party()
 class Manager:
-	def main(self):
+	def __init__(self):
+		self.checked = False
+
+	def update_check(self):
 		print 'checking for update...'
 		try:
 			latest = requests.get('https://api.github.com/repos/microwaveabletoaster/dunces-and-dungeons/releases/latest').json()['tag_name']
@@ -16,11 +19,15 @@ class Manager:
 				print 'you\'re up to date!'
 
 			else:
-				print "---------------===========-----------\nan update to dunces and dungeons has been released! go download it now from here: https://github.com/microwaveabletoaster/dunces-and-dungeons/releases it probably contains super important bugfixes and or more neat features, so don't dawdle!! \n\n<3 the team\n"
+				print "---------------=====UPDATE!!=====-----------\nan update to dunces and dungeons has been released! \ngo download it now from here: https://github.com/microwaveabletoaster/dunces-and-dungeons/releases \nit probably contains super important bugfixes and or more neat features, so don't dawdle!! \n\n<3 the team\n"
 		except:
 			print 'could not check for update :('
+		self.checked = True
 
-		print "------WELCOME TO DUNCES AND DUNGEONS------"
+	def main(self):
+		if not self.checked:
+			self.update_check()
+		print "------=====WELCOME TO DUNCES AND DUNGEONS=====------"
 		party_size = raw_input('enter the size of your party: ')
 		if int(party_size) is 0:
 			print "you can't play with zero people, dingus"
@@ -34,28 +41,21 @@ class Manager:
 		print PARTY.to_str()
 
 		dungeon = Hub(PARTY)
-
 		PARTY.hub = dungeon
-
 		PARTY.current_dungeon = dungeon
-
 		PARTY.current_dungeon.start()
 
 		while(PARTY.end):
 			PARTY.handle_player_turn()
 			if(PARTY.end):
 				PARTY.current_dungeon.handle_monster_turn()
-		print "              "
-		print "              "
-		print "              "
-		print "              "
-		print "              "
-		print "              "
-		print "              "
-		print "              "
-		print "              "
-		print "              "
-		print "                 *****GAME OVER*****"
+		print "\n\n------------=========GAME OVER=========------------"
+		ans = raw_input("\n\nplay again? y/n ")
+		if ans is "y":
+			self.main()
+		else:
+			sys.exit()
+
 
 
 

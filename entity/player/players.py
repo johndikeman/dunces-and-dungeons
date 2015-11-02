@@ -151,8 +151,15 @@ class Player(base.Entity):
 				# when more choices is full, add it to options
 				options.append(more_choices)
 			# print str(options)
+			pretty_options = []
 
-			ret = base.make_choice(options,'character setup!')
+			for attribute_set in options:
+				# this is an ugly hack to make the string format that i copypasta'd from below work. 
+				# i have no shame
+				self.attributes = attribute_set
+				pretty_options.append('%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t' % ('agility',self.attributes['agility'],'intelligence',self.attributes['intelligence'],'strength',self.attributes['strength'],'luck',self.attributes['luck'],'mana',self.attributes['mana']))
+
+			ret = base.make_choice(pretty_options,'character setup!')
 			#need your help displaying the choices for the player to pick his character.
 			self.attributes = options[ret]
 
@@ -184,7 +191,8 @@ class Player(base.Entity):
 		for slot, instance in self.equipment.iteritems():
 			if slot is not "left" and slot is not "right":
 				if instance:
-					instance.do_turn(attacker,damage)
+					instance.register_damage(attacker,damage)
+					# print 'did turn on %s' % instance.to_str()
 		super(Player,self).take_damage(attacker,damage,wait)
 
 	def return_options(self):

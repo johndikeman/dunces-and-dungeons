@@ -55,9 +55,18 @@ class Item(base.Entity):
 					pass
 			self.owner.equipment['left']=self
 			self.owner.equipment['right']=self
-		elif self.owner.equipment[self.info]:
-			self.owner.equipment[self.info].unequip()
-			self.owner.equipment[self.info] = self
+		else:
+			if not self.owner.equipment[self.info]: name = 'Nothing'  
+			else: name = self.owner.equipment[self.info].to_str()
+
+			# we want to equip something if we've done it in a test.
+			if not base.IS_TEST:
+				ans = raw_input('would you like to replace %s with %s? (y/n) ' % (name,self.to_str())) 
+			else:
+				ans = 'y'
+			if ans is 'y':
+				if self.owner.equipment[self.info]: self.owner.equipment[self.info].unequip()
+				self.owner.equipment[self.info] = self
 		self.equipped = True
 
 	def unequip(self):
