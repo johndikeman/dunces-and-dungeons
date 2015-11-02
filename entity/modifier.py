@@ -19,7 +19,7 @@ class Apply(object):
 	# lol this method will work for armor too cause theyre the exact same modifiers
 	def modify_armor(self,Item):
 		Mod = {}
-		# i sincerely apologize about this 
+		# i sincerely apologize about this
 		Mod = {
 			"Common":
 				[ar.Iron,
@@ -50,7 +50,7 @@ class Apply(object):
 				ar.Heavenly,
 				ar.Arch]
 			 }
-			
+
 		return self.decide(Mod,Item)
 
 	def modify_weapon(self,Item):
