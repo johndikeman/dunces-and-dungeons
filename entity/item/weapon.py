@@ -7,7 +7,7 @@ class Weapon(entity.item.items.Item):
 		super(Weapon,self).__init__()
 
 	def get_cost(self):
-		return (self.damage * self.cost)
+		return math.ceil((math.log((self.damage * self.cost),1.1)))
 
 class Sword(Weapon):
 	def __init__(self,level):

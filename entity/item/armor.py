@@ -6,6 +6,8 @@ import base,random,math
 class Armor(entity.item.items.Item):
 	def __init__(self):
 		super(Armor,self).__init__()
+	def get_cost(self):
+		return math.ceil((math.log((self.armor * self.cost),1.1)))
 
 	def register_damage(self,attacker,damage):
 		for a in self.modifiers:
@@ -65,9 +67,6 @@ class Shield(Armor):
 	def exit(self):
 		self.owner.armor -= self.armor
 
-	def get_cost(self):
-		return self.cost * self.armor
-
 
 
 class Breastplate(Armor):
@@ -85,9 +84,6 @@ class Breastplate(Armor):
 	def exit(self):
 		self.owner.armor -= self.armor
 
-	def get_cost(self):
-		return self.cost * self.armor
-
 
 class Chainmail(Armor):
 	def __init__(self,level):
@@ -102,9 +98,6 @@ class Chainmail(Armor):
 
 	def exit(self):
 		self.owner.armor -= self.armor
-
-	def get_cost(self):
-		return self.cost * self.armor
 
 
 class Platelegs(Armor):
@@ -121,9 +114,6 @@ class Platelegs(Armor):
 	def exit(self):
 		self.owner.armor -= self.armor
 
-	def get_cost(self):
-		return self.cost * self.armor
-
 
 class Helmet(Armor):
 	def __init__(self,level):
@@ -138,6 +128,3 @@ class Helmet(Armor):
 
 	def exit(self):
 		self.owner.armor -= self.armor
-
-	def get_cost(self):
-		return self.cost * self.armor
