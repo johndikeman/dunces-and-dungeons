@@ -34,8 +34,8 @@ class Stun(base.Entity):
 		self.turns = turns
 
 	def do_turn(self,options):
-		print '%s is stunned, and cannot move for another %d turns' % (self.owner.to_str(),self.turns)
 		if self.turns > 0:
+			print '%s is stunned, and cannot move for another %d turns' % (self.owner.to_str(),self.turns)
 			self.owner.action_points = 0
 			self.turns -= 1
 		else:
@@ -102,7 +102,7 @@ class Sleep(base.Entity):
 		super(Sleep,self).__init__()
 
 	def do_turn(self,options):
-		
+
 		chance=base.D20.roll()
 		if chance>16:
 			self.owner.statuses.remove(self)
