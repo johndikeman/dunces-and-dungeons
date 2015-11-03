@@ -177,6 +177,7 @@ class Player(base.Entity):
 	def level_up(self):
 		for attribute_str in self.attributes.keys():
 			self.attributes[attribute_str] += RACES[self.race]['LvlGains'][attribute_str]
+			self.max_health=self.attributes['strength'] * 10
 
 	def buy_item(self,item):
 		if self.gold >= item.get_cost():
@@ -255,8 +256,10 @@ class Player(base.Entity):
 							ret += 'R '
 						elif(isinstance(b,dungeon.Room) and self.party.current_dungeon.roomsmap[x][y]=='?'):
 							ret+='? '
+						elif(isinstance(b,dungeon.Room) and self.party.current_dungeon.roomsmap[x][y]=='L'):
+							ret+='L '
 						else:
-							ret += 'E '
+							ret += '  '
 					ret += '\n'
 				print ret
 

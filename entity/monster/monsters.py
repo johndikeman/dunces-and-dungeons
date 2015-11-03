@@ -100,6 +100,7 @@ def spawn(level):
 class Skeleton(Monster):
 	def __init__(self,level):
 		super(Skeleton,self).__init__(level)
+		self.modif=[mod.Acidic,mod.Caustic,mod.Dieing,mod.Dusty,mod.Fetid,mod.Foul,mod.Lowly,mod.Normal, mod.Putrid,mod.Tiny, mod.Weak,mod.Rancid,mod.Dieing]
 		self.health=10+self.level*8
 		self.power=4+(self.level-1)*4
 		self.name="Skeleton"
@@ -110,6 +111,7 @@ class Skeleton(Monster):
 class Goblin(Monster):
 	def __init__(self,level):
 		super(Goblin,self).__init__(level)
+		self.modif=[mod.Acidic,mod.Caustic,mod.Dieing,mod.Dusty,mod.Fetid,mod.Foul,mod.Lowly,mod.Normal, mod.Putrid,mod.Tiny, mod.Weak]
 		self.health=8+self.level*6
 		self.multiplier=.5
 		self.power=3+(self.level-1)*4
@@ -119,6 +121,7 @@ class Goblin(Monster):
 class Spider(Monster):
 	def __init__(self,level):
 		super(Spider,self).__init__(level)
+		self.modif=[mod.Acidic,mod.Caustic,mod.Dieing,mod.Dusty,mod.Fetid,mod.Foul,mod.Lowly,mod.Normal, mod.Putrid,mod.Tiny, mod.Weak]
 		self.health=10+self.level*3
 		self.multiplier=.4
 		self.power=2+(self.level-1)*.5
@@ -127,6 +130,7 @@ class Spider(Monster):
 class Assassin(Monster):
 	def __init__(self,level):
 		super(Assassin,self).__init__(level)
+		self.modif=[mod.Dank,mod.Destructive,mod.Funky,mod.Lightning,mod.Musky,mod.Nasty,mod.Camphoric]
 		self.health=1+self.level*3
 		self.multiplier=1.5
 		self.power=10+(self.level-1)*15
@@ -135,6 +139,7 @@ class Assassin(Monster):
 class Hidden_Devourer(Monster):
 	def __init__(self,level):
 		super(Hidden_Devourer,self).__init__(level)
+		self.modif=[mod.Dank,mod.Lowly, mod.Destructive,mod.Musky,mod.Nasty,mod.Lightning,mod.Forgotten]
 		self.health=5+self.level*3
 		self.multiplier=.6
 		self.power=8+(self.level-1)*12
@@ -146,6 +151,7 @@ class Hidden_Devourer(Monster):
 class Ogre(Monster):
 	def __init__(self,level):
 		super(Ogre,self).__init__(level)
+		self.modif=[mod.Forgotten,mod.Musky, mod.Normal, mod.Tiny, mod.Camphoric]
 		self.health=50+self.level*25
 		self.power=1+(self.level-1)*2;
 		self.name="Ogre"
@@ -153,6 +159,7 @@ class Ogre(Monster):
 class Hellhound(Monster):
 	def __init__(self,level):
 		super(Hellhound,self).__init__(level)
+		self.modif=[mod.Destructive,mod.Lightning,mod.Dank,mod.Scorched,mod.Musky,mod.Nasty]
 		self.health=40+self.level*15
 		self.multiplier=1.1
 		self.power=12+(self.level-1)*10
@@ -161,6 +168,7 @@ class Hellhound(Monster):
 class Sorcerer(Monster):
 	def __init__(self,level):
 		super(Sorcerer,self).__init__(level)
+		self.modif=[mod.Caustic, mod.Dank, mod.Destructive, mod.Forgotten, mod.Funky, mod.Lowly, mod.Nasty]
 		self.health=12+self.level*8
 		self.multiplier = .9
 		self.power=15+(self.level-1)*10
@@ -175,12 +183,14 @@ class Elemental(Monster):
 class Meme(Monster):
 	def __init__(self,level):
 		super(Meme,self).__init__(level)
+		self.modif=[mod.Dank, mod.Forgotten]
 		self.health=420+self.level*9.11
 		self.power=69+(self.level-1)*42
 		self.name ="Meme"
 class WindElemental(Elemental):
 	def __init__(self,level):
 		super(WindElemental,self).__init__(level)
+		self.modif=[mod.Camphoric, mod.Dank, mod.Destructive, mod.Dusty, mod.Forgotten, mod.Lightning, mod.Nasty]
 		self.health=5+self.level*10
 		self.power=11+(self.level-1)*9
 		self.name="Wind Elemental"
@@ -188,6 +198,7 @@ class WindElemental(Elemental):
 class WaterElemental(Elemental):
 	def __init__(self,level):
 		super(WaterElemental,self).__init__(level)
+		self.modif=[mod.Destructive, mod.Forgotten, mod.Funky, mod.Foul, mod.Musky, mod.Nasty, mod.Putrid, mod.Weak]
 		self.power=4+(self.level-1)*13
 		self.name="Water Elemental"
 
@@ -199,7 +210,6 @@ class FireElemental(Elemental):
 		self.power=18+(self.level-1)*12
 		self.name="Fire Elemental"
 
-# here down are not added to the spawn list
 
 class EarthElemental(Elemental):
 	def __init__(self,level):
@@ -241,11 +251,11 @@ class Cyclops(Monster):
 
 MONSTERLIST = {
 	Skeleton:{
-		'probability':40.0,
+		'probability':20.0,
 		'groupsize':3
 	},
 	Goblin:{
-		'probability':30.0,
+		'probability':15.0,
 		'groupsize':6
 	},
 	Spider:{
@@ -253,43 +263,43 @@ MONSTERLIST = {
 		'groupsize':12
 	},
 	Assassin:{
-		'probability':4.0,
+		'probability':2.0,
 		'groupsize':1
 	},
 	Hidden_Devourer:{
-		'probability':6.0,
+		'probability':3.0,
 		'groupsize':1
 	},
 	Ogre:{
-		'probability':20.0,
+		'probability':10.0,
 		'groupsize':2
 	},
 	Hellhound:{
-		'probability':5.0,
+		'probability':2.0,
 		'groupsize':2
 	},
 	Sorcerer:{
-		'probability':8.0,
+		'probability':3.0,
 		'groupsize':1
 	},
 	Meme:{
-		'probability':.001,
+		'probability':.1,
 		'groupsize':3
 	},
 	WindElemental:{
-		'probability':15.0,
+		'probability':8.0,
 		'groupsize':4
 	},
 	WaterElemental:{
-		'probability':12.0,
+		'probability':6.0,
 		'groupsize':3
 	},
 	FireElemental:{
-		'probability':10.0,
+		'probability':3.0,
 		'groupsize':3
 	},
 	EarthElemental:{
-		'probability':12.0,
+		'probability':3.0,
 		'groupsize':2
 	},
 	Demigod:{
@@ -297,11 +307,11 @@ MONSTERLIST = {
 		'groupsize':1
 	},
 	Overcharger:{
-		'probability':5.0,
+		'probability':2.0,
 		'groupsize':2
 	},
 	Cyclops:{
-		'probability':8.0,
+		'probability':4.0,
 		'groupsize':3
 	}
 }

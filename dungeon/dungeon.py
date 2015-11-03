@@ -150,6 +150,8 @@ class Hub(Dungeon):
 		pass
 
 	def start(self):
+		for a in self.party.inventory:
+			a.health=a.attributes['strength'] * 10
 		controller = control.ItemController(self.party.get_avg_level())
 		for category in self.shop.keys():
 			for b in range(random.randint(0,5)):
@@ -245,8 +247,8 @@ class Room(object):
 	def enter(self):
 		for a in self.things:
 			if(isinstance(a,LeaveOption) ):
-				self.party.current_dungeon.roomsmap[self.cords[0]][self.cords[1]]='E'
-			else:
+				self.party.current_dungeon.roomsmap[self.cords[0]][self.cords[1]]='L'
+			if(self.party.current_dungeon.roomsmap[self.cords[0]][self.cords[1]]!='L'):
 				self.party.current_dungeon.roomsmap[self.cords[0]][self.cords[1]]='T'
 		g=self.cords[0]
 		h=self.cords[1]
