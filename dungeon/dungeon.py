@@ -6,6 +6,7 @@ import os.path
 import entity.thing as thing
 import entity.item.consumable as consumable
 import entity.item.controller as control
+import entity.monster.bosses as boss
 
 
 # these words are from http://acreativemoment.com/2008/07/18/words-to-describe-smell-sound-taste-touch/
@@ -56,8 +57,11 @@ class Dungeon(object):
 			for b in a:
 				if b:
 					temp.append(b)
+		final = random.choice(temp)
+		# final = temp[0]
+		final.things.append(LeaveOption())
 
-		random.choice(temp).things.append(LeaveOption())
+		final.things.append(boss.ChemicalOgre(final.level))
 
 		# self.rooms[0][0].things.append(LeaveOption())
 
@@ -277,8 +281,11 @@ class LeaveOption(thing.InteractiveObject):
 
 	def do_turn(self,arg):
 		if arg == self.options[0]:
-			for player in self.owner.containing_dungeon.party.inventory:
-				player.gold += (self.owner.containing_dungeon.gold_reward / 5)
-			print 'each player is awarded %d gold!' % (self.owner.containing_dungeon.gold_reward / 5)
+			if len(self.owner.things) == 1:
+				for player in self.owner.containing_dungeon.party.inventory:
+					player.gold += (self.owner.containing_dungeon.gold_reward / 5)
+				print 'each player is awarded %d gold!' % (self.owner.containing_dungeon.gold_reward / 5)
 
-			self.owner.containing_dungeon.leave_dungeon()
+				self.owner.containing_dungeon.leave_dungeon()
+			else:
+				print 'you can\'t leave the dungeon while you\'re under attack!'
