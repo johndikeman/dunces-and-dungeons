@@ -96,6 +96,19 @@ def spawn(level):
 				ret.append(app.modify_monster(key(level)))
 		ind += 1
 	return ret
+# this is a special monter that spider queen spawns. dont add it to room spawnlists.
+class Spiderling(Monster):
+	def __init__(self,level):
+		super(Spiderling,self).__init__(level)
+		self.health = self.level * 10
+		self.power = self.level * 10
+		self.name = "Spiderling"
+
+	def do_turn(self):
+		super(Spiderling,self).do_turn()
+		if base.D6.roll >= 2:
+			print 'a spiderling has reproduced!'
+			self.owner.things.append(Spiderling(self.level))
 
 class Skeleton(Monster):
 	def __init__(self,level):

@@ -15,6 +15,7 @@ import entity.modifier
 # monster imports
 import entity.monster.monster_modification as monster_mods
 import entity.monster.monsters as monsters
+import entity.monster.bosses as boss
 # statuses
 import entity.status.player_statuses as statuses
 # other
@@ -109,7 +110,7 @@ class PlayerTest(unittest.TestCase):
                     self.tearDown()
 
 
-        
+
 
 
 # class WeaponMods(unittest.TestCase):

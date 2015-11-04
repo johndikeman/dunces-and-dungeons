@@ -13,7 +13,7 @@ class Item(base.Entity):
 		self.cost = 5
 		self.name="item"
 		self.equipped = False
-
+		self.item_options = []
 	def to_str(self):
 		return self.name
 
@@ -56,12 +56,12 @@ class Item(base.Entity):
 			self.owner.equipment['left']=self
 			self.owner.equipment['right']=self
 		else:
-			if not self.owner.equipment[self.info]: name = 'Nothing'  
+			if not self.owner.equipment[self.info]: name = 'Nothing'
 			else: name = self.owner.equipment[self.info].to_str()
 
 			# we want to equip something if we've done it in a test.
 			if not base.IS_TEST:
-				ans = raw_input('would you like to replace %s with %s? (y/n) ' % (name,self.to_str())) 
+				ans = raw_input('would you like to replace %s with %s? (y/n) ' % (name,self.to_str()))
 			else:
 				ans = 'y'
 			if ans is 'y':

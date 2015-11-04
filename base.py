@@ -83,11 +83,11 @@ class Entity(object):
 		damage -= (damage * res)
 		if(damage<0):
 			damage=0
-		print '(%s) takes (%.2f) damage from (%s)' % (self.to_str(),damage,attacker.to_str())
+		print '[DAMAGE] %s takes %.2f damage from %s' % (self.to_str(),damage,attacker.to_str())
 		self.health -= damage
 		if self.health <= 0:
 			self.alive = False
-			print "(%s) has died by the hand of (%s)" % (self.to_str(),attacker.to_str())
+			print "[INFO] %s has died by the hand of %s" % (self.to_str(),attacker.to_str())
 			self.kill(attacker)
 		if wait:
 			time.sleep(1)
