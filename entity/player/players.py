@@ -4,7 +4,7 @@ import dungeon.dungeon as dungeon
 import entity.player.player_inventory as inv
 import entity.thing as thing
 import entity.monster.monsters as monster
-
+import entity.item.consumable as consumable
 RACES = {
 	"Dwarf":{
 		"rolls":{
@@ -171,7 +171,7 @@ class Player(base.Entity):
 
 		self.max_health = self.attributes['strength'] * 10
 		self.health = self.max_health
-
+		self.inventory.append(consumable.HealthSack())
 		self.inventory.append(inv.InventoryHandler())
 
 	def level_up(self):
