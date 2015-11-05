@@ -178,6 +178,7 @@ class Player(base.Entity):
 		for attribute_str in self.attributes.keys():
 			self.attributes[attribute_str] += RACES[self.race]['LvlGains'][attribute_str]
 			self.max_health=self.attributes['strength'] * 10
+			self.health=self.max_health
 
 	def buy_item(self,item):
 		if self.gold >= item.get_cost():

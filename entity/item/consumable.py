@@ -26,6 +26,7 @@ class HealthPotion(Consumable):
 		for a in self.owner.inventory:
 			if isinstance(a,HealthSack):
 				a.add()
+		self.owner.inventory.remove(self)
 
 class Sack(Consumable):
 	def __init__(self,contents):
@@ -55,5 +56,5 @@ class HealthSack(Consumable):
 
 	def do_turn(self,options):
 		if options == 'use health bag' and self.contents>0:
-			self.owner.statuses.append(s.Healing)
+			self.owner.statuses.append(s.Healing())
 			self.contents-=1

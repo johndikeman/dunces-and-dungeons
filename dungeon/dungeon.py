@@ -123,6 +123,8 @@ class Hub(Dungeon):
 		he = [5,8,15,25]
 		ind = base.make_choice(['smol','medium','large','goliath'],'size')
 		self.party.current_dungeon = Dungeon(he[ind],self.party.get_avg_level(),self.party)
+		for a in self.party.inventory:
+			a.action_points=a.base_ap
 		self.party.current_dungeon.start()
 		# print self.party.current_dungeon
 
