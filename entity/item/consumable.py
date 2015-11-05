@@ -22,7 +22,7 @@ class HealthPotion(Consumable):
 		##	print "%s consumes a health potion!" % self.owner.name
 		##	self.owner.statuses.append(s.Healing())
 		##	self.owner.inventory.remove(self)
-	def apply(self):
+	def add_to_inventory(self):
 		for a in self.owner.inventory:
 			if isinstance(a,HealthSack):
 				a.add()

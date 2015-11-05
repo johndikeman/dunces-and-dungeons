@@ -89,7 +89,7 @@ class Maim(base.Entity):
 
 	def do_turn(self,option):
 		if self.turns > 0:
-			self.owner.action_points -= amount
+			self.owner.action_points -= self.amount
 			self.turns -= 1
 		else:
 			self.owner.statuses.remove(self)
