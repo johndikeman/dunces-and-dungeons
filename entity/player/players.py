@@ -282,9 +282,10 @@ class Player(base.Entity):
 
 	# IMPORTANT- return value of select_target NEEDS to be validated before use to prevent crashes, cause sometimes it'll return None
 	def select_target(self):
-		target_ind = base.make_choice([a.to_str() for a in self.owner.current_dungeon.active_room.things if(isinstance(a,monster.Monster) and a.revealed)],'target')
+		opt = [a for a in self.owner.current_dungeon.active_room.things if(isinstance(a,monster.Monster) and a.revealed)]
+		target_ind = base.make_choice([b.to_str() for b in opt],'target')
 		if target_ind != None:
-			return self.owner.current_dungeon.active_room.things[target_ind]
+			return opt[target_ind]
 		return None
 
 	def to_str(self):

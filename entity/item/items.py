@@ -91,7 +91,7 @@ class SpellBook(Item):
 
 		self.level = level
 		self.name = ''
-		# hahahahahaha this is so fucking stupid
+		# hahahahahaha this is so stupid
 		for a in range(int(self.level)):
 			self.name += "%s " % random.choice(arcane_words)
 		self.options = ['%s' % self.name]

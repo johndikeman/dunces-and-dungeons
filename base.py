@@ -31,7 +31,7 @@ class Entity(object):
 		pass
 
 	def update_xp(self,val):
-		print '%s has gained %d xp!' % (self.to_str(),val)
+		print '[INFO] %s has gained %d xp!' % (self.to_str(),val)
 		self.xp += val
 		self.check_for_levelup()
 
@@ -41,7 +41,7 @@ class Entity(object):
 			self.level_up()
 			self.xp -= self.level_up_threshold
 			self.level += 1
-			print "%s has leveled up to level %d!" % (self.to_str(),self.level)
+			print "[LEVELUP] %s has leveled up to level %d!" % (self.to_str(),self.level)
 			self.level_up_threshold = self.level * 10
 			self.check_for_levelup()
 
@@ -87,7 +87,7 @@ class Entity(object):
 		self.health -= damage
 		if self.health <= 0:
 			self.alive = False
-			print "[INFO] %s has died by the hand of %s" % (self.to_str(),attacker.to_str())
+			print "[DEATH] %s has died by the hand of %s" % (self.to_str(),attacker.to_str())
 			self.kill(attacker)
 		if wait:
 			time.sleep(1)

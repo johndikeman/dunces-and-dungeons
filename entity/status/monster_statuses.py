@@ -2,7 +2,7 @@ import base
 
 class OgreEnrage(base.Entity):
     def __init__(self):
-        super(OgreEnrage,self)
+        super(OgreEnrage,self).__init__()
         self.turns = 0
         self.applied = False
 

@@ -81,10 +81,12 @@ class SpiderQueen(m.Monster):
             else:
                 self.autoattack()
 
+        self.action_points -= 1
+
     def spawn_spiderlings(self):
         num = base.D20.roll()
         print "the spider queen births %d new spiderlings!" % num
-        for a in num:
+        for a in range(num):
             self.owner.things.append(m.Spiderling(self.level))
 
     def autoattack(self):

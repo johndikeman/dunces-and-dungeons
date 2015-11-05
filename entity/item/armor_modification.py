@@ -319,7 +319,6 @@ class Celestial(Divined):
 		chance=base.D40.roll()
 		if chance>39:
 			print "A blinding light flashes from the Heavens and blinds and reveals all enemies in the room!"
-			print 'Hey if there is an error its on 323 of item_modification.py'
 			for a in self.owner.owner.party.current_dungeon.active_room.things:
 				if isinstance(a,Monster):
 					a.statuses.append(s.Blind(6))

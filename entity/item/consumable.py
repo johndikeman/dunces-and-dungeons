@@ -16,6 +16,7 @@ class HealthPotion(Consumable):
 		self.name = 'health potion'
 		self.cost = 20
 	def do_turn(self,option):
+		pass
 		# the player can only have one health potion active at a time
 		##if option == self.options[0] and not self.owner.statuses.contains_type(s.Healing):
 		##	print "%s consumes a health potion!" % self.owner.name
@@ -23,7 +24,7 @@ class HealthPotion(Consumable):
 		##	self.owner.inventory.remove(self)
 	def apply(self):
 		for a in self.owner.inventory:
-			if isinstance(a,HealthSack) :
+			if isinstance(a,HealthSack):
 				a.add()
 
 class Sack(Consumable):

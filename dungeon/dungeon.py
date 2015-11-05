@@ -57,8 +57,8 @@ class Dungeon(object):
 			for b in a:
 				if b:
 					temp.append(b)
-		final = random.choice(temp)
-		# final = temp[0]
+		# final = random.choice(temp)
+		final = temp[0]
 		final.things.append(LeaveOption())
 
 		final.things.append(random.choice(boss.boss_options)(final.level))

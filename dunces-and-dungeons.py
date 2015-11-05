@@ -50,13 +50,6 @@ class Manager:
 			if(PARTY.end):
 				PARTY.current_dungeon.handle_monster_turn()
 		print "\n\n------------=========GAME OVER=========------------"
-		ans = raw_input("\n\nplay again? y/n ")
-		if ans is "y":
-			self.main()
-		else:
-			sys.exit()
-
-
 
 
 if __name__ == '__main__':
