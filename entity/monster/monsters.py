@@ -106,9 +106,11 @@ class Spiderling(Monster):
 
 	def do_turn(self):
 		super(Spiderling,self).do_turn()
-		if base.D6.roll >= 2:
+		if base.D6.roll() == 1:
 			print 'a spiderling has reproduced!'
-			self.owner.things.append(Spiderling(self.level))
+			child = Spiderling(self.level)
+			child.action_points = 0
+			self.owner.things.append(child)
 
 class Skeleton(Monster):
 	def __init__(self,level):

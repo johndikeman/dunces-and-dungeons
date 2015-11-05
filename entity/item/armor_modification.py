@@ -240,7 +240,7 @@ class Blessed(Rare):
 	def do_turn(self,target,damage):
 		chance = base.D20.roll()
 		if chance > 18:
-			target.statuses.append(s.Blind(math.round(math.pow(1.1,self.owner.level))))
+			target.statuses.append(s.Blind(round(math.pow(1.1,self.owner.level))))
 		return damage
 
 	def to_str(self):

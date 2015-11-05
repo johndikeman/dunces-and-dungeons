@@ -1,4 +1,4 @@
-import base
+import base, random
 import entity.monster.monsters as m
 import entity.status.monster_statuses as status
 import entity.status.player_statuses as p_status
@@ -13,6 +13,7 @@ class ChemicalOgre(m.Monster):
         self.power = self.level * 200
         self.action_points = 4
         self.base_ap = 4
+        self.animals = 'horse cow sheep giraffe anteater anchovie dolphin dog cat antelope hippo whale'.split(' ')
 
     def do_turn(self):
         for a in self.statuses:
@@ -41,11 +42,13 @@ class ChemicalOgre(m.Monster):
             player.take_damage(self,self.power/3)
 
     def enrage(self):
+        self.reveal()
         print 'the ogre is enraged, and has gotten stronger!'
         self.statuses.append(status.OgreEnrage())
 
     def autoattack(self):
-		if self.action_points > 0:
+        self.reveal()
+        if self.action_points > 0:
 			if not self.aggroed:
 				self.select_aggro()
 
@@ -53,10 +56,12 @@ class ChemicalOgre(m.Monster):
 				self.attack(self.aggro)
 
     def feast(self):
-        print 'the ogre eats an entire pig! where did it even get that??'
+        self.reveal()
+        print 'the ogre eats an entire %s!! where did it even get that??' % random.choice(self.animals)
         self.health += (self.max_health * .05)
 
     def poison_splash(self):
+        self.reveal()
         print 'the ogre pours a cask of poisonous sludge all over your party!'
         for player in self.owner.party.inventory:
             player.statuses.append(p_status.Poison(3,self.power * .1))
@@ -85,19 +90,21 @@ class SpiderQueen(m.Monster):
         self.action_points -= 1
 
     def spawn_spiderlings(self):
+        self.reveal()
         num = base.D20.roll()
         print "the spider queen births %d new spiderlings!" % num
         for a in range(num):
             self.owner.things.append(m.Spiderling(self.level))
 
     def autoattack(self):
+        self.reveal()
         if self.action_points > 0:
             if not self.aggroed:
                 self.select_aggro()
 
         if self.aggro.alive:
             self.attack(self.aggro)
-            self.aggro.statuses.append(p_status.Poison(5,self.power/2))
+            self.aggro.statuses.append(p_status.Poison(5,self.power/4))
 
     def to_str(self):
         return "Araknai the Spider Queen"

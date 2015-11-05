@@ -1,5 +1,6 @@
 import entity.item.items
 import base,random,math
+import entity.monster.monsters as r
 
 
 class Weapon(entity.item.items.Item):

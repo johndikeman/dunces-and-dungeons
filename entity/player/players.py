@@ -154,7 +154,7 @@ class Player(base.Entity):
 			pretty_options = []
 
 			for attribute_set in options:
-				# this is an ugly hack to make the string format that i copypasta'd from below work. 
+				# this is an ugly hack to make the string format that i copypasta'd from below work.
 				# i have no shame
 				self.attributes = attribute_set
 				pretty_options.append('%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t' % ('agility',self.attributes['agility'],'intelligence',self.attributes['intelligence'],'strength',self.attributes['strength'],'luck',self.attributes['luck'],'mana',self.attributes['mana']))
@@ -224,21 +224,16 @@ class Player(base.Entity):
 
 			## This is the examine method.
 			if args == 'examine':
-				p = base.make_choice(['examine','dev_examine'])
-				if p == 0:
-					s = ''
-					for ind, a in enumerate(self.party.current_dungeon.active_room.things):
-						if ind != len(self.party.current_dungeon.active_room.things) - 1:
-							s+='a %s, ' % a.examine(self)
-						else:
-							s+='and a %s.' % a.examine(self)
-					if not s:
-						s = 'absolutely nothing.'
-					print 'you examine the room and notice %s' % s
+				s = ''
+				for ind, a in enumerate(self.party.current_dungeon.active_room.things):
+					if ind != len(self.party.current_dungeon.active_room.things) - 1:
+						s+='a %s, ' % a.examine(self)
+					else:
+						s+='and a %s.' % a.examine(self)
+				if not s:
+					s = 'absolutely nothing.'
+				print 'you examine the room and notice %s' % s
 
-				if p == 1:
-					for a in self.party.current_dungeon.active_room.things:
-						print a.dev_examine()
 
 			# if p == 2:
 			# 	print 'you can\'t do that yet, lol'
