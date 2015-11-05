@@ -21,7 +21,7 @@ class Healing(base.Entity):
 			self.owner.health += hp_restored
 			if self.owner.health > self.owner.max_health:
 				self.owner.health = self.owner.max_health
-			print "healed %s for %d" % (self.owner.name, hp_restored)
+			print "[STATUS] healed %s for %d" % (self.owner.name, hp_restored)
 			self.turns -= 1
 		else:
 			self.owner.statuses.remove(self)
@@ -35,7 +35,7 @@ class Stun(base.Entity):
 
 	def do_turn(self,options):
 		if self.turns > 0:
-			print '%s is stunned, and cannot move for another %d turns' % (self.owner.to_str(),self.turns)
+			print '[STATUS] %s is stunned, and cannot move for another %d turns' % (self.owner.to_str(),self.turns)
 			self.owner.action_points = 0
 			self.turns -= 1
 		else:
@@ -52,7 +52,7 @@ class Poison(base.Entity):
 	def do_turn(self,option):
 		if self.turns > 0:
 			self.owner.health -= self.damage
-			print '%s takes %f poison damage' % (self.owner.name,self.damage)
+			print '[STATUS] %s takes %f poison damage' % (self.owner.name,self.damage)
 			self.turns -= 1
 			self.damage *= 1.2
 		else:
@@ -72,7 +72,7 @@ class Bleeding(base.Entity):
 		if self.turns > 0:
 			self.owner.health -= self.damage
 			self.damage /=2
-			print '%s takes %f bleed damage' % (self.owner.name,self.damage)
+			print '[STATUS] %s takes %f bleed damage' % (self.owner.name,self.damage)
 			self.turns -= 1
 		else:
 			self.owner.statuses.remove(self)
@@ -106,9 +106,9 @@ class Sleep(base.Entity):
 		chance=base.D20.roll()
 		if chance>16:
 			self.owner.statuses.remove(self)
-			print '%s has awoken!' % (self.owner.to_str())
+			print '[STATUS] %s has awoken!' % (self.owner.to_str())
 		else:
-			print '%s is asleep, and cannot move!' % (self.owner.to_str())
+			print '[STATUS] %s is asleep, and cannot move!' % (self.owner.to_str())
 			self.owner.action_points =0
 
 
@@ -118,7 +118,7 @@ class Blind(base.Entity):
 		self.turns = turns
 
 	def do_turn(self,options):
-		print '%s is blinded, and will not hit!' % self.owner.to_str()
+		print '[STATUS] %s is blinded, and will not hit!' % self.owner.to_str()
 		if self.turns > 0:
 			self.owner.action_points = 0
 			self.turns -= 1
@@ -135,7 +135,7 @@ class Burn(base.Entity):
 	def do_turn(self,option):
 		if self.turns > 0:
 			self.owner.health -= self.damage
-			print '%s takes %f burn damage' % (self.owner.name,self.damage)
+			print '[STATUS] %s takes %f burn damage' % (self.owner.name,self.damage)
 			self.turns -= 1
 		else:
 			self.owner.statuses.remove(self)

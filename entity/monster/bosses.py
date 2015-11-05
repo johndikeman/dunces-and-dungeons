@@ -35,6 +35,7 @@ class ChemicalOgre(m.Monster):
         self.action_points -= 1
 
     def smash(self):
+        self.reveal()
         print 'the ogre roars and smashes the floor!'
         for player in self.owner.party.inventory:
             player.take_damage(self,self.power/3)

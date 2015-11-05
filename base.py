@@ -35,6 +35,8 @@ class Entity(object):
 		self.xp += val
 		self.check_for_levelup()
 
+	def add_to_inventory(self):
+		pass
 
 	def check_for_levelup(self):
 		if self.xp >= self.level_up_threshold:
@@ -137,9 +139,8 @@ class Inventory():
 
 	def append(self,thing):
 		thing.owner = self.owner
-		# thing.apply()
-
 		self.list.append(thing)
+		thing.add_to_inventory()
 
 	def remove(self,object_to_remove):
 		if object_to_remove in self:
