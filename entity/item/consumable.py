@@ -48,13 +48,21 @@ class HealthSack(Consumable):
 	def __init__(self):
 		super(HealthSack,self).__init__()
 		self.contents =0
-		self.options= ['use health bag']
+		self.options= []
 		self.name = 'a bag of health'
 
 	def add(self):
 		self.contents+=1
+		self.options = ['drink a health potion (x%d)' % self.contents]
 
 	def do_turn(self,options):
-		if options == 'use health bag' and self.contents>0:
-			self.owner.statuses.append(s.Healing())
-			self.contents-=1
+		try:
+			if options == self.options[0] and self.contents>0:
+				self.owner.statuses.append(s.Healing())
+				self.contents-=1
+				if self.contents != 0:
+					self.options = ['drink a health potion (x%d)' % self.contents]
+				else:
+					self.options = []
+		except:
+			pass

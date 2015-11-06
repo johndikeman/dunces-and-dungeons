@@ -346,7 +346,7 @@ class Party(base.Entity):
 	def handle_player_turn(self):
 		count=0
 		for a in range(len(self.inventory)):
-			if(self.inventory[self.index].alive==False):
+			if(self.inventory[a].alive==False):
 				count=count+1
 		if(count==len(self.inventory)):
 			self.end=False
