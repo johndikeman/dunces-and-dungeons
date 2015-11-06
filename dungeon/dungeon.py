@@ -154,7 +154,7 @@ class Hub(Dungeon):
 	def start(self):
 		controller = control.ItemController(self.party.get_avg_level())
 		for category in self.shop.keys():
-			for b in range(random.randint(0,5)):
+			for b in range(random.randint(len(self.party.inventory),len(self.party.inventory)+5)):
 				inst = controller.generate(category)
 				if inst:
 					self.shop[category].append(inst)
