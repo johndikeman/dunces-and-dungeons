@@ -114,7 +114,7 @@ class Sleep(base.Entity):
 
 class Blind(base.Entity):
 	def __init__(self,turns):
-		super(Stun,self).__init__()
+		super(Blind,self).__init__()
 		self.turns = turns
 
 	def do_turn(self,options):

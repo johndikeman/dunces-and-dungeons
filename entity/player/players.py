@@ -5,6 +5,8 @@ import entity.player.player_inventory as inv
 import entity.thing as thing
 import entity.monster.monsters as monster
 import entity.item.consumable as consumable
+import entity.ability.player_abilities as ability
+
 RACES = {
 	"Tank":{
 		"rolls":{
@@ -28,7 +30,7 @@ RACES = {
 			'luck': 1,
 			'mana': .2
 		},
-		'abilities':[],
+		'abilities':[ability.BattleCry],
 		'statuses':[]
 	},
 	'Wizard':{
@@ -173,6 +175,10 @@ class Player(base.Entity):
 		self.health = self.max_health
 		self.inventory.append(consumable.HealthSack())
 		self.inventory.append(inv.InventoryHandler())
+
+		# add all the starting abilities
+		for a in RACES[self.race]['abilities']:
+			self.inventory.append(a())
 
 	def level_up(self):
 		for attribute_str in self.attributes.keys():

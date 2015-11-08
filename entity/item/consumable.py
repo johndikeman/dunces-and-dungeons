@@ -2,14 +2,8 @@ import entity.item.items
 import entity.status.player_statuses as s
 # this extends item but overrides return_options to allow it to return an option
 # if it isnt equipped
-class Consumable(entity.item.items.Item):
-	def __init__(self):
-		super(Consumable,self).__init__()
 
-	def return_options(self):
-		return self.options
-
-class HealthPotion(Consumable):
+class HealthPotion(entity.item.items.ItemUsedFromInventory):
 	def __init__(self):
 		super(HealthPotion,self).__init__()
 		##self.options = ['drink health potion']
@@ -28,7 +22,7 @@ class HealthPotion(Consumable):
 				a.add()
 		self.owner.inventory.remove(self)
 
-class Sack(Consumable):
+class Sack(entity.item.items.ItemUsedFromInventory):
 	def __init__(self,contents):
 		super(Sack,self).__init__()
 		self.contents = contents
@@ -44,7 +38,7 @@ class Sack(Consumable):
 			print 'you open the sack and find %s' % de[:-2]
 			self.owner.inventory.remove(self)
 
-class HealthSack(Consumable):
+class HealthSack(entity.item.items.ItemUsedFromInventory):
 	def __init__(self):
 		super(HealthSack,self).__init__()
 		self.contents =0

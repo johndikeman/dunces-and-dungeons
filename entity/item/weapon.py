@@ -72,6 +72,12 @@ class Bow(Weapon):
 		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
 		self.damage=1.0 * (25 * math.log(self.level + 1, 2) + 3) / 50.0
+
+	def add_to_inventory(self):
+		# we want rangers to be super effective with bows
+		if self.owner.race is 'Ranger':
+			self.damage *= 2
+
 	def do_turn(self,option):
 		self.options = ['%s' % self.to_str()]
 		if option == self.options[0]:
@@ -92,13 +98,13 @@ class Bow(Weapon):
 	#an attempt to further increase the action points system. shoot would only cost 1 action point while aim would take 2
 	def shoot(self,target):
 		for a in self.modifiers:
-			a.do_turn(target,self.damage * self.owner.attributes['agility'] + self.owner.attributes['strength'] / 10.0 + base.D12.roll())
+			a.do_turn(target,self.damage * (self.owner.attributes['agility'] + self.owner.attributes['strength'] / 10.0) + base.D12.roll())
 	def aim(self,target):
 		for a in self.modifiers:
-			a.do_turn(target,self.damage * self.owner.attributes['agility'] * 1.9 + self.owner.attributes['strength']/4.0+base.D20.roll())
+			a.do_turn(target,self.damage * (self.owner.attributes['agility'] * 1.9 + self.owner.attributes['strength']/4.0) + base.D20.roll())
 	def volley(self,target):
 		for a in self.modifiers:
-			a.do_turn(target,self.damage*.1 + self.owner.attributes['agility']*.1+self.owner.attributes['strength']*.1+self.owner.attributes['intelligence']*.1+self.owner.attributes['luck']*.1)
+			a.do_turn(target,self.damage*.1 + self.owner.attributes['agility']*.1+self.owner.attributes['strength']*.1 + self.owner.attributes['intelligence']*.1+self.owner.attributes['luck']*.1)
 
 
 class Rapier(Weapon):

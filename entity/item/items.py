@@ -81,6 +81,13 @@ class Item(base.Entity):
 	def get_cost(self):
 		return self.cost
 
+class ItemUsedFromInventory(Item):
+	def __init__(self):
+		super(ItemUsedFromInventory,self).__init__()
+
+	def return_options(self):
+		return self.options
+
 class SpellBook(Item):
 	def __init__(self,level):
 		super(SpellBook,self).__init__()

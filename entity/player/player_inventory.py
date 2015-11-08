@@ -1,5 +1,5 @@
 import base
-
+import entity.item.items as i
 class InventoryHandler(base.Entity):
 	def __init__(self):
 		super(InventoryHandler,self).__init__()
@@ -10,8 +10,9 @@ class InventoryHandler(base.Entity):
 			go=True
 			while(go):
 				mod_list = self.owner.inventory.get_list([self])
-				item_index=base.make_choice([a.to_str() for a in mod_list])
-				item_object=mod_list[item_index]
+				new_li = [a for a in mod_list if isinstance(a,i.Item)]
+				item_index=base.make_choice([a.to_str() for a in new_li])
+				item_object=new_li[item_index]
 				option_index=base.make_choice(item_object.item_options)
 				if option_index is not None:
 					item_opt=item_object.item_options[option_index]
