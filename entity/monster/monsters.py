@@ -1,6 +1,7 @@
 import base, random, time
 import entity.modifier as mo
 import entity.monster.monster_modification as mod
+
 class Monster(base.Entity):
 	def __init__(self,level):
 		super(Monster,self).__init__()
@@ -10,9 +11,9 @@ class Monster(base.Entity):
 		self.probablity = 0.0
 
 		self.health = 100
-		self.level=1
-		self.power=self.level*10.0
-		self.multiplier=1
+		self.level = level
+		self.power = self.level * 10.0
+		self.multiplier = 1
 		# base ap is what the ap should be restored to after a turn is complete
 		self.base_ap = 1
 		self.alive = True
@@ -24,6 +25,12 @@ class Monster(base.Entity):
 		self.revealed = False
 		self.xp_reward = self.level * 10
 
+		# this will be used in especially strong modifiers to make the rewards higher.
+		self.generic_reward_multiplier = 1.0
+
+	# for computing rewards after the specific monster and modifier applications.
+	def compute_rewards(self):
+		self.xp_reward = abs(self.level * 10 * (self.power / 3) * self.generic_reward_multiplier)
 
 	def set_level(self,val):
 		pass
@@ -96,7 +103,8 @@ def spawn(level):
 				ret.append(app.modify_monster(key(level)))
 		ind += 1
 	return ret
-# this is a special monter that spider queen spawns. dont add it to room spawnlists.
+
+# this is a special monster that spider queen spawns. dont add it to room spawnlists.
 class Spiderling(Monster):
 	def __init__(self,level):
 		super(Spiderling,self).__init__(level)
@@ -119,6 +127,7 @@ class Skeleton(Monster):
 		self.health=10+self.level*8
 		self.power=4+(self.level-1)*4
 		self.name="Skeleton"
+		# self.compute_rewards()
 
 	def to_str(self):
 		return self.name
@@ -131,6 +140,7 @@ class Goblin(Monster):
 		self.multiplier=.5
 		self.power=3+(self.level-1)*4
 		self.name="Goblin"
+		# self.compute_rewards()
 
 ## Hmmmmm..... My spiders health change has disappearrf
 class Spider(Monster):
@@ -141,6 +151,7 @@ class Spider(Monster):
 		self.multiplier=.4
 		self.power=2+(self.level-1)*.5
 		self.name="Spider"
+		# self.compute_rewards()
 
 class Assassin(Monster):
 	def __init__(self,level):
@@ -150,6 +161,7 @@ class Assassin(Monster):
 		self.multiplier=1.5
 		self.power=10+(self.level-1)*15
 		self.name="Assassin"
+		# self.compute_rewards()
 
 class Hidden_Devourer(Monster):
 	def __init__(self,level):
@@ -161,6 +173,7 @@ class Hidden_Devourer(Monster):
 		self.ap=1
 		self.action_points=1
 		self.name="Hidden Devourer"
+		# self.compute_rewards()
 
 
 class Ogre(Monster):
@@ -170,6 +183,7 @@ class Ogre(Monster):
 		self.health=50+self.level*25
 		self.power=1+(self.level-1)*2;
 		self.name="Ogre"
+		# self.compute_rewards()
 
 class Hellhound(Monster):
 	def __init__(self,level):
@@ -179,6 +193,7 @@ class Hellhound(Monster):
 		self.multiplier=1.1
 		self.power=12+(self.level-1)*10
 		self.name="Hellhound"
+		# self.compute_rewards()
 
 class Sorcerer(Monster):
 	def __init__(self,level):
@@ -188,6 +203,7 @@ class Sorcerer(Monster):
 		self.multiplier = .9
 		self.power=15+(self.level-1)*10
 		self.name="Sorcerer"
+		# self.compute_rewards()
 
 class Elemental(Monster):
 	def __init__(self,level):
@@ -195,6 +211,7 @@ class Elemental(Monster):
 		self.health=20+self.level*15
 		self.power=15+(self.level-1)*7
 		self.name="Elemental"
+		# self.compute_rewards()
 class Meme(Monster):
 	def __init__(self,level):
 		super(Meme,self).__init__(level)
@@ -202,6 +219,7 @@ class Meme(Monster):
 		self.health=420+self.level*9.11
 		self.power=69+(self.level-1)*42
 		self.name ="Meme"
+		# self.compute_rewards()
 class WindElemental(Elemental):
 	def __init__(self,level):
 		super(WindElemental,self).__init__(level)
@@ -209,6 +227,7 @@ class WindElemental(Elemental):
 		self.health=5+self.level*10
 		self.power=11+(self.level-1)*9
 		self.name="Wind Elemental"
+		# self.compute_rewards()
 
 class WaterElemental(Elemental):
 	def __init__(self,level):
@@ -216,6 +235,7 @@ class WaterElemental(Elemental):
 		self.modif=[mod.Destructive, mod.Forgotten, mod.Funky, mod.Foul, mod.Musky, mod.Nasty, mod.Putrid, mod.Weak]
 		self.power=4+(self.level-1)*13
 		self.name="Water Elemental"
+		# self.compute_rewards()
 
 class FireElemental(Elemental):
 	def __init__(self,level):
@@ -224,6 +244,7 @@ class FireElemental(Elemental):
 		self.health=10+self.level*12
 		self.power=18+(self.level-1)*12
 		self.name="Fire Elemental"
+		# self.compute_rewards()
 
 
 class EarthElemental(Elemental):
@@ -233,6 +254,7 @@ class EarthElemental(Elemental):
 		self.health=100+self.level*20
 		self.power=4+(self.level-1)*8
 		self.name="Earth Elemental"
+		# self.compute_rewards()
 
 class Demigod(Monster):
 	def __init__(self,level):
@@ -243,6 +265,7 @@ class Demigod(Monster):
 		self.power=20+(self.level-1)*14
 		self.action_points=2
 		self.name="Demigod"
+		# self.compute_rewards()
 
 class Overcharger(Monster):
 	def __init__(self,level):
@@ -254,6 +277,7 @@ class Overcharger(Monster):
 		self.ap=1
 		self.action_points=1
 		self.name="Overcharger"
+		# self.compute_rewards()
 
 class Cyclops(Monster):
 	def __init__(self,level):
@@ -262,6 +286,7 @@ class Cyclops(Monster):
 		self.health=60+self.level*15
 		self.power=6+(self.level-1)*10
 		self.name="Cyclops"
+		# self.compute_rewards()
 
 
 MONSTERLIST = {

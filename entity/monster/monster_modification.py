@@ -17,6 +17,7 @@ class Acidic(ModifyMons):
 	def apply(self):
 		self.owner.health*=.5
 		self.owner.power*=1.1
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -32,6 +33,7 @@ class Camphoric(ModifyMons):
 		self.owner.health*=.5
 		self.owner.power*=2
 		self.owner.base_ap+=1
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		pass
@@ -42,6 +44,7 @@ class Camphoric(ModifyMons):
 class Caustic(ModifyMons):
 	def apply(self):
 		self.owner.health*=.5
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -57,6 +60,7 @@ class Dank(ModifyMons):
 		self.owner.health*=1.5
 		self.owner.power*=2
 		self.owner.base_ap+=2
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -80,6 +84,7 @@ class Decaying(ModifyMons):
 		self.owner.health*=.3
 		self.owner.power*=.5
 		self.owner.base_ap+=1
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		self.health-=10;
@@ -91,6 +96,7 @@ class Destructive(ModifyMons):
 	def apply(self):
 		self.owner.health*=1.2
 		self.owner.power*=3
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		chance = base.D20.roll()
@@ -105,6 +111,7 @@ class Dieing(ModifyMons):
 	def apply(self):
 		self.owner.health*=.05
 		self.owner.power*=.05
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		self.health-=5;
@@ -116,6 +123,7 @@ class Dusty(ModifyMons):
 	def apply(self):
 		self.owner.health*=.7
 		self.owner.power*=.5
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -130,6 +138,7 @@ class Fetid(ModifyMons):
 	def apply(self):
 		self.owner.health*=.2
 		self.owner.power*=.5
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		pass
@@ -141,6 +150,7 @@ class Flowery(ModifyMons):
 	def apply(self):
 		self.owner.health=1
 		self.owner.power=1
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -155,6 +165,7 @@ class Forgotten(ModifyMons):
 	def apply(self):
 		self.owner.health*=1.1
 		self.owner.power*=.5
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		pass
@@ -165,7 +176,8 @@ class Forgotten(ModifyMons):
 class Foul(ModifyMons):
 	def apply(self):
 		self.owner.health*=.8
-		self.owner.power-=12
+		self.owner.power *= .2
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -181,6 +193,7 @@ class Funky(ModifyMons):
 		self.owner.health+=random.randint(1,150)
 		self.owner.power*=random.randint(1,4)
 		self.owner.base_ap+=1
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		chance =  base.D20.roll()
@@ -196,6 +209,7 @@ class Lightning(ModifyMons):
 		self.owner.health*=.1
 		self.owner.power*=3
 		self.owner.base_ap*=2
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		chance =base.D20.roll()
@@ -211,6 +225,7 @@ class Lowly(ModifyMons):
 		self.owner.health*=.4
 		self.owner.power*=.5
 		self.owner.base_ap=1
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		pass
@@ -223,6 +238,7 @@ class Musky(ModifyMons):
 		self.owner.health*=2
 		self.owner.power*=1.2
 		self.owner.base_ap+=2
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -238,6 +254,7 @@ class Nasty(ModifyMons):
 		self.owner.health*=.9
 		self.owner.power*=1.2
 		self.owner.base_ap*=2
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -251,6 +268,7 @@ class Nasty(ModifyMons):
 class Normal(ModifyMons):
 	def apply(self):
 		pass
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		pass
@@ -262,6 +280,7 @@ class Putrid(ModifyMons):
 	def apply(self):
 		self.owner.health*=.6
 		self.owner.power*=.1
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		pass
@@ -274,6 +293,7 @@ class Rancid(ModifyMons):
 		self.owner.health-=20
 		self.owner.power*=3
 		self.owner.base_ap*=2
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -288,6 +308,7 @@ class Scorched(ModifyMons):
 	def apply(self):
 		self.owner.health*=.4
 		self.owner.power*=.5
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		chance=base.D20.roll()
@@ -302,6 +323,7 @@ class Tiny(ModifyMons):
 	def apply(self):
 		self.owner.health*=.3
 		self.owner.power*=.3
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		pass
@@ -313,6 +335,7 @@ class Weak(ModifyMons):
 	def apply(self):
 		self.owner.health*=.1
 		self.owner.power*=.2
+		self.owner.compute_rewards()
 
 	def do_turn(self,target):
 		pass

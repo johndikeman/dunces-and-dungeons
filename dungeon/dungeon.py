@@ -117,6 +117,9 @@ class Hub(Dungeon):
 				print 'successfully purchased a %s' % item_object.to_str()
 			# inventory.append(item_object)
 			# self.party.inventory[self.party.index].gold -= item_object.cost
+		# allow the player to shop as much as they want in a turn
+		if raw_input('continue? (y/n) ') is 'y':
+			self.enter_shop()
 
 
 	def leave_dungeon(self):

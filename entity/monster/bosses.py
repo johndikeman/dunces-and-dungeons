@@ -17,7 +17,7 @@ class ChemicalOgre(m.Monster):
 
     def do_turn(self):
         for a in self.statuses:
-            a.do_turn()
+            a.do_turn(None)
         self.check_if_alive()
 
         if self.action_points > 0:
@@ -77,7 +77,7 @@ class SpiderQueen(m.Monster):
 
     def do_turn(self):
         for a in self.statuses:
-            a.do_turn()
+            a.do_turn(None)
         self.check_if_alive()
 
         if self.action_points > 0:

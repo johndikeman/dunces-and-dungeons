@@ -6,7 +6,7 @@ class OgreEnrage(base.Entity):
         self.turns = 0
         self.applied = False
 
-    def do_turn(self):
+    def do_turn(self,option):
         if self.turns < 3:
             if not self.applied:
                 self.owner.power *= 1.2
