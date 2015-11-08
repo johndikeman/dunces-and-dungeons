@@ -42,7 +42,7 @@ class PlayerTest(unittest.TestCase):
         base.INSTRUCTION_QUEUE = []
         base.IS_TEST = True
         self.party = player.Party()
-        self.player = player.Player('john was here',{'race':'Dwarf','attributes':{
+        self.player = player.Player('john was here',{'race':'Tank','attributes':{
             'agility': 2,
             'intelligence': 5,
             'strength': 8,
