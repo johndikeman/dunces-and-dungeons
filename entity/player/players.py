@@ -6,7 +6,7 @@ import entity.thing as thing
 import entity.monster.monsters as monster
 import entity.item.consumable as consumable
 RACES = {
-	"Dwarf":{
+	"Tank":{
 		"rolls":{
 			'agility': base.D6,
 			'intelligence':base.D12,
@@ -51,7 +51,7 @@ RACES = {
 			'intelligence': 4,
 			'strength': 1,
 			'luck': 1,
-			'mana':1.6
+			'mana': 3.6
 		},
 		'abilities':[],
 		'statuses':[]
@@ -92,14 +92,14 @@ RACES = {
 		'BaseStats':{
 			'agility': 8,
 			'intelligence': 6,
-			'strength': 9,
+			'strength': 5,
 			'luck': 5,
 			'mana': 4
 		},
 		'LvlGains':{
 			'agility': 2,
 			'intelligence': 1.6,
-			'strength': 2.2,
+			'strength': 1.2,
 			'luck': .8,
 			'mana': .8
 		},
