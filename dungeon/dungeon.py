@@ -286,14 +286,17 @@ class LeaveOption(thing.InteractiveObject):
 
 	def do_turn(self,arg):
 		if arg == self.options[0]:
-			if len(self.owner.things) == 1:
+			full = False
+			for a in self.owner.things:
+				if isinstance(a,monsters.Monster):
+					full = True
+			if full:
+				print 'you can\'t leave the dungeon while you\'re under attack!'
+			else:
 				for player in self.owner.containing_dungeon.party.inventory:
 					player.gold += (self.owner.containing_dungeon.gold_reward / 5)
 				print 'each player is awarded %d gold!' % (self.owner.containing_dungeon.gold_reward / 5)
-
 				self.owner.containing_dungeon.leave_dungeon()
-			else:
-				print 'you can\'t leave the dungeon while you\'re under attack!'
 
 	def to_str(self):
 		return 'a ladder out of the dungeon'

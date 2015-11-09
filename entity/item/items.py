@@ -111,6 +111,10 @@ class SpellBook(Item):
 		self.cooldown_time = random.random() * (7 * level)
 		self.item_options=['equip','examine']
 
+		self.is_healing = random.choice([True,False])
+		if self.is_healing:
+			self.damage *= -1
+
 	def do_turn(self,option):
 		# effectiveness coefficient
 		ec = self.owner.attributes['mana'] / 5
@@ -126,22 +130,32 @@ class SpellBook(Item):
 
 			if p == 0:
 				if not self.on_cooldown:
-					if not self.aoe:
-						targets = [self.owner.select_target()]
+					if not self.healing:
+						if not self.aoe:
+							self.murder(owner.select_target())
+							self.owner.statuses.append(s.Cooldown(self,self.cooldown_time))
+						else:
+							self.owner.do_aoe_monster(self.murder)
+							self.owner.statuses.append(s.Cooldown(self,self.cooldown_time))
 					else:
-						targets = self.owner.party.current_dungeon.active_room.things
-					for target in targets:
-						# we have to make sure that the targets are monsters, because otherwise we would hit chests and leaveoptions
-						if target and isinstance(target,r.Monster):
-							if self.damage:
-								target.take_damage(self.owner,self.damage*ec)
-							if self.stuntime:
-								target.statuses.append(s.Stun(math.ceil(self.stuntime*ec)))
-							if self.poisontime and self.poisondamage:
-								target.statuses.append(s.Poison(math.ceil(self.poisontime*ec),self.poisondamage*ec))
-					self.owner.statuses.append(s.Cooldown(self,self.cooldown_time))
+						if not self.aoe:
+							self.murder(owner.select_player_target())
+							self.owner.statuses.append(s.Cooldown(self,self.cooldown_time))
+						else:
+							self.owner.do_aoe_player(self.murder)
+							self.owner.statuses.append(s.Cooldown(self,self.cooldown_time))
+
 				else:
 					print '%s is on cooldown!' % self.name
+
+	def murder(self,target):
+		if target:
+			if self.damage:
+				target.take_damage(self.owner,self.damage*ec)
+			if self.stuntime:
+				target.statuses.append(s.Stun(math.ceil(self.stuntime*ec)))
+			if self.poisontime and self.poisondamage:
+				target.statuses.append(s.Poison(math.ceil(self.poisontime*ec),self.poisondamage*ec))
 
 	def to_str(self):
 		return 'a spell by the name of %s' % self.name

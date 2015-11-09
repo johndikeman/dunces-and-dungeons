@@ -288,6 +288,12 @@ class Player(base.Entity):
 			return opt[target_ind]
 		return None
 
+	def select_player_target(self):
+		opt = base.make_choice([a.to_str() for a in self.party.inventory])
+		if opt != None:
+			return self.party.inventory[opt]
+		return None
+
 	def to_str(self):
 		return self.name
 
@@ -307,6 +313,28 @@ class Player(base.Entity):
 		except:
 			print "error here, 291 monsters.py"
 			return self.attributes['strength']/4
+
+	# this is what items that need to operate in an area of effect need to do.
+	# predicate needs to be a function object, which will be called with the entity as the first option
+	def do_aoe_monster(self,predicate):
+		a = 0
+		start = len(self.party.current_dungeon.active_room.things)
+		while a < start:
+			if isinstance(self.party.current_dungeon.active_room.things[a],monster.Monster):
+				predicate(self.party.current_dungeon.active_room.things[a])
+				if len(self.party.current_dungeon.active_room.things) is start:
+					a += 1
+				else:
+					start = len(self.party.current_dungeon.active_room.things)
+	def do_aoe_player(self,predicate):
+		a = 0
+		start = len(self.party.inventory)
+		while a < start:
+			predicate(self.party.inventory[a])
+			if len(self.party.inventory) is start:
+				a += 1
+			else:
+				start = len(self.party.inventory)
 
 
 class Party(base.Entity):
