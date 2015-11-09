@@ -50,11 +50,32 @@ class PlayerTest(unittest.TestCase):
             'mana': 0
         }})
         self.party.add_player(self.player)
+        self.dung = d.Dungeon(20,4,self.party)
 
     def tearDown(self):
         base.INSTRUCTION_QUEUE = []
         self.party = None
         self.player = None
+
+    def test_aoe(self):
+        # the instruction queue has to be reversed in order to be usable, lol
+        base.INSTRUCTION_QUEUE = ['bow','Launch Volley','examine'][::-1]
+        bow = weapon.Bow(5)
+        stat = item_mods.Rusty()
+        bow.modifiers.append(stat)
+        self.player.inventory.append(bow)
+        bow.equip()
+        self.dung.rooms[0][0].things.clear()
+        for a in range(6):
+            spidey = monsters.Spider(1)
+            weak = monster_mods.Weak()
+            spidey.modifiers.append(weak)
+            weak.apply()
+            self.dung.rooms[0][0].things.append(spidey)
+        self.party.current_dungeon = self.dung
+        self.dung.start()
+        self.party.handle_player_turn()
+
 
     def test_armor(self):
         legs = armor.Platelegs(2)

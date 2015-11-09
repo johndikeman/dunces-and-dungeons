@@ -161,6 +161,9 @@ class Inventory():
 				return True
 		return False
 
+	def clear(self):
+		self.list = []
+
 	def __getitem__(self,key):
 		return self.list[key]
 

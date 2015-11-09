@@ -91,9 +91,17 @@ class Bow(Weapon):
 				if target:
 					self.aim(target)
 			elif p == 2:
-				for a in self.owner.party.current_dungeon.active_room.things:
-					if(isinstance(a,r.Monster) and a.revealed):
-						self.volley(a)
+				# THIS IS THE NEW AOE CODE. IT MIGHT NEED TO BE IMPLEMENTED ELSEWHERE FOR BETTER USABILITY
+				a = 0
+				start = len(self.owner.party.current_dungeon.active_room.things)
+				while a < start:
+					if isinstance(self.owner.party.current_dungeon.active_room.things[a],r.Monster):
+						self.volley(self.owner.party.current_dungeon.active_room.things[a])
+						if len(self.owner.party.current_dungeon.active_room.things) == start:
+							a += 1
+						else:
+							start = len(self.owner.party.current_dungeon.active_room.things)
+
 
 	#an attempt to further increase the action points system. shoot would only cost 1 action point while aim would take 2
 	def shoot(self,target):
