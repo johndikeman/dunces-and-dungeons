@@ -317,19 +317,20 @@ class Player(base.Entity):
 	# this is what items that need to operate in an area of effect need to do.
 	# predicate needs to be a function object, which will be called with the entity as the first option
 	def do_aoe_monster(self,predicate):
-		a = 0
-		num=0
-		start = len(self.party.current_dungeon.active_room.things)
-		for b in self.party.current_dungeon.active_room.things:
-			if not isinstance(b,monster.Monster):
-				n+=1
-		while a < start-num:
+		b=len(self.party.current_dungeon.active_room.things)
+		a=0
+		while a < b:
 			if isinstance(self.party.current_dungeon.active_room.things[a],monster.Monster):
+				firstr=self.party.current_dungeon.active_room.things[a].alive
 				predicate(self.party.current_dungeon.active_room.things[a])
-				if len(self.party.current_dungeon.active_room.things) is start:
-					a += 1
-				else:
-					start = len(self.party.current_dungeon.active_room.things)
+				try:
+					if firstr and not self.party.current_dungeon.active_room.things[a].alive:
+						a -= 1
+						b-=1
+				except:
+					a-=1
+					b-=1
+			a+=1
 	def do_aoe_player(self,predicate):
 		a = 0
 		start = len(self.party.inventory)

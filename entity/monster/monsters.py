@@ -83,7 +83,7 @@ class Monster(base.Entity):
 		self.alive = False
 		if killa:
 			killa.update_xp(self.xp_reward)
-		#self.owner.things.remove(self)
+		self.owner.things.remove(self)
 
 def compute(comp,val):
 	fin = 1.0
