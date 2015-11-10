@@ -190,6 +190,7 @@ class Room(object):
 	def generate(self):
 		for monstar in monsters.spawn(self.level):
 			self.things.append(monstar)
+			monstar.room=self
 
 		chest = chesteses.spawn(self.level)
 		if chest:
@@ -268,10 +269,15 @@ class Room(object):
 	def handle_monster_turn(self):
 		# print "THINGS: %s" % str(self.things)
 		# print 'ID: %s' % str(self.identified_things)
+		alist=[]
 		for thing in self.things:
 			thing.action_points = thing.base_ap
 			while thing.alive and thing.action_points > 0:
 				thing.do_turn()
+				if not thing.alive:
+					alist.append(thing)
+		for a in alist:
+			self.things.remove(a)
 		# for thing in self.identified_things:
 		# 	if thing.alive:
 		# 		thing.do_turn()

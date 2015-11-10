@@ -318,8 +318,12 @@ class Player(base.Entity):
 	# predicate needs to be a function object, which will be called with the entity as the first option
 	def do_aoe_monster(self,predicate):
 		a = 0
+		num=0
 		start = len(self.party.current_dungeon.active_room.things)
-		while a < start:
+		for b in self.party.current_dungeon.active_room.things:
+			if not isinstance(b,monster.Monster):
+				n+=1
+		while a < start-num:
 			if isinstance(self.party.current_dungeon.active_room.things[a],monster.Monster):
 				predicate(self.party.current_dungeon.active_room.things[a])
 				if len(self.party.current_dungeon.active_room.things) is start:
