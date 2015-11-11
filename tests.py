@@ -11,6 +11,7 @@ import entity.item.items as items
 import entity.item.controller as control
 import entity.item.weapon_modification as item_mods
 import entity.item.armor_modification as armor_mods
+import entity.item.utils as utils
 import entity.modifier
 # monster imports
 import entity.monster.monster_modification as monster_mods
@@ -25,7 +26,7 @@ import entity.chest
 
 class DungeonTest(unittest.TestCase):
     def setUp(self):
-        self.dung = d.Dungeon(20,4,None)
+        self.dung = d.Dungeon(10,4,None)
 
     def tearDown(self):
         self.dung = None
@@ -35,7 +36,7 @@ class DungeonTest(unittest.TestCase):
         for a in self.dung.rooms:
             for b in a:
                 size += 1
-        self.assertEquals(size,400)
+        self.assertEquals(size,100)
 
 class PlayerTest(unittest.TestCase):
     def setUp(self):
@@ -50,7 +51,7 @@ class PlayerTest(unittest.TestCase):
             'mana': 0
         }})
         self.party.add_player(self.player)
-        self.dung = d.Dungeon(20,4,self.party)
+        self.dung = d.Dungeon(10,4,self.party)
 
     def tearDown(self):
         base.INSTRUCTION_QUEUE = []
@@ -76,6 +77,12 @@ class PlayerTest(unittest.TestCase):
         self.dung.start()
         self.party.handle_player_turn()
 
+    def test_map(self):
+        base.INSTRUCTION_QUEUE = ['open map','examine'][::-1]
+        self.player.inventory.append(utils.CompletedMap())
+        self.party.current_dungeon = self.dung
+        self.dung.start()
+        self.party.handle_player_turn()
 
     def test_armor(self):
         legs = armor.Platelegs(2)

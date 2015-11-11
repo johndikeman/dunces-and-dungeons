@@ -186,6 +186,7 @@ class Room(object):
 		self.cords = None
 
 		self.directions = {'north':(-1,0),'south':(1,0),'east':(0,1),'west':(0,-1)}
+		self.entered = False
 
 	def generate(self):
 		for monstar in monsters.spawn(self.level):
@@ -225,6 +226,11 @@ class Room(object):
 				pass
 		return neighbors
 
+	def contains_exit(self):
+		for a in self.things:
+			if isinstance(a,LeaveOption):
+				return True
+		return False
 
 	def generate_neighbor(self,di):
 		# print 'generating n to the %s at %s' % (di,str(self.cords))
@@ -249,22 +255,7 @@ class Room(object):
 
 
 	def enter(self):
-		for a in self.things:
-			if(isinstance(a,LeaveOption) ):
-				self.party.current_dungeon.roomsmap[self.cords[0]][self.cords[1]]='E'
-			else:
-				self.party.current_dungeon.roomsmap[self.cords[0]][self.cords[1]]='T'
-		g=self.cords[0]
-		h=self.cords[1]
-		if((str(g+1)+' '+str(h)) in self.containing_dungeon.roomslist and self.party.current_dungeon.roomsmap[g+1][h]!="T"):
-			self.party.current_dungeon.roomsmap[g+1][h]='?'
-		if((str(g-1)+' '+str(h)) in self.containing_dungeon.roomslist and self.party.current_dungeon.roomsmap[g-1][h]!="T"):
-			self.party.current_dungeon.roomsmap[g-1][h]='?'
-		if((str(g)+' '+str(h+1)) in self.containing_dungeon.roomslist and self.party.current_dungeon.roomsmap[g][h+1]!="T"):
-			self.party.current_dungeon.roomsmap[g][h+1]='?'
-		if((str(g)+' '+str(h-1)) in self.containing_dungeon.roomslist and self.party.current_dungeon.roomsmap[g][h-1]!="T"):
-			self.party.current_dungeon.roomsmap[g][h-1]='?'
-		# print 'you enter a %s, CORDS:%s' % (self.description,str(self.cords))
+		self.entered = True
 
 	def handle_monster_turn(self):
 		# print "THINGS: %s" % str(self.things)
