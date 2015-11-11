@@ -10,7 +10,7 @@ class ChemicalOgre(m.Monster):
         super(ChemicalOgre,self).__init__(level)
         self.health = self.level * 700
         self.max_health = self.level * 700
-        self.power = math.pow(self.level * 80,1.1)
+        self.power = math.pow(self.level * 80,1.05)
         self.action_points = 4
         self.base_ap = 4
         self.animals = 'horse cow sheep giraffe anteater anchovie dolphin dog cat antelope hippo whale'.split(' ')

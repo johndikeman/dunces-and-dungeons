@@ -170,7 +170,7 @@ class SpellBook(Item):
 		return ret
 
 	def examine(self):
-		return self.descr()
+		return self.descr
 
 	def get_cost(self):
 		return 20 * (10/self.cooldown_time)
