@@ -90,7 +90,7 @@ class AncientDragon(m.Monster):
         if self.action_points > 0:
             roll = base.D6.roll()
             if roll is 1:
-                self.breatefire()
+                self.breathefire()
             if roll is 2:
                 self.fly()
             if roll is 3:
@@ -143,10 +143,10 @@ class AncientDragon(m.Monster):
             if not self.aggroed:
                 self.select_aggro()
             if self.aggro.alive:
-                self.statuses.append(p_status.Sleep(self.level/3))
+                self.statuses.append(p_status.Sleep())
             else:
                 self.select_aggro()
-                self.statuses.append(p_status.Sleep(self.level/3))
+                self.statuses.append(p_status.Sleep())
 
     def to_str(self):
         return "Zearth the Elder Dragon"

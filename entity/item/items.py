@@ -13,6 +13,7 @@ class Item(base.Entity):
 		self.cost = 5
 		self.name="item"
 		self.equipped = False
+		self.descr=self.name+" "+str(self.level)
 		self.item_options = []
 	def to_str(self):
 		return self.name

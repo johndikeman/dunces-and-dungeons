@@ -16,7 +16,8 @@ class Sword(Weapon):
 		self.name = 'sword'
 		self.info='one-handed'
 		self.info2='weapon'
-		self.level = level
+		self.level = level		
+		self.descr=self.name+" "+str(self.level)
 		self.options = ['%s' % self.to_str()]
 		self.item_options=['examine','equip']
 		self.damage = 10.0 * self.level
@@ -41,6 +42,7 @@ class Dagger(Weapon):
 		super(Dagger,self).__init__()
 		self.name = 'dagger'
 		self.level = level
+		self.descr=self.name+" "+str(self.level)
 		self.info='one-handed'
 		self.info2='weapon'
 		self.item_options=['examine','equip']
@@ -69,6 +71,7 @@ class Bow(Weapon):
 		self.info='two-handed'
 		self.info2='weapon'
 		self.level = level
+		self.descr=self.name+" "+str(self.level)
 		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
 		self.damage=1.0 * (25 * math.log(self.level + 1, 2) + 3) / 50.0
@@ -114,6 +117,7 @@ class Rapier(Weapon):
 		self.name='rapier'
 		self.info='one-handed'
 		self.info2='weapon'
+		self.descr=self.name+" "+str(self.level)
 		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
 		self.damage = 2 * self.level
@@ -149,6 +153,7 @@ class Flail(Weapon):
 		self.name = 'flail'
 		self.info='one-handed'
 		self.info2='weapon'
+		self.descr=self.name+" "+str(self.level)
 		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
 		self.damage = 4.0 * self.level
