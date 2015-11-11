@@ -322,9 +322,10 @@ class Player(base.Entity):
 		while a < b:
 			if isinstance(self.party.current_dungeon.active_room.things[a],monster.Monster):
 				firstr=self.party.current_dungeon.active_room.things[a].alive
+				work=self.party.current_dungeon.active_room.things[a]
 				predicate(self.party.current_dungeon.active_room.things[a])
 				try:
-					if firstr and not self.party.current_dungeon.active_room.things[a].alive:
+					if firstr and not work.alive:
 						a -= 1
 						b-=1
 				except:

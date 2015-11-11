@@ -2,7 +2,7 @@ from dungeon.dungeon import Dungeon, Hub
 from entity.player.players import Player, Party
 import entity.item.items as items
 import sys
-import requests
+#import requests
 
 RELEASE_ID = 'v1.0.6'
 
