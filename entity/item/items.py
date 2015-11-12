@@ -82,6 +82,7 @@ class Item(base.Entity):
 	def get_cost(self):
 		return self.cost
 
+# this class is for items that we need to be usable at all times, not just while equipped
 class ItemUsedFromInventory(Item):
 	def __init__(self):
 		super(ItemUsedFromInventory,self).__init__()

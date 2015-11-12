@@ -5,6 +5,7 @@ import entity.item.armor as armor
 import entity.item.items as item
 import entity.monster.monsters as r
 import entity.modifier as m
+import entity.item.utils as utils
 
 
 
@@ -27,8 +28,13 @@ class ItemController():
 				return self.get_armor()
 			elif kind == 'spells':
 				return self.get_spells()
+			elif kind == 'utility':
+				return self.get_utils()
 		else:
 			return random.choice([self.get_spells(),self.get_armor(),self.get_weapon(),self.get_health()])
+
+	def get_utils(self):
+		return random.choice([utils.Map(),utils.CompletedMap()])
 
 	def get_weapon(self):
 		weapon_instance = self.applier.modify_weapon(random.choice(self.items['weapons'])(self.level))

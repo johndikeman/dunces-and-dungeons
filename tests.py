@@ -78,9 +78,9 @@ class PlayerTest(unittest.TestCase):
         self.party.handle_player_turn()
 
     def test_map(self):
-        base.INSTRUCTION_QUEUE = ['open map','examine'][::-1]
-        self.player.inventory.append(utils.CompletedMap())
+        base.INSTRUCTION_QUEUE = ['open completed map','examine'][::-1]
         self.party.current_dungeon = self.dung
+        self.player.inventory.append(utils.CompletedMap())
         self.dung.start()
         self.party.handle_player_turn()
 

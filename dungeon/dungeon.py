@@ -7,6 +7,7 @@ import entity.thing as thing
 import entity.item.consumable as consumable
 import entity.item.controller as control
 import entity.monster.bosses as boss
+import entity.item.utils as utils
 
 
 # these words are from http://acreativemoment.com/2008/07/18/words-to-describe-smell-sound-taste-touch/
@@ -231,6 +232,13 @@ class Room(object):
 			if isinstance(a,LeaveOption):
 				return True
 		return False
+
+	def contains_chest(self):
+		for a in self.things:
+			if isinstance(a,chesteses.Chest):
+				return True
+		return False
+
 
 	def generate_neighbor(self,di):
 		# print 'generating n to the %s at %s' % (di,str(self.cords))

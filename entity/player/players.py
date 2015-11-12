@@ -6,6 +6,7 @@ import entity.thing as thing
 import entity.monster.monsters as monster
 import entity.item.consumable as consumable
 import entity.ability.player_abilities as ability
+import entity.item.utils as utils
 
 RACES = {
 	"Tank":{
@@ -175,6 +176,7 @@ class Player(base.Entity):
 		self.health = self.max_health
 		self.inventory.append(consumable.HealthSack())
 		self.inventory.append(inv.InventoryHandler())
+		# self.inventory.append(utils.Map())
 
 		# add all the starting abilities
 		for a in RACES[self.race]['abilities']:
@@ -301,8 +303,8 @@ class Player(base.Entity):
 	# this is what items that need to operate in an area of effect need to do.
 	# predicate needs to be a function object, which will be called with the entity as the first option
 	def do_aoe_monster(self,predicate):
-		b=len(self.party.current_dungeon.active_room.things)
-		a=0
+		b = len(self.party.current_dungeon.active_room.things)
+		a = 0
 		while a < b:
 			if isinstance(self.party.current_dungeon.active_room.things[a],monster.Monster):
 				firstr=self.party.current_dungeon.active_room.things[a].alive
@@ -311,10 +313,10 @@ class Player(base.Entity):
 				try:
 					if firstr and not work.alive:
 						a -= 1
-						b-=1
+						b -= 1
 				except:
-					a-=1
-					b-=1
+					a -= 1
+					b -= 1
 			a+=1
 	def do_aoe_player(self,predicate):
 		a = 0
