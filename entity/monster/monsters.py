@@ -1,6 +1,7 @@
 import base, random, time
 import entity.modifier as mo
 import entity.monster.monster_modification as mod
+import math
 
 class Monster(base.Entity):
 	def __init__(self,level):
@@ -30,7 +31,7 @@ class Monster(base.Entity):
 
 	# for computing rewards after the specific monster and modifier applications.
 	def compute_rewards(self):
-		self.xp_reward = abs(self.level * 10 * (self.power / 3) * self.generic_reward_multiplier)
+		self.xp_reward = math.pow(abs(self.level * 10 * (self.power / 3) * self.generic_reward_multiplier),.8)
 
 	def set_level(self,val):
 		pass

@@ -24,7 +24,7 @@ class Entity(object):
 		self.armor = 1
 		self.id = random.random() * 100000000
 		self.xp = 0
-		self.level_up_threshold = self.level * 10
+		self.level_up_threshold = math.log(self.level * self.level,2)*100
 		self.xp_reward = 0
 
 	def do_turn(self,options):
@@ -44,7 +44,7 @@ class Entity(object):
 			self.xp -= self.level_up_threshold
 			self.level += 1
 			print "[LEVELUP] %s has leveled up to level %d!" % (self.to_str(),self.level)
-			self.level_up_threshold = self.level * 10
+			self.level_up_threshold = (self.level * self.level)+6
 			self.check_for_levelup()
 
 	def examine(self,arg):
