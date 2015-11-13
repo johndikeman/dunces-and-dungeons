@@ -79,6 +79,8 @@ class Entity(object):
 
 
 	def take_damage(self,attacker,damage,wait=True):
+		if IS_TEST:
+			wait = False
 		damage = float(damage)
 		# compute damage resistance based on the armor
 		res = (25 * math.log(self.armor + 1, 11) + 3) / 100.0

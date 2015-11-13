@@ -84,6 +84,37 @@ class PlayerTest(unittest.TestCase):
         self.dung.start()
         self.party.handle_player_turn()
 
+    def test_carl(self):
+        self.party.current_dungeon = self.dung
+        self.dung.rooms[0][0].things.clear()
+        # CORALLLLLL
+        coral = boss.GrandMage(1)
+        self.dung.rooms[0][0].things.append(coral)
+        coral.room = self.dung.rooms[0][0]
+        self.player.health = 100000
+        self.dung.start()
+        coral.cast_cosmicBlast()
+        coral.cast_flood()
+        coral.cast_restore()
+        coral.cast_fireball()
+        coral.cast_oops()
+
+    def test_dragon(self):
+        self.party.current_dungeon = self.dung
+        self.dung.rooms[0][0].things.clear()
+        # CORALLLLLL
+        coral = boss.AncientDragon(1)
+        self.dung.rooms[0][0].things.append(coral)
+        coral.room = self.dung.rooms[0][0]
+        self.player.health = 100000
+        self.dung.start()
+        coral.breathefire()
+        coral.fly()
+        coral.sleep()
+        coral.Roar()
+        coral.autoattack()
+
+
     def test_armor(self):
         legs = armor.Platelegs(2)
         self.player.inventory.append(legs)

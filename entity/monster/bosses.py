@@ -57,7 +57,7 @@ class ChemicalOgre(m.Monster):
             else:
                 self.select_aggro()
                 self.attack(self.aggro)
-            
+
 
     def feast(self):
         self.reveal()
@@ -99,7 +99,7 @@ class AncientDragon(m.Monster):
                 self.Roar()
             if roll is 5 or roll is 6:
                 self.autoattack()
-        print self.health
+        #print self.health
 
         self.action_points -= 1
 
@@ -110,7 +110,7 @@ class AncientDragon(m.Monster):
             roll=base.D20.roll()
             if roll<12:
                 player.take_damage(self,self.power/3)
-                player.statuses.append(p_status.Burn(math.ceil(self.level/4),self.damage/(self.level/2)))
+                player.statuses.append(p_status.Burn(math.ceil(self.level/4),self.power/(self.level/2.0)))
             else:
                 print '%s has dodged the flames!' %player.name
 
@@ -128,7 +128,7 @@ class AncientDragon(m.Monster):
             else:
                 self.select_aggro()
                 self.attack(self.aggro)
-            
+
 
     def Roar(self):
         self.reveal()
@@ -265,8 +265,8 @@ class GrandMage(m.Monster):
 
     def cast_cosmicBlast(self):
         num=0
-        for a in self.active_room.things:
-            if isinstance(a,Monster):
+        for a in self.room.things:
+            if isinstance(a,m.Monster):
                 a.conceal()
                 num+=1
         self.conceal()
