@@ -4,7 +4,7 @@ import entity.item.items as items
 import sys
 import requests
 
-RELEASE_ID = 'v1.0.6'
+RELEASE_ID = 'v1.0.7'
 
 PARTY = Party()
 class Manager:
