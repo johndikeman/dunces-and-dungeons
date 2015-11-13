@@ -78,7 +78,7 @@ class AncientDragon(m.Monster):
         super(AncientDragon,self).__init__(level)
         self.health = self.level * 1000
         self.max_health = self.level * 1000
-        self.power = self.level*75
+        self.power = self.level*150
         self.action_points = 1
         self.base_ap = 1
 
