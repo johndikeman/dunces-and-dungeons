@@ -8,7 +8,7 @@ class CompletedMap(items.ItemUsedFromInventory):
         # map will be the matrix
         self.map = []
         self.name = "a completed map of the dungeon"
-        self.cost = 500
+        self.cost = 200
 
     def do_turn(self,arg):
         if arg is self.options[0]:

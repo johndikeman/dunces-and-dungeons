@@ -128,7 +128,7 @@ class SpellBook(Item):
 				self.options = ['%s' % self.name]
 
 			if p == 2:
-				print self.descr()
+				print self.ploop()
 
 			if p == 0:
 				if not self.on_cooldown:
@@ -162,7 +162,7 @@ class SpellBook(Item):
 	def to_str(self):
 		return 'a spell by the name of %s' % self.name
 
-	def descr(self):
+	def ploop(self):
 		ret =  "%s does %.2f damage, stuns for %d turns and does %.2f of poison damage every turn for %d turns, with a cooldown of %d turns" % (self.name,self.damage,self.stuntime,self.poisondamage,self.poisontime,self.cooldown_time)
 		if self.aoe:
 			ret += 'in an area of effect.'
@@ -171,7 +171,7 @@ class SpellBook(Item):
 		return ret
 
 	def examine(self):
-		return self.descr
+		return self.ploop()
 
 	def get_cost(self):
 		return 20 * (10/self.cooldown_time)

@@ -14,6 +14,7 @@ class ChemicalOgre(m.Monster):
         self.action_points = 4
         self.base_ap = 4
         self.animals = 'horse cow sheep giraffe anteater anchovie dolphin dog cat antelope hippo whale'.split(' ')
+        self.compute_rewards()
 
     def do_turn(self):
         for a in self.statuses:
@@ -32,7 +33,7 @@ class ChemicalOgre(m.Monster):
                 self.feast()
             if roll is 5 or roll is 6:
                 print "the ogre looks around, apparently confused."
-        print self.health
+        # print self.health
 
         self.action_points -= 1
 
@@ -78,9 +79,11 @@ class AncientDragon(m.Monster):
         super(AncientDragon,self).__init__(level)
         self.health = self.level * 1000
         self.max_health = self.level * 1000
-        self.power = self.level*150
+        self.power = self.level*75
         self.action_points = 1
         self.base_ap = 1
+        self.compute_rewards()
+
 
     def do_turn(self):
         for a in self.statuses:
@@ -156,6 +159,8 @@ class SpiderQueen(m.Monster):
         super(SpiderQueen,self).__init__(level)
         self.health = self.level * 400
         self.power = self.level * 100
+        self.compute_rewards()
+
 
     def do_turn(self):
         for a in self.statuses:
@@ -201,6 +206,8 @@ class GrandMage(m.Monster):
         self.health = self.level * 200
         self.power = self.level * 40
         self.max_health=self.level * 200
+        self.compute_rewards()
+
 
     def do_turn(self):
         for a in self.statuses:

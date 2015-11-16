@@ -8,11 +8,13 @@ class OgreEnrage(base.Entity):
 
     def do_turn(self,option):
         if self.turns < 3:
-            if not self.applied:
+            if not self.applied and not self.owner.statuses.contains_type(OgreEnrage):
                 self.owner.power *= 1.2
                 self.owner.health *= 1.2
                 self.applied = True
             self.turns += 1
         else:
-            self.owner.power /=1.2
+            print "[STATUS] the ogre is no longer enraged!"
+            self.owner.power /= 1.2
+            self.owner.health -= (self.owner.health * .2)
             self.owner.statuses.remove(self)

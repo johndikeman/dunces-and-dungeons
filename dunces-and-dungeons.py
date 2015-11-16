@@ -2,7 +2,6 @@ from dungeon.dungeon import Dungeon, Hub
 from entity.player.players import Player, Party
 import entity.item.items as items
 import sys
-import requests
 
 RELEASE_ID = 'v1.0.7'
 
@@ -14,6 +13,7 @@ class Manager:
 	def update_check(self):
 		print 'checking for update...'
 		try:
+			import requests
 			latest = requests.get('https://api.github.com/repos/microwaveabletoaster/dunces-and-dungeons/releases/latest').json()['tag_name']
 			if latest == RELEASE_ID:
 				print 'you\'re up to date!'
