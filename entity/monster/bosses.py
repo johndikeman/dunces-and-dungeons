@@ -119,6 +119,7 @@ class AncientDragon(m.Monster):
 
     def fly(self):
         self.conceal()
+        self.statuses.append(p_status.Healing)
         print 'Zearth takes to the skies and quickly becomes invisible'
 
     def autoattack(self):
