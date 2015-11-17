@@ -31,7 +31,7 @@ RACES = {
 			'luck': 1,
 			'mana': .2
 		},
-		'abilities':[ability.BattleCry],
+		'abilities':[ability.BattleCry, ability.BerserkerVitality],
 		'statuses':[]
 	},
 	'Wizard':{
@@ -106,7 +106,7 @@ RACES = {
 			'luck': .8,
 			'mana': .8
 		},
-		'abilities':[],
+		'abilities':[ability.Steal],
 		'statuses':[]
 	},
 }

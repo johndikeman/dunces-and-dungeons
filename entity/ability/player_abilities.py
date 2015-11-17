@@ -53,6 +53,38 @@ class ShieldBash(Ability):
 			# TODO- implement stun
 			target.statuses.append(s.Stun(2))
 
+class BerserkerVitality(Ability):
+	def __init__(self):
+		super(BerserkerVitaliy,self).__init__()
+		self.options=[]
+		self.level=1
+
+	def do_turn(self):
+		self.level=self.owner.level
+		self.owner.health=self.level*.5
+		print "%s's Berserker Vitality restores health!",self.owner.name
+		if self.owner.health >self.owner.max_health:
+			self.owner.health=self.owner.max_health
+
+class Steal(Ability):
+	def __init__(self):
+		super(Steal,self).__init__()
+		self.options=['Pickpocket']
+		self.level=1
+
+	def do_turn(self):
+		target=self.owner.select_target()
+		if target:
+			amount=target.power/10
+			roll=base.D20.roll()
+			roll=roll+(self.owner.attributes['luck']/(100/self.level))
+			if roll>15:
+				self.owner.gold=self.owner.gold+amount
+			else:	
+				self.owner.health-=(self.owner.max_health/3+self.target.power/10)
+				self.owner.gold/=3
+
+
 
 
 # class ArcaneGenerator(base.Entity):
