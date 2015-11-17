@@ -274,6 +274,27 @@ class Player(base.Entity):
 			return opt[target_ind]
 		return None
 
+	def get_healthbar(self,size=12):
+		bar = '['
+		num = int(math.floor(self.health / (self.max_health / (size * 1.0))))
+		rest = 12 - num
+		for a in range(num):
+			bar += '='
+		for a in range(rest):
+			bar += ' '
+		return bar + ']'
+
+	def get_xpbar(self,size=12):
+		bar = '['
+		num = int(math.floor(self.xp / ((self.level_up_threshold + 1) / (size * 1.0))))
+		rest = 12 - num
+		for a in range(num):
+			bar += '='
+		for a in range(rest):
+			bar += ' '
+		return bar + ']'
+
+
 	def select_player_target(self):
 		opt = base.make_choice([a.to_str() for a in self.party.inventory])
 		if opt != None:
@@ -377,7 +398,8 @@ class Party(base.Entity):
 		for a in range(len(self.inventory)):
 			if(self.end):
 				print "------====%s's turn====------" % self.inventory[self.index].name
-				print 'you have %d hp left' % self.inventory[self.index].health
+				print 'HEALTH: %s' % self.inventory[self.index].get_healthbar(24)
+				print 'XP: %s' % self.inventory[self.index].get_xpbar(24)
 				while((self.inventory[self.index].action_points > 0) and (self.inventory[self.index].alive==True)):
 					selection = base.make_choice(self.return_options(),'option')
 					self.do_turn(self.return_options()[selection])

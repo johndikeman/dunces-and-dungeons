@@ -69,9 +69,11 @@ class Item(base.Entity):
 				if self.owner.equipment[self.info]: self.owner.equipment[self.info].unequip()
 				self.owner.equipment[self.info] = self
 		self.equipped = True
+		self.name += '*'
 
 	def unequip(self):
 		self.equipped = False
+		self.name = self.name[:-1]
 
 	def examine(self):
 		try:
@@ -132,7 +134,7 @@ class SpellBook(Item):
 
 			if p == 0:
 				if not self.on_cooldown:
-					if not self.healing:
+					if not self.is_healing:
 						if not self.aoe:
 							self.murder(owner.select_target())
 							self.owner.statuses.append(s.Cooldown(self,self.cooldown_time))
