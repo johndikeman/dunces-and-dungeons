@@ -153,6 +153,7 @@ class SpellBook(Item):
 					print '%s is on cooldown!' % self.name
 
 	def murder(self,target):
+		ec = self.owner.attributes['mana'] / 5
 		if target:
 			if self.damage:
 				target.take_damage(self.owner,self.damage*ec)

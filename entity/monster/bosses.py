@@ -109,7 +109,7 @@ class AncientDragon(m.Monster):
     def breathefire(self):
         self.reveal()
         print 'Zearth breathes a sea of fire at his enemies!'
-        for player in self.owner.party.inventory:
+        for player in self.owner.owner.party.inventory:
             roll=base.D20.roll()
             if roll<12:
                 player.take_damage(self,self.power/3)
@@ -137,7 +137,7 @@ class AncientDragon(m.Monster):
     def Roar(self):
         self.reveal()
         print 'Zearth lets loose a mighty roar terrifying everyone!'
-        for player in self.owner.party.inventory:
+        for player in self.owner.owner.party.inventory:
             player.statuses.append(p_status.Maim(math.ceil(self.level/4),1))
 
     def sleep(self):
@@ -147,10 +147,10 @@ class AncientDragon(m.Monster):
             if not self.aggroed:
                 self.select_aggro()
             if self.aggro.alive:
-                self.statuses.append(p_status.Sleep())
+                self.aggro.statuses.append(p_status.Sleep())
             else:
                 self.select_aggro()
-                self.statuses.append(p_status.Sleep())
+                self.agro.statuses.append(p_status.Sleep())
 
     def to_str(self):
         return "Zearth the Elder Dragon"
