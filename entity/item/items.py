@@ -69,11 +69,11 @@ class Item(base.Entity):
 				if self.owner.equipment[self.info]: self.owner.equipment[self.info].unequip()
 				self.owner.equipment[self.info] = self
 		self.equipped = True
-		self.name += '*'
+		# self.name += '*'
 
 	def unequip(self):
 		self.equipped = False
-		self.name = self.name[:-1]
+		# self.name = self.name[:-1]
 
 	def examine(self):
 		try:

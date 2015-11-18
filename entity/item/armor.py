@@ -16,10 +16,12 @@ class Armor(entity.item.items.Item):
 	def equip(self):
 		super(Armor,self).equip()
 		self.apply()
+		self.name += '*'
 
 	def unequip(self):
 		super(Armor,self).unequip()
 		self.exit()
+		self.name = self.name[:-1]
 
 class Shield(Armor):
 	def __init__(self,level):

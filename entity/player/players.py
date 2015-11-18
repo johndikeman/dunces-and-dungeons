@@ -218,11 +218,13 @@ class Player(base.Entity):
 			self.options =  ['shop','enter a dungeon','inventory']
 			return super(Player,self).return_options(False)
 
-	def do_turn(self, args):
+	def do_turn(self):
 		for x in self.statuses:
-			x.do_turn(args)
+			x.do_turn(None)
+
 		# since action points can be removed in the statuses, we need to check it here
 		if self.action_points > 0:
+			args = self.return_options()[base.make_choice(self.return_options())]
 			if args == 'save':
 				self.party.current_dungeon.save_game()
 
@@ -277,7 +279,7 @@ class Player(base.Entity):
 	def get_healthbar(self,size=12):
 		bar = '['
 		num = int(math.floor(self.health / (self.max_health / (size * 1.0))))
-		rest = 12 - num
+		rest = size - num
 		for a in range(num):
 			bar += '='
 		for a in range(rest):
@@ -287,7 +289,7 @@ class Player(base.Entity):
 	def get_xpbar(self,size=12):
 		bar = '['
 		num = int(math.floor(self.xp / ((self.level_up_threshold + 1) / (size * 1.0))))
-		rest = 12 - num
+		rest = size - num
 		for a in range(num):
 			bar += '='
 		for a in range(rest):
@@ -385,8 +387,8 @@ class Party(base.Entity):
 		return self.inventory[self.index]
 
 
-	def do_turn(self,options):
-		self.inventory[self.index].do_turn(options)
+	def do_turn(self):
+		self.inventory[self.index].do_turn()
 
 	def handle_player_turn(self):
 		count=0
@@ -401,8 +403,7 @@ class Party(base.Entity):
 				print 'HEALTH: %s' % self.inventory[self.index].get_healthbar(24)
 				print 'XP: %s' % self.inventory[self.index].get_xpbar(24)
 				while((self.inventory[self.index].action_points > 0) and (self.inventory[self.index].alive==True)):
-					selection = base.make_choice(self.return_options(),'option')
-					self.do_turn(self.return_options()[selection])
+					self.do_turn()
 
 			# set the ap back to start. the subtraction per turn is done in the player do_turn
 			self.inventory[self.index].action_points = self.inventory[self.index].base_ap

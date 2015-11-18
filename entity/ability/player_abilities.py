@@ -11,6 +11,7 @@ class Ability(base.Entity):
 		return self.options
 
 
+# TANK
 class BattleCry(Ability):
 	def __init__(self):
 		super(BattleCry,self).__init__()
@@ -40,7 +41,7 @@ class BattleCry(Ability):
 			else:
 				print 'the primal roar was unsuccessful.'
 
-
+# UNIMPLEMENTED
 class ShieldBash(Ability):
 	def __init__(self):
 		super(BattleCry,self).__init__()
@@ -53,36 +54,53 @@ class ShieldBash(Ability):
 			# TODO- implement stun
 			target.statuses.append(s.Stun(2))
 
+# TANK
 class BerserkerVitality(Ability):
 	def __init__(self):
-		super(BerserkerVitaliy,self).__init__()
+		super(BerserkerVitality,self).__init__()
 		self.options=[]
 		self.level=1
 
-	def do_turn(self):
-		self.level=self.owner.level
-		self.owner.health=self.level*.5
-		print "%s's Berserker Vitality restores health!",self.owner.name
-		if self.owner.health >self.owner.max_health:
-			self.owner.health=self.owner.max_health
+	def do_turn(self,option):
+		self.level = self.owner.level
+		self.owner.health += self.level*.5
+		print "%s's Berserker Vitality restores health!" % self.owner.name
+		if self.owner.health > self.owner.max_health:
+			self.owner.health = self.owner.max_health
 
+# ROGUE
 class Steal(Ability):
 	def __init__(self):
 		super(Steal,self).__init__()
 		self.options=['Pickpocket']
 		self.level=1
 
-	def do_turn(self):
-		target=self.owner.select_target()
-		if target:
-			amount=target.power/10
-			roll=base.D20.roll()
-			roll=roll+(self.owner.attributes['luck']/(100/self.level))
-			if roll>15:
-				self.owner.gold=self.owner.gold+amount
-			else:	
-				self.owner.health-=(self.owner.max_health/3+self.target.power/10)
-				self.owner.gold/=3
+	def do_turn(self,option):
+		if option is self.options[0]:
+			target=self.owner.select_target()
+			if target:
+				amount=target.power/10
+				roll=base.D20.roll()
+				roll=roll+(self.owner.attributes['luck']/(100/self.level))
+				if roll>15:
+					self.owner.gold=self.owner.gold+amount
+					print 'successfully pickpocketed the %s for %d gold' % (target.name,amount)
+				else:
+					self.owner.health -= (self.owner.max_health / 3 + target.power / 10)
+					self.owner.gold /= 3
+					print 'critical failure pickpocketing!'
+
+class Quickness(Ability):
+	def __init__(self):
+		super(Quickness,self).__init__()
+		self.options = []
+
+	def do_turn(self,option):
+		if base.d10.roll() >= 9:
+			print '%s gets an extra action from their rogue quickness!' % self.owner.name
+			self.owner.action_points += 1
+
+
 
 
 
