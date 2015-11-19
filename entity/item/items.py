@@ -42,10 +42,21 @@ class Item(base.Entity):
 
 			side=base.make_choice(['left (%s)' % left,'right (%s)' % right])
 			try:
-				self.owner.equipment[['left','right'][side]].unequip()
+				if self.owner.equipment[['left','right'][side]].info == 'one-handed':
+					self.owner.equipment[['left','right'][side]].unequip()
+				else:
+					self.owner.equipment['left'].unequip()
+					self.owner.equipment['right'].unequip()
 			except:
-				pass
-			self.owner.equipment[['left','right'][side]] = self
+				print "Line 47 items.py"
+			try:
+				if self.owner.equipment[['left','right'][side]].info == 'one-handed':
+					self.owner.equipment[['left','right'][side]]= self
+				else:
+					self.owner.equipment['left']= None
+					self.owner.equipment['right']= None
+					self.owner.equipment[['left','right'][side]]= self
+			self.owner.equipment[['left','right'][side]]= self
 		elif self.info =='two-handed':
 			try:
 				self.owner.equipment['left'].unequip()
