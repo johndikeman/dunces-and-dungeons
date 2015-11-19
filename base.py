@@ -204,10 +204,14 @@ def make_choice(choices,thing=None,backable=False):
 	# the instruction queue is used in tests to make choices for the player.
 	if len(INSTRUCTION_QUEUE) != 0:
 		cho = INSTRUCTION_QUEUE.pop()
-		try:
-			ans = choices.index(cho)
-		except:
-			raise Exception("the value '%s' in the instruction queue wasn't an option, bud." % cho)
+		# if we want to select a random option in a test, add this to the instruction queue
+		if cho == 'ayyy lmao random it':
+			ans = choices[random.choice(range(len(choices)-1))]
+		else:
+			try:
+				ans = choices.index(cho)
+			except:
+				raise Exception("the value '%s' in the instruction queue wasn't an option, bud." % cho)
 	else:
 		ans = raw_input()
 	try:

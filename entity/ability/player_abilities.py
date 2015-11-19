@@ -10,6 +10,16 @@ class Ability(base.Entity):
 	def return_options(self):
 		return self.options
 
+	def do_turn(self,option):
+		if option is self.options[0]:
+			self.main()
+
+	def main(self):
+		pass
+
+	def to_str(self):
+		return 'an ability'
+
 
 # TANK
 class BattleCry(Ability):
@@ -19,36 +29,35 @@ class BattleCry(Ability):
 		self.level = 1
 
 	# roll a d10. if the roll is over 5, then you attract all the aggro of all the monsters
-	def do_turn(self,option):
-		if option == self.options[0]:
-			roll = base.D10.roll()
-			if roll > 5:
-				# if the roll is 10, you do damage to all monsters based on half your strength.
-				if roll == 10:
-					print 'primal roar critical success!'
-					for a in self.owner.party.current_dungeon.active_room.things:
-						a.aggro = self.owner
-						a.take_damage(self.owner,self.owner.attributes['strength'] * .5)
-				else:
-					print 'primal roar successfully cast!'
-					for a in self.owner.party.current_dungeon.active_room.things:
-							a.aggro = self.owner
-			# if the roll is one, you do the damage to all your party.
-			elif roll == 1:
-				print 'primal roar critical fail!'
-				for party_member in self.owner.party.inventory:
-					party_member.take_damage(self.owner,self.owner.attributes['strength'] * .5)
+	def main(self):
+		roll = base.D10.roll()
+		if roll > 5:
+			# if the roll is 10, you do damage to all monsters based on half your strength.
+			if roll == 10:
+				print 'primal roar critical success!'
+				for a in self.owner.party.current_dungeon.active_room.things:
+					a.aggro = self.owner
+					a.take_damage(self.owner,self.owner.attributes['strength'] * .5)
 			else:
-				print 'the primal roar was unsuccessful.'
+				print 'primal roar successfully cast!'
+				for a in self.owner.party.current_dungeon.active_room.things:
+						a.aggro = self.owner
+		# if the roll is one, you do the damage to all your party.
+		elif roll == 1:
+			print 'primal roar critical fail!'
+			for party_member in self.owner.party.inventory:
+				party_member.take_damage(self.owner,self.owner.attributes['strength'] * .5)
+		else:
+			print 'the primal roar was unsuccessful.'
 
 # UNIMPLEMENTED
 class ShieldBash(Ability):
 	def __init__(self):
-		super(BattleCry,self).__init__()
+		super(ShieldBash,self).__init__()
 		self.options = ['cast ShieldBash']
 		self.level = 1
 
-	def do_turn(self,option):
+	def main(self):
 		target = self.owner.select_target()
 		if target:
 			# TODO- implement stun
@@ -77,18 +86,21 @@ class Steal(Ability):
 
 	def do_turn(self,option):
 		if option is self.options[0]:
-			target=self.owner.select_target()
-			if target:
-				amount=target.power/10
-				roll=base.D20.roll()
-				roll=roll+(self.owner.attributes['luck']/(100/self.level))
-				if roll>15:
-					self.owner.gold=self.owner.gold+amount
-					print 'successfully pickpocketed the %s for %d gold' % (target.name,amount)
-				else:
-					self.owner.health -= (self.owner.max_health / 3 + target.power / 10)
-					self.owner.gold /= 3
-					print 'critical failure pickpocketing!'
+			self.main()
+
+	def main(self):
+		target=self.owner.select_target()
+		if target:
+			amount=target.power/10
+			roll=base.D20.roll()
+			roll=roll+(self.owner.attributes['luck']/(100/self.level))
+			if roll>15:
+				self.owner.gold=self.owner.gold+amount
+				print 'successfully pickpocketed the %s for %d gold' % (target.name,amount)
+			else:
+				self.owner.health -= (self.owner.max_health / 3 + target.power / 10)
+				self.owner.gold /= 3
+				print 'critical failure pickpocketing!'
 
 class Quickness(Ability):
 	def __init__(self):
@@ -97,10 +109,11 @@ class Quickness(Ability):
 
 	def do_turn(self,option):
 		if base.d10.roll() >= 9:
-			print '%s gets an extra action from their rogue quickness!' % self.owner.name
-			self.owner.action_points += 1
+			self.main()
 
-
+	def main(self):
+		print '%s gets an extra action from their rogue quickness!' % self.owner.name
+		self.owner.action_points += 1
 
 
 
