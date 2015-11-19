@@ -1,4 +1,4 @@
-import unittest, math, inspect, base
+import unittest, math, inspect, base, sys
 import dungeon.dungeon as d
 # player imports
 import entity.player.players as player
@@ -170,51 +170,55 @@ class PlayerTest(unittest.TestCase):
                     self.player.take_damage(self.player,30,False)
                     self.tearDown()
 
-# class AbilityTest(unittest.TestCase):
-#     def setUp(self):
-#         base.INSTRUCTION_QUEUE = []
-#         base.IS_TEST = True
-#         self.party = player.Party()
-#         self.player = player.Player('john was here',{'race':'Tank','attributes':{
-#             'agility': 2,
-#             'intelligence': 5,
-#             'strength': 8,
-#             'luck': 3,
-#             'mana': 0
-#         }})
-#         self.party.add_player(self.player)
-#         self.dung = d.Dungeon(10,4,self.party)
-#
-#     def tearDown(self):
-#         base.INSTRUCTION_QUEUE = []
-#         self.party = None
-#         self.player = None
-#
-#     def test_ablities(self):
-#         for name, obj in inspect.getmembers(player_abilities):
-#             if inspect.isclass(obj):
-#                 if name not in ['Ability','SheildBash']:
-#                     self.setUp()
-#                     for a in range(6):
-#                         spidey = monsters.Spider(1)
-#                         weak = monster_mods.Weak()
-#                         spidey.modifiers.append(weak)
-#                         weak.apply()
-#                         self.dung.rooms[0][0].things.append(spidey)
-#                     ability = obj()
-#                     self.player.inventory.append(ability)
-#                     self.party.current_dungeon = self.dung
-#                     self.dung.start()
-#                     self.party.handle_player_turn()
-#                     self.tearDown()
-#
-#
-# auto_tests = unittest.TestSuite()
-# auto_tests.addTests(DungeonTest)
-# auto_tests.addTests(PlayerTest)
+class AbilityTest(unittest.TestCase):
+    def setUp(self):
+        base.INSTRUCTION_QUEUE = []
+        base.IS_TEST = True
+        self.party = player.Party()
+        self.player = player.Player('john was here',{'race':'Tank','attributes':{
+            'agility': 2,
+            'intelligence': 5,
+            'strength': 8,
+            'luck': 3,
+            'mana': 0
+        }})
+        self.party.add_player(self.player)
+        self.dung = d.Dungeon(10,4,self.party)
+        self.player.inventory.clear()
 
-# man_tests = unittest.TestSuite()
-# man_tests.addTests(unittest.MyCase('AbilityTest'))
+    def tearDown(self):
+        base.INSTRUCTION_QUEUE = []
+        self.party = None
+        self.player = None
+        self.dung = None
+
+    def test_ablities(self):
+        for name, obj in inspect.getmembers(player_abilities):
+            if inspect.isclass(obj):
+                if name not in ['Ability','ShieldBash']:
+                    self.setUp()
+                    # we want the abilities to be able to proc
+                    base.IS_TEST = False
+                    for a in range(6):
+                        spidey = monsters.Spider(1)
+                        weak = monster_mods.Weak()
+                        spidey.modifiers.append(weak)
+                        weak.apply()
+                        self.dung.rooms[0][0].things.append(spidey)
+                    ability = obj()
+                    self.player.inventory.append(ability)
+                    self.party.current_dungeon = self.dung
+                    self.dung.start()
+                    self.party.handle_player_turn()
+                    self.tearDown()
+
+
+auto_tests = unittest.TestSuite()
+auto_tests.addTests(unittest.TestLoader().loadTestsFromTestCase(DungeonTest))
+auto_tests.addTests(unittest.TestLoader().loadTestsFromTestCase(PlayerTest))
+
+man_tests = unittest.TestSuite()
+man_tests.addTests(unittest.TestLoader().loadTestsFromTestCase(AbilityTest))
 
 # class WeaponMods(unittest.TestCase):
 #     def setUp(self):
@@ -224,4 +228,10 @@ class PlayerTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    # if you run the script without any arguments (like travis ci does) itll just run the automatic tests.
+    # to test abilities and other things that require a little more finesse just specify any argument
+    try:
+        sys.argv[1]
+        unittest.TextTestRunner().run(man_tests)
+    except:
+        unittest.TextTestRunner().run(auto_tests)

@@ -81,7 +81,7 @@ class BerserkerVitality(Ability):
 class Steal(Ability):
 	def __init__(self):
 		super(Steal,self).__init__()
-		self.options=['Pickpocket']
+		self.options=['pickpocket']
 		self.level=1
 
 	def do_turn(self,option):
@@ -91,16 +91,16 @@ class Steal(Ability):
 	def main(self):
 		target=self.owner.select_target()
 		if target:
-			amount=target.power/10
+			amount=target.power/5
 			roll=base.D20.roll()
-			roll=roll+(self.owner.attributes['luck']/(100/self.level))
+			roll=roll+(self.owner.attributes['luck']/(100/self.owner.level))
 			if roll>15:
-				self.owner.gold=self.owner.gold+amount
+				self.owner.gold = self.owner.gold + amount
 				print 'successfully pickpocketed the %s for %d gold' % (target.name,amount)
 			else:
-				self.owner.health -= (self.owner.max_health / 3 + target.power / 10)
-				self.owner.gold /= 3
-				print 'critical failure pickpocketing!'
+				amo = (self.owner.max_health / 3 + target.power / 10)
+				self.owner.health -= amo
+				print 'critical failure pickpocketing! %s loses %d health!' % (self.owner.name,amo)
 
 class Quickness(Ability):
 	def __init__(self):
@@ -108,7 +108,7 @@ class Quickness(Ability):
 		self.options = []
 
 	def do_turn(self,option):
-		if base.d10.roll() >= 9:
+		if base.D10.roll() >= 9:
 			self.main()
 
 	def main(self):
