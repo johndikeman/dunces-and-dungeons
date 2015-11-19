@@ -48,7 +48,7 @@ class Item(base.Entity):
 					self.owner.equipment['left'].unequip()
 					self.owner.equipment['right'].unequip()
 			except:
-				print "Line 47 items.py"
+				pass
 			try:
 				if self.owner.equipment[['left','right'][side]].info == 'one-handed':
 					self.owner.equipment[['left','right'][side]]= self
@@ -56,7 +56,8 @@ class Item(base.Entity):
 					self.owner.equipment['left']= None
 					self.owner.equipment['right']= None
 					self.owner.equipment[['left','right'][side]]= self
-			self.owner.equipment[['left','right'][side]]= self
+			except:
+				self.owner.equipment[['left','right'][side]]= self
 		elif self.info =='two-handed':
 			try:
 				self.owner.equipment['left'].unequip()
