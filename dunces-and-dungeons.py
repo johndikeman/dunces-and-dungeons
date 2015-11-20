@@ -3,7 +3,7 @@ from entity.player.players import Player, Party
 import entity.item.items as items
 import sys
 
-RELEASE_ID = 'v1.0.7'
+RELEASE_ID = 'v1.0.8'
 
 PARTY = Party()
 class Manager:
