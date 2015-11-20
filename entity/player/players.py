@@ -262,10 +262,10 @@ class Player(base.Entity):
 				else:
 					a.do_turn(args)
 
-		if not isinstance(self.party.current_dungeon,dungeon.Hub):
-			for a in self.party.current_dungeon.active_room.things:
-				if isinstance(a,thing.InteractiveObject):
-					a.do_turn(args)
+			if not isinstance(self.party.current_dungeon,dungeon.Hub):
+				for a in self.party.current_dungeon.active_room.things:
+					if isinstance(a,thing.InteractiveObject):
+						a.do_turn(args)
 		self.action_points -= 1
 
 	# IMPORTANT- return value of select_target NEEDS to be validated before use to prevent crashes, cause sometimes it'll return None

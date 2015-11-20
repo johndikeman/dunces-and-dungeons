@@ -148,14 +148,14 @@ class SpellBook(Item):
 				if not self.on_cooldown:
 					if not self.is_healing:
 						if not self.aoe:
-							self.murder(owner.select_target())
+							self.murder(self.owner.select_target())
 							self.owner.statuses.append(s.Cooldown(self,self.cooldown_time))
 						else:
 							self.owner.do_aoe_monster(self.murder)
 							self.owner.statuses.append(s.Cooldown(self,self.cooldown_time))
 					else:
 						if not self.aoe:
-							self.murder(owner.select_player_target())
+							self.murder(self.owner.select_player_target())
 							self.owner.statuses.append(s.Cooldown(self,self.cooldown_time))
 						else:
 							self.owner.do_aoe_player(self.murder)
