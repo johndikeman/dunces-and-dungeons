@@ -94,13 +94,11 @@ class AncientDragon(m.Monster):
             roll = base.D6.roll()
             if roll is 1:
                 self.breathefire()
-            if roll is 2:
-                self.fly()
             if roll is 3:
                 self.sleep()
             if roll is 4:
                 self.Roar()
-            if roll is 5 or roll is 6:
+            if roll is 5 or roll is 6 or roll is 2:
                 self.autoattack()
         #print self.health
 
@@ -116,11 +114,6 @@ class AncientDragon(m.Monster):
                 player.statuses.append(p_status.Burn(math.ceil(self.level/4),self.power/(self.level/2.0)))
             else:
                 print '%s has dodged the flames!' %player.name
-
-    def fly(self):
-        self.conceal()
-        self.statuses.append(p_status.Healing())
-        print 'Zearth takes to the skies and quickly becomes invisible'
 
     def autoattack(self):
         self.reveal()
@@ -255,15 +248,8 @@ class GrandMage(m.Monster):
     def cast_flood(self):
         self.reveal()
         print "Carl closes his eyes and starts to chant. The room quickly fills with water!"
-        if self.action_points > 0:
-            if not self.aggroed:
-                self.select_aggro()
-
-            if self.aggro.alive:
-                self.attack(self.aggro,self.power)
-            else:
-                self.select_aggro()
-                self.attack(self.aggro,self.power)
+        for a in self.owner.party.inventory:
+            self.attack(a,self.power)
 
     def cast_restore(self):
         self.reveal()
@@ -287,10 +273,12 @@ class GrandMage(m.Monster):
             if self.aggro.alive:
                 self.attack(self.aggro,self.power*(2+num))
                 self.aggro.statuses.append(p_status.Stun(base.D3.roll()))
+                self.aggro.statuses.append(p_status.Burn(base.D3.roll(),num*(self.power/5)))
             else:
                 self.select_aggro()
                 self.attack(self.aggro,self.power*(2+num))
-                self.aggro.statuses.append(p_status.Burn(base.D3.roll()))
+                self.aggro.statuses.append(p_status.Burn(base.D3.roll(),num*(self.power/5)))
+                self.aggro.statuses.append(p_status.Stun(base.D3.roll()))
 
     def cast_oops(self):
         self.reveal()
