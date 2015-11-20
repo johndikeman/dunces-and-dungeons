@@ -111,7 +111,7 @@ class PlayerTest(unittest.TestCase):
         self.player.health = 100000
         self.dung.start()
         coral.breathefire()
-        coral.fly()
+        # coral.fly()
         coral.sleep()
         coral.Roar()
         coral.autoattack()
