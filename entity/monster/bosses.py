@@ -259,7 +259,7 @@ class GrandMage(m.Monster):
 
     def cast_cosmicBlast(self):
         num=0
-        for a in self.room.things:
+        for a in self.owner.things:
             if isinstance(a,m.Monster):
                 a.conceal()
                 num+=1
