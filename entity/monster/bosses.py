@@ -231,7 +231,7 @@ class GrandMage(m.Monster):
 
     def cast_fireball(self):
         self.reveal()
-        roll=base.D20.roll()
+        roll=base.D6.roll()
         print "Carl summons a mass of fire!"
         if self.action_points > 0:
             if not self.aggroed:
@@ -239,11 +239,11 @@ class GrandMage(m.Monster):
 
             if self.aggro.alive:
                 self.attack(self.aggro,self.power)
-                self.aggro.statuses.append(p_status.Burn(math.ceil(roll/4),self.power/8*roll))
+                self.aggro.statuses.append(p_status.Burn(math.ceil(roll/2),self.power/8*roll))
             else:
                 self.select_aggro()
                 self.attack(self.aggro,self.power)
-                self.aggro.statuses.append(p_status.Burn(math.ceil(roll/4),self.power/8*roll))
+                self.aggro.statuses.append(p_status.Burn(math.ceil(roll/2),self.power/8*roll))
 
     def cast_flood(self):
         self.reveal()

@@ -379,7 +379,7 @@ class Arch(Divined):
 			target.statuses.append(s.Blind(self.owner.level*2))
 			for a in self.owner.owner.party.inventory:
 				a.statuses.append(s.Healing())
-			damage/=10
+			damage=0
 
 	def to_str(self):
 		return "Arch"
