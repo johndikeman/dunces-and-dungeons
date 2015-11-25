@@ -6,6 +6,7 @@ import entity.item.items as item
 import entity.monster.monsters as r
 import entity.modifier as m
 import entity.item.utils as utils
+import entity.item.spell as spell
 
 
 
@@ -14,7 +15,7 @@ class ItemController():
 		self.items = {
 			'weapons':[weapon.Sword,weapon.Dagger,weapon.Bow,weapon.Flail,weapon.Rapier],
 			'armor':[armor.Shield,armor.Breastplate,armor.Chainmail,armor.Platelegs,armor.Helmet],
-			'spells':[item.SpellBook],
+			'spells':[spell.SpellBook],
 			'health':[consumable.HealthPotion]
 		}
 		self.level = level
@@ -54,7 +55,7 @@ class ItemController():
 		return armor_instance
 
 	def get_spells(self):
-		spell_instance = item.SpellBook(self.level)
+		spell_instance = spell.SpellBook(self.level)
 		return spell_instance
 
 	def get_health(self):

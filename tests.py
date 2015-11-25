@@ -14,6 +14,7 @@ import entity.item.weapon_modification as item_mods
 import entity.item.armor_modification as armor_mods
 import entity.item.utils as utils
 import entity.modifier
+import entity.item.spell as spell
 # monster imports
 import entity.monster.monster_modification as monster_mods
 import entity.monster.monsters as monsters
@@ -195,7 +196,8 @@ class AbilityTest(unittest.TestCase):
     def test_ablities(self):
         for name, obj in inspect.getmembers(player_abilities):
             if inspect.isclass(obj):
-                if name not in ['Ability','ShieldBash']:
+                #if name not in ['Ability','ShieldBash']:
+                if False:
                     self.setUp()
                     # we want the abilities to be able to proc
                     base.IS_TEST = False
@@ -211,6 +213,21 @@ class AbilityTest(unittest.TestCase):
                     self.dung.start()
                     self.party.handle_player_turn()
                     self.tearDown()
+        self.player.attributes['mana'] = 5
+        base.IS_TEST = False
+        for a in range(6):
+            spidey = monsters.Spider(1)
+            weak = monster_mods.Weak()
+            spidey.modifiers.append(weak)
+            weak.apply()
+            self.dung.rooms[0][0].things.append(spidey)
+        sp = spell.SpellBook(2)
+        self.player.inventory.append(player_inv.InventoryHandler())
+        self.player.inventory.append(sp)
+        sp.equip()
+        self.party.current_dungeon = self.dung
+        self.dung.start()
+        self.party.handle_player_turn()
 
 
 auto_tests = unittest.TestSuite()
