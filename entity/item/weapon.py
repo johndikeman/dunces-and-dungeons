@@ -20,7 +20,7 @@ class Sword(Weapon):
 		self.descr=self.name+" "+str(self.level)
 		self.options = ['%s' % self.to_str()]
 		self.item_options=['examine','equip']
-		self.damage = 10.0 * self.level
+		self.damage = 7.0 * self.level
 		self.cost = 10
 
 	def do_turn(self,options):

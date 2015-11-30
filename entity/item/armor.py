@@ -32,7 +32,7 @@ class Shield(Armor):
 		self.level = level
 		self.item_options=['examine','equip']
 		self.options=['%s' % self.to_str()]
-		self.armor=4*self.level
+		self.armor=12*self.level
 		self.defendin=False
 		self.blockin=False
 
@@ -78,7 +78,7 @@ class Breastplate(Armor):
 		self.info='chest'
 		self.item_options=['examine','equip']
 		self.level = level
-		self.armor=20
+		self.armor=20*level
 
 	def apply(self):
 		self.owner.armor += self.armor
@@ -94,7 +94,7 @@ class Chainmail(Armor):
 		self.item_options=['examine','equip']
 		self.info='chest'
 		self.level = level
-		self.armor=15
+		self.armor=15*level
 	def apply(self):
 		self.owner.armor += self.armor
 
@@ -109,7 +109,7 @@ class Platelegs(Armor):
 		self.item_options=['examine','equip']
 		self.info='legs'
 		self.level = level
-		self.armor=12
+		self.armor=12*level
 	def apply(self):
 		self.owner.armor += self.armor
 
@@ -124,7 +124,7 @@ class Helmet(Armor):
 		self.info='helmet'
 		self.item_options=['examine','equip']
 		self.level = level
-		self.armor=13
+		self.armor=13*level
 	def apply(self):
 		self.owner.armor += self.armor
 

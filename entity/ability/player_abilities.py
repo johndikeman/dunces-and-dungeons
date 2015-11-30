@@ -28,6 +28,7 @@ class BattleCry(Ability):
 		self.options = ['roar a primal roar']
 		self.level = 1
 
+
 	# roll a d10. if the roll is over 5, then you attract all the aggro of all the monsters
 	def main(self):
 		roll = base.D10.roll()
@@ -49,6 +50,41 @@ class BattleCry(Ability):
 				party_member.take_damage(self.owner,self.owner.attributes['strength'] * .5)
 		else:
 			print 'the primal roar was unsuccessful.'
+# Wizard
+class Dementia(Ability):
+	def __init__(self):
+		super(Dementia,self).__init__()
+		self.options = ['cast Dementia']
+		self.level=1
+
+	def do_turn(self,option):
+		if option is self.options[0]:
+			self.main()
+	def main(self):
+		self.level=self.owner.level
+		for mon in self.owner.party.current_dungeon.active_room.things:
+			if instanceOf(mon,Monster):
+				if self.level/2 > mon.level:
+					mon.aggroed=False
+					mon.aggro=None
+				roll=base.D100.roll()
+				roll2=base.D20.roll()
+				if roll2>10 and self.level>roll:
+					mon.aggroed=False
+					mon.aggro=None
+
+class Forget(Ability):
+	def __init__(self):
+		super(Forget,self).__init__()
+		self.level=1
+
+	def do_turn(self,option):
+		self.main()
+	def main(self):
+		roll=base.D20.roll()
+		if roll < 4:
+			print"You forget what you were planning on doing!"
+			self.owner.action_points=0
 
 # UNIMPLEMENTED
 class ShieldBash(Ability):

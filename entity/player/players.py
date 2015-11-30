@@ -56,7 +56,7 @@ RACES = {
 			'luck': 1,
 			'mana': 3.6
 		},
-		'abilities':[],
+		'abilities':[ability.Forget,ability.Dementia],
 		'statuses':[]
 	},
 	'Ranger':{
