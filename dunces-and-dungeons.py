@@ -1,9 +1,14 @@
 from dungeon.dungeon import Dungeon, Hub
 from entity.player.players import Player, Party
 import entity.item.items as items
-import sys
+import sys, os
 
-RELEASE_ID = 'v1.0.8'
+ver = []
+with open('%s/version.dunce' % os.path.dirname(os.path.abspath(__file__)), 'r+') as f:
+	ver = f.read().split(' ')
+
+
+RELEASE_ID = ('v%s.%s.%s' % (ver[0],ver[1],ver[2])).strip()
 
 PARTY = Party()
 class Manager:

@@ -16,7 +16,7 @@ class Sword(Weapon):
 		self.name = 'sword'
 		self.info='one-handed'
 		self.info2='weapon'
-		self.level = level		
+		self.level = level
 		self.descr=self.name+" "+str(self.level)
 		self.options = ['%s' % self.to_str()]
 		self.item_options=['examine','equip']
@@ -105,6 +105,7 @@ class Bow(Weapon):
 	def aim(self,target):
 		for a in self.modifiers:
 			a.do_turn(target,self.damage * (self.owner.attributes['agility'] * 1.9 + self.owner.attributes['strength']/4.0) + base.D20.roll())
+		self.owner.action_points -= 1
 	def volley(self,target):
 		for a in self.modifiers:
 			a.do_turn(target,self.damage*.1 + self.owner.attributes['agility']*.1+self.owner.attributes['strength']*.1 + self.owner.attributes['intelligence']*.1+self.owner.attributes['luck']*.1)

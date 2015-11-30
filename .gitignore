@@ -4,3 +4,5 @@ dist
 *.spec
 *.db
 *.lnk
+build.py
+icon.ico

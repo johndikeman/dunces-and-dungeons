@@ -24,7 +24,7 @@ class SpellBook(item.Item):
 		self.poisondamage = (random.random() * (10*level))
 		self.aoe = random.choice([True,False])
 		self.on_cooldown = False
-		self.cooldown_time = random.random() * (7 * level)
+		self.cooldown_time = random.random() * math.log(2,level)
 		self.item_options = ['equip','examine']
 
 		self.is_healing = False

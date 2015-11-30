@@ -106,7 +106,7 @@ RACES = {
 			'luck': .8,
 			'mana': .8
 		},
-		'abilities':[ability.Steal],
+		'abilities':[ability.Steal, ability.Quickness],
 		'statuses':[]
 	},
 }
