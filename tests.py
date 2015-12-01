@@ -24,6 +24,7 @@ import entity.status.player_statuses as statuses
 # other
 import entity.thing
 import entity.chest
+import StringIO as string
 
 
 # experimental save testing yo
@@ -39,6 +40,21 @@ class SaveTest(unittest.TestCase):
 
     def tearDown(self):
         pass
+
+    def test_pickle(self):
+        self.player = player.Player('test',{'race':'Tank','attributes':{
+            'agility': 2,
+            'intelligence': 5,
+            'strength': 8,
+            'luck': 3,
+            'mana': 0
+        }})
+
+        # ch = string.StringIO()
+        ch = dill.dumps(self.player)
+        self.clone = dill.loads(ch)
+        self.assertEquals(self.clone.attributes, self.player.attributes)
+
 
 class DungeonTest(unittest.TestCase):
     def setUp(self):
