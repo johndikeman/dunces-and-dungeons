@@ -3,33 +3,42 @@ from entity.player.players import Player, Party
 import entity.item.items as items
 import sys, os
 
-ver = []
-with open('%s/version.dunce' % os.path.dirname(os.path.abspath(__file__)), 'r+') as f:
-	ver = f.read().split(' ')
-
-
-RELEASE_ID = ('v%s.%s.%s' % (ver[0],ver[1],ver[2])).strip()
 
 PARTY = Party()
 class Manager:
 	def __init__(self):
 		self.checked = False
 
-	def update_check(self):
-		print 'checking for update...'
+	def get_current_release(self):
+		latest = None
 		try:
 			import requests
 			latest = requests.get('https://api.github.com/repos/microwaveabletoaster/dunces-and-dungeons/releases/latest').json()['tag_name']
-			if latest == RELEASE_ID:
-				print 'you\'re up to date!'
+		except:
+			print "could not reach the update service :'("
+		return latest
 
+	def update_check(self):
+		print 'checking for update...'
+		latest = self.get_current_release()
+
+		if latest:
+			if latest == self.RELEASE_ID:
+				print 'you\'re up to date!'
 			else:
 				print "---------------=====UPDATE!!=====-----------\nan update to dunces and dungeons has been released! \ngo download it now from here: https://github.com/microwaveabletoaster/dunces-and-dungeons/releases \nit probably contains super important bugfixes and or more neat features, so don't dawdle!! \n\n<3 the team\n"
-		except:
-			print 'could not check for update :('
 		self.checked = True
 
 	def main(self):
+		ver = []
+		with open('%s/version.dunce' % os.path.dirname(os.path.abspath(__file__)), 'r+') as f:
+			contents = f.read()
+			if contents is '':
+				print 'writing'
+				f.write(self.get_current_release().replace('.',' ').replace('v',''))
+			ver = contents.split(' ')
+		self.RELEASE_ID = ('v%s.%s.%s' % (ver[0],ver[1],ver[2])).strip()
+
 		if not self.checked:
 			self.update_check()
 		print "------=====WELCOME TO DUNCES AND DUNGEONS=====------"
