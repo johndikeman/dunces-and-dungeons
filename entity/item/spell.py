@@ -18,13 +18,13 @@ class SpellBook(item.Item):
 			self.name += "%s " % random.choice(arcane_words)
 		self.options = ['%s' % self.name]
 		# the stuntime maxes out around 5 turns
-		self.stuntime = random.random() * math.log(2,level)
+		self.stuntime = random.random() * math.log(2,level+1)
 		self.poisontime = random.random() * (level * 4)
 		self.damage = (random.random() * (20*level))
 		self.poisondamage = (random.random() * (10*level))
 		self.aoe = random.choice([True,False])
 		self.on_cooldown = False
-		self.cooldown_time = random.random() * math.log(2,level)
+		self.cooldown_time = random.random() * math.log(2,level+1) + 1
 		self.item_options = ['equip','examine']
 
 		self.is_healing = False

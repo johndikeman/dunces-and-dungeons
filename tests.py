@@ -26,6 +26,20 @@ import entity.thing
 import entity.chest
 
 
+# experimental save testing yo
+try:
+    import dill
+    dill_support = True
+except:
+    dill_support = False
+
+class SaveTest(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
 class DungeonTest(unittest.TestCase):
     def setUp(self):
         self.dung = d.Dungeon(10,4,None)
@@ -119,7 +133,7 @@ class PlayerTest(unittest.TestCase):
 
 
     def test_armor(self):
-        legs = armor.Platelegs(2)
+        legs = armor.Platelegs(1)
         self.player.inventory.append(legs)
         legs.equip()
 
@@ -233,6 +247,9 @@ class AbilityTest(unittest.TestCase):
 auto_tests = unittest.TestSuite()
 auto_tests.addTests(unittest.TestLoader().loadTestsFromTestCase(DungeonTest))
 auto_tests.addTests(unittest.TestLoader().loadTestsFromTestCase(PlayerTest))
+if dill_support:
+    auto_tests.addTests(unittest.TestLoader().loadTestsFromTestCase(SaveTest))
+
 
 man_tests = unittest.TestSuite()
 man_tests.addTests(unittest.TestLoader().loadTestsFromTestCase(AbilityTest))
