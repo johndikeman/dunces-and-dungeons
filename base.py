@@ -4,6 +4,8 @@ IS_TEST = False
 
 INSTRUCTION_QUEUE = []
 
+BASE_DIR = None
+
 class Entity(object):
 	def __init__(self):
 		# ATTRIBUTES

@@ -2,6 +2,12 @@ from dungeon.dungeon import Dungeon, Hub
 from entity.player.players import Player, Party
 import entity.item.items as items
 import sys, os
+import base
+
+try:
+	import dill
+except:
+	dill = None
 
 
 PARTY = Party()
@@ -30,8 +36,9 @@ class Manager:
 		self.checked = True
 
 	def main(self):
+		base.BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 		ver = []
-		with open('%s/version.dunce' % os.path.dirname(os.path.abspath(__file__)), 'r+') as f:
+		with open('%s/version.dunce' % base.BASE_DIR, 'r+') as f:
 			contents = f.read()
 			if contents is '':
 				print 'writing'
@@ -41,7 +48,32 @@ class Manager:
 
 		if not self.checked:
 			self.update_check()
+		go = True
 		print "------=====WELCOME TO DUNCES AND DUNGEONS=====------"
+		cho = 0
+
+		if cho is not None:
+			if cho is 0:
+				self.new_game()
+			if cho is 1:
+				li = []
+				if os.path.exists('%s/saves/' % base.BASE_DIR):
+					for dirpath, dirname, filename in os.walk('%s/saves/' % base.BASE_DIR):
+						for fi in filename:
+							if '.dunce' in fi:
+								li.append(fi)
+				else:
+					print 'no saves to choose from!'
+				op = base.make_choice(li,"savefile")
+				if dill:
+					if op is not None:
+						go = False
+						print 'loading session'
+						dill.load_session('%s/saves/%s' % (base.BASE_DIR,li[op]))
+				else:
+					print 'save/load support is disabled because you haven\'t installed dill!'
+
+	def new_game(self):
 		party_size = raw_input('enter the size of your party: ')
 		if int(party_size) is 0:
 			print "you can't play with zero people, dingus"

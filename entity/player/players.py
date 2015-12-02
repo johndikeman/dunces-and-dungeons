@@ -7,6 +7,7 @@ import entity.monster.monsters as monster
 import entity.item.consumable as consumable
 import entity.ability.player_abilities as ability
 import entity.item.utils as utils
+import os
 
 try:
 	import dill
@@ -232,10 +233,35 @@ class Player(base.Entity):
 			args = self.return_options()[base.make_choice(self.return_options())]
 			if args == 'save':
 				if dill:
-					dill.dump_session()
+					name = raw_input('enter the name of your save: ')
+					if not os.path.exists('%s/saves/' % base.BASE_DIR):
+						os.makedirs('%s/saves/' % base.BASE_DIR)
+
+					path = '%s/saves/%s.dunce' % (base.BASE_DIR,name)
+					# have to create the file before we take a dump in it
+					with open(path,'w+'):
+						pass
+					dill.dump_session(path)
+
 			if args == 'load':
+				li = []
+				if os.path.exists('%s/saves/' % base.BASE_DIR):
+					for dirpath, dirname, filename in os.walk('%s/saves/' % base.BASE_DIR):
+						for fi in filename:
+							if '.dunce' in fi:
+								li.append(fi)
+				else:
+					print 'no saves to choose from!'
+				op = base.make_choice(li,"savefile")
 				if dill:
-					dill.load_session()
+					if op is not None:
+						go = False
+						print 'loading session'
+						self.action_points = 0
+						dill.load_session('%s/saves/%s' % (base.BASE_DIR,li[op]))
+				else:
+					print 'save/load support is disabled because you haven\'t installed dill!'
+
 
 			if args == 'exit room':
 				# door should be the INDEX of the returned list, ie 0 1 2 3
