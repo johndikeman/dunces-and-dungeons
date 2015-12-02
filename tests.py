@@ -24,6 +24,36 @@ import entity.status.player_statuses as statuses
 # other
 import entity.thing
 import entity.chest
+import StringIO as string
+
+
+# experimental save testing yo
+try:
+    import dill
+    dill_support = True
+except:
+    dill_support = False
+
+class SaveTest(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_pickle(self):
+        self.player = player.Player('test',{'race':'Tank','attributes':{
+            'agility': 2,
+            'intelligence': 5,
+            'strength': 8,
+            'luck': 3,
+            'mana': 0
+        }})
+
+        # ch = string.StringIO()
+        ch = dill.dumps(self.player)
+        self.clone = dill.loads(ch)
+        self.assertEquals(self.clone.attributes, self.player.attributes)
 
 
 class DungeonTest(unittest.TestCase):
@@ -119,7 +149,7 @@ class PlayerTest(unittest.TestCase):
 
 
     def test_armor(self):
-        legs = armor.Platelegs(2)
+        legs = armor.Platelegs(1)
         self.player.inventory.append(legs)
         legs.equip()
 
@@ -233,6 +263,9 @@ class AbilityTest(unittest.TestCase):
 auto_tests = unittest.TestSuite()
 auto_tests.addTests(unittest.TestLoader().loadTestsFromTestCase(DungeonTest))
 auto_tests.addTests(unittest.TestLoader().loadTestsFromTestCase(PlayerTest))
+if dill_support:
+    auto_tests.addTests(unittest.TestLoader().loadTestsFromTestCase(SaveTest))
+
 
 man_tests = unittest.TestSuite()
 man_tests.addTests(unittest.TestLoader().loadTestsFromTestCase(AbilityTest))

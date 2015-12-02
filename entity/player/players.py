@@ -23,16 +23,16 @@ RACES = {
 			'mana':base.D2
 		},
 		'BaseStats':{
-			'agility': 2,
-			'intelligence': 5,
-			'strength': 8,
-			'luck': 3,
+			'agility': 10,
+			'intelligence': 10,
+			'strength': 30,
+			'luck': 7,
 			'mana': 0
 		},
 		'LvlGains':{
 			'agility': 1.4,
 			'intelligence': 2,
-			'strength': 3.6,
+			'strength': 6,
 			'luck': 1,
 			'mana': .2
 		},
@@ -48,18 +48,18 @@ RACES = {
 			'mana':base.D12
 		},
 		'BaseStats':{
-			'agility': 4,
-			'intelligence': 9,
-			'strength': 2,
-			'luck': 3,
-			'mana': 4
+			'agility': 5,
+			'intelligence': 25,
+			'strength': 10,
+			'luck': 8,
+			'mana': 30
 		},
 		'LvlGains':{
 			'agility': 2,
 			'intelligence': 4,
-			'strength': 1,
+			'strength': 1.4,
 			'luck': 1,
-			'mana': 3.6
+			'mana': 6
 		},
 		'abilities':[ability.Forget,ability.Dementia],
 		'statuses':[]
@@ -73,20 +73,20 @@ RACES = {
 			'mana':base.D6
 		},
 		'BaseStats':{
-			'agility': 6,
-			'intelligence': 3,
-			'strength': 4,
-			'luck': 3,
-			'mana': 2
+			'agility': 12,
+			'intelligence': 12,
+			'strength': 12,
+			'luck': 12,
+			'mana': 12
 		},
 		'LvlGains':{
-			'agility': 3.2,
-			'intelligence': 1.8,
-			'strength': 2.2,
-			'luck': 1,
-			'mana': .8
+			'agility': 4.6,
+			'intelligence': 2.4,
+			'strength': 3.8,
+			'luck': 1.5,
+			'mana': 1.2
 		},
-		'abilities':[],
+		'abilities':[ability.Perseverance, ability.Swap],
 		'statuses':[]
 	},
 	'Rogue':{
@@ -98,18 +98,18 @@ RACES = {
 			'mana':base.D6
 		},
 		'BaseStats':{
-			'agility': 8,
-			'intelligence': 6,
-			'strength': 5,
-			'luck': 5,
-			'mana': 4
+			'agility': 30,
+			'intelligence': 30,
+			'strength': 40,
+			'luck': 14,
+			'mana': 18
 		},
 		'LvlGains':{
-			'agility': 2,
+			'agility': 2.4,
 			'intelligence': 1.6,
-			'strength': 1.2,
-			'luck': .8,
-			'mana': .8
+			'strength': 2.4,
+			'luck': 1.2,
+			'mana': .6
 		},
 		'abilities':[ability.Steal, ability.Quickness],
 		'statuses':[]

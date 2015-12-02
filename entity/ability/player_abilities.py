@@ -50,6 +50,48 @@ class BattleCry(Ability):
 				party_member.take_damage(self.owner,self.owner.attributes['strength'] * .5)
 		else:
 			print 'the primal roar was unsuccessful.'
+
+#Ranger
+class Perseverance(Ability):
+	def __init__(self):
+		super(Perseverance,self).__init__()
+		self.level=1
+		self.count=0
+
+	def do_turn(self,option):
+		self.level=self.owner.level/10
+		self.main()
+
+	def main(self):
+		self.count+=1
+		if self.count == 10:
+			self.owner.armor+=self.level
+			self.count=0
+
+class Swap(Ability):
+	def __init__(self):
+		super(Swap,self).__init__()
+		self.level=1
+		self.options = ['cast Swap']
+
+	def do_turn(self,option):
+		if option is self.options[0]:
+			self.main()
+
+	def main(self):
+		target=self.owner.select_target()
+		roll=base.D20.roll()
+		if roll<11:
+			target.statuses, self.owner.statuses = self.owner.statuses, target.statuses
+			print 'You successfully swap your statuses with the Enemies!'
+		else:
+			times=len(self.owner.statuses)
+			print 'Woops! You doubled your own statuses!'
+			for a in range(times):
+				self.owner.statuses.append(self.owner.statuses[a])
+
+
+
 # Wizard
 class Dementia(Ability):
 	def __init__(self):
