@@ -43,7 +43,7 @@ class Monster(base.Entity):
 	def check_if_alive(self):
 		if self.health <= 0:
 			self.kill()
-		return True
+			return True
 
 	def do_turn(self):
 		for a in self.statuses:
