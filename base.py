@@ -15,7 +15,7 @@ class Entity(object):
 		self.level = 1
 		# base ap is what the ap should be restored to after a turn is complete
 		self.base_ap = 1
-		self.alive = False
+		self.alive = True
 		self.action_points = 1
 		self.options = []
 		self.inventory = Inventory(self)
