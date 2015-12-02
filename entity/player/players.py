@@ -8,6 +8,11 @@ import entity.item.consumable as consumable
 import entity.ability.player_abilities as ability
 import entity.item.utils as utils
 
+try:
+	import dill
+except:
+	dill = None
+
 RACES = {
 	"Tank":{
 		"rolls":{
@@ -215,7 +220,7 @@ class Player(base.Entity):
 			return super(Player,self).return_options(True)
 
 		else:
-			self.options =  ['shop','enter a dungeon','inventory']
+			self.options =  ['shop','enter a dungeon','inventory','save','load']
 			return super(Player,self).return_options(False)
 
 	def do_turn(self):
@@ -226,7 +231,11 @@ class Player(base.Entity):
 		if self.action_points > 0:
 			args = self.return_options()[base.make_choice(self.return_options())]
 			if args == 'save':
-				self.party.current_dungeon.save_game()
+				if dill:
+					dill.dump_session()
+			if args == 'load':
+				if dill:
+					dill.load_session()
 
 			if args == 'exit room':
 				# door should be the INDEX of the returned list, ie 0 1 2 3
