@@ -264,6 +264,7 @@ class Kingly(Legendary):
 		chance = base.D20.roll()
 		if chance > 16:
 			self.owner.owner.gold+=self.owner.level*1.5
+			print '%s peices of gold just fell out of your %s!' % (self.owner.level*1.5,self.owner.name)
 		return damage
 
 	def to_str(self):

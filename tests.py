@@ -226,8 +226,7 @@ class AbilityTest(unittest.TestCase):
     def test_ablities(self):
         for name, obj in inspect.getmembers(player_abilities):
             if inspect.isclass(obj):
-                #if name not in ['Ability','ShieldBash']:
-                if False:
+                if name not in ['Ability','ShieldBash']:
                     self.setUp()
                     # we want the abilities to be able to proc
                     base.IS_TEST = False
@@ -240,9 +239,11 @@ class AbilityTest(unittest.TestCase):
                     ability = obj()
                     self.player.inventory.append(ability)
                     self.party.current_dungeon = self.dung
+                    print '========testing ability======== %s ' % ability
                     self.dung.start()
                     self.party.handle_player_turn()
                     self.tearDown()
+        self.setUp()
         self.player.attributes['mana'] = 5
         base.IS_TEST = False
         for a in range(6):

@@ -36,13 +36,10 @@ class BattleCry(Ability):
 			# if the roll is 10, you do damage to all monsters based on half your strength.
 			if roll == 10:
 				print 'primal roar critical success!'
-				for a in self.owner.party.current_dungeon.active_room.things:
-					a.aggro = self.owner
-					a.take_damage(self.owner,self.owner.attributes['strength'] * .5)
+				self.owner.do_aoe_monster(self.action_damage)
 			else:
 				print 'primal roar successfully cast!'
-				for a in self.owner.party.current_dungeon.active_room.things:
-						a.aggro = self.owner
+				self.owner.do_aoe_monster(self.action)
 		# if the roll is one, you do the damage to all your party.
 		elif roll == 1:
 			print 'primal roar critical fail!'
@@ -50,6 +47,13 @@ class BattleCry(Ability):
 				party_member.take_damage(self.owner,self.owner.attributes['strength'] * .5)
 		else:
 			print 'the primal roar was unsuccessful.'
+
+	def action(self,monster):
+		monster.aggro = self.owner
+
+	def action_damage(self,monster):
+		monster.aggro = self.owner
+		monster.take_damage(self.owner,self.owner.attributes['strength'] * .5)
 
 #Ranger
 class Perseverance(Ability):
@@ -59,7 +63,7 @@ class Perseverance(Ability):
 		self.count=0
 
 	def do_turn(self,option):
-		self.level=self.owner.level/10
+		self.level=self.owner.level/10.0
 		self.main()
 
 	def main(self):
@@ -102,18 +106,20 @@ class Dementia(Ability):
 	def do_turn(self,option):
 		if option is self.options[0]:
 			self.main()
+
 	def main(self):
 		self.level=self.owner.level
-		for mon in self.owner.party.current_dungeon.active_room.things:
-			if instanceOf(mon,Monster):
-				if self.level/2 > mon.level:
-					mon.aggroed=False
-					mon.aggro=None
-				roll=base.D100.roll()
-				roll2=base.D20.roll()
-				if roll2>10 and self.level>roll:
-					mon.aggroed=False
-					mon.aggro=None
+		self.owner.do_aoe_monster(self.action)
+
+	def action(self,mon):
+		if self.level/2 > mon.level:
+			mon.aggroed=False
+			mon.aggro=None
+		roll=base.D100.roll()
+		roll2=base.D20.roll()
+		if roll2>10 and self.level>roll:
+			mon.aggroed=False
+			mon.aggro=None
 
 class Forget(Ability):
 	def __init__(self):

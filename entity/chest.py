@@ -13,7 +13,7 @@ class Chest(t.InteractiveObject):
 		self.generator = control.ItemController(self.level)
 		self.items = []
 								# this got out of hand fast
-		for a in range((int(math.ceil(self.level)))):
+		for a in range((int(math.ceil(5)))):
 			self.items.append(self.generator.generate())
 
 

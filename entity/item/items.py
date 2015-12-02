@@ -61,6 +61,7 @@ class Item(base.Entity):
 		elif self.info =='two-handed':
 			try:
 				self.owner.equipment['left'].unequip()
+				self.owner.equipment['right'].unequip()
 			except:
 				try:
 					self.owner.equipment['right'].unequip()
