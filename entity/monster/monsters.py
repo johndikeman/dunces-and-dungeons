@@ -43,6 +43,7 @@ class Monster(base.Entity):
 	def check_if_alive(self):
 		if self.health <= 0:
 			self.kill()
+		return True
 
 	def do_turn(self):
 		for a in self.statuses:
@@ -84,7 +85,7 @@ class Monster(base.Entity):
 		self.alive = False
 		if killa:
 			killa.update_xp(self.xp_reward)
-		self.owner.things.remove(self)
+		#self.owner.things.remove(self)
 
 def compute(comp,val):
 	fin = 1.0

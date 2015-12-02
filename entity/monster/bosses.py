@@ -19,7 +19,8 @@ class ChemicalOgre(m.Monster):
     def do_turn(self):
         for a in self.statuses:
             a.do_turn(None)
-        self.check_if_alive()
+        if self.check_if_alive():
+            self.owner.things.remove(self)
 
         if self.action_points > 0:
             roll = base.D6.roll()
