@@ -79,7 +79,7 @@ class Monster(base.Entity):
 			self.revealed = True
 
 	def dev_examine(self):
-		print 'name: %s health: %d, attributes: %s, power: %s, level: %d' % (self.name, self.health,str(self.attributes),self.power,self.level)
+		base.put('name: %s health: %d, attributes: %s, power: %s, level: %d' % (self.name, self.health,str(self.attributes),self.power,self.level))
 
 	def kill(self,killa=None):
 		self.alive = False
@@ -119,7 +119,7 @@ class Spiderling(Monster):
 	def do_turn(self):
 		super(Spiderling,self).do_turn()
 		if base.D6.roll() == 1:
-			print 'a spiderling has reproduced!'
+			base.put('a spiderling has reproduced!')
 			child = Spiderling(self.level)
 			child.action_points = 0
 			self.owner.things.append(child)

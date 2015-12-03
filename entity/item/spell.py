@@ -9,7 +9,7 @@ class SpellBook(item.Item):
 		self.info = 'one-handed'
 		self.info2='nope'
 		self.cost = random.randint(0,10)
-		# print type(level)
+		# base.put(type(level))
 
 		self.level = level
 		self.name = ''
@@ -40,7 +40,7 @@ class SpellBook(item.Item):
 				self.options = ['%s' % self.name]
 
 			if p == 2:
-				print self.ploop()
+				base.put(self.ploop())
 
 			if p == 0:
 				if not self.on_cooldown:
@@ -60,7 +60,7 @@ class SpellBook(item.Item):
 							self.owner.statuses.append(s.Cooldown(self,self.cooldown_time))
 
 				else:
-					print '%s is on cooldown!' % self.name
+					base.put('%s is on cooldown!' % self.name)
 
 	def murder(self,target):
 		ec = self.owner.attributes['mana'] / 5

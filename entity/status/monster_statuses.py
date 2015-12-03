@@ -14,7 +14,7 @@ class OgreEnrage(base.Entity):
                 self.applied = True
             self.turns += 1
         else:
-            print "[STATUS] the ogre is no longer enraged!"
+            base.put("[STATUS] the ogre is no longer enraged!")
             self.owner.power /= 1.2
             self.owner.health -= (self.owner.health * .2)
             self.owner.statuses.remove(self)

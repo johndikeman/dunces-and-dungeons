@@ -1,10 +1,13 @@
 import random, math, time
+from StringIO import StringIO as string
 
 IS_TEST = False
-
 INSTRUCTION_QUEUE = []
-
 BASE_DIR = None
+IS_WEB_VERSION = False
+OUTPUT = string()
+
+
 
 class Entity(object):
 	def __init__(self):
@@ -33,7 +36,7 @@ class Entity(object):
 		pass
 
 	def update_xp(self,val):
-		print '[INFO] %s has gained %d xp!' % (self.to_str(),val)
+		put('[INFO] %s has gained %d xp!' % (self.to_str(),val))
 		self.xp += val
 		self.check_for_levelup()
 
@@ -45,7 +48,7 @@ class Entity(object):
 			self.level_up()
 			self.xp -= self.level_up_threshold
 			self.level += 1
-			print "[LEVELUP] %s has leveled up to level %d!" % (self.to_str(),self.level)
+			put("[LEVELUP] %s has leveled up to level %d!" % (self.to_str(),self.level))
 			self.level_up_threshold = (self.level * self.level)+6
 			self.check_for_levelup()
 
@@ -89,11 +92,11 @@ class Entity(object):
 		damage -= (damage * res)
 		if(damage<0):
 			damage=0
-		print '[DAMAGE] %s takes %.2f damage from %s' % (self.to_str(),damage,attacker.to_str())
+		put('[DAMAGE] %s takes %.2f damage from %s' % (self.to_str(),damage,attacker.to_str()))
 		self.health -= damage
 		if self.health <= 0:
 			self.alive = False
-			print "[DEATH] %s has died by the hand of %s" % (self.to_str(),attacker.to_str())
+			put("[DEATH] %s has died by the hand of %s" % (self.to_str(),attacker.to_str()))
 			self.kill(attacker)
 		if wait:
 			time.sleep(1)
@@ -186,6 +189,10 @@ class Inventory():
 	def __len__(self):
 		return len(self.list)
 
+def put(thing):
+	if not IS_WEB_VERSION:
+		print thing
+
 
 # use this method when you have a list of things that the
 # player needs to choose from. it will be handy later on
@@ -194,14 +201,14 @@ def make_choice(choices,thing=None,backable=False):
 	if(backable):
 		choices.append("exit")
 	if len(choices) <= 0:
-		print 'nothing to choose from!'
+		put('nothing to choose from!')
 		return
 	if thing:
-		print 'choose a %s' % thing
+		put('choose a %s' % thing)
 	else:
-		print 'choose one!'
+		put('choose one!')
 	for ind, a in enumerate(choices):
-		print "\t%s (%d)\n" % (a, ind)
+		put("\t%s (%d)\n" % (a, ind))
 
 	# the instruction queue is used in tests to make choices for the player.
 	if len(INSTRUCTION_QUEUE) != 0:
@@ -219,12 +226,12 @@ def make_choice(choices,thing=None,backable=False):
 	try:
 		ret = int(ans)
 		if ret > len(choices) - 1:
-			print 'that wasn\'t a choice! try again.'
+			put('that wasn\'t a choice! try again.')
 			return make_choice(choices,thing)
 		if backable and ret == len(choices) - 1:
 			return None
 	except ValueError:
-		print 'that wasn\'t a choice! try again.'
+		put('that wasn\'t a choice! try again.')
 		return make_choice(choices,thing)
 	return ret
 
@@ -232,24 +239,24 @@ def make_choice(choices,thing=None,backable=False):
 # 	choices.append("Back")
 # 	choiceskeys.append(0)
 # 	if len(choices) <= 0:
-# 		print 'nothing to choose from!'
+# 		base.put('nothing to choose from!')
 # 		return
 # 	if thing:
-# 		print 'choose a %s' % thing
+# 		base.put('choose a %s' % thing)
 # 	else:
-# 		print 'choose one!'
+# 		base.put('choose one!')
 # 	for ind, a in enumerate(choices):
-# 		# print a
-# 		print "\t%s for %d (%d)\n" % (a, choiceskeys[ind], ind)
+# 		# base.put(a)
+# 		base.put("\t%s for %d (%d)\n" % (a, choiceskeys[ind], ind))
 
 # 	ans = raw_input()
 # 	try:
 # 		ret = int(ans)
 # 		if ret > len(choices)-1:
-# 			print 'that wasn\'t a choice! try again.'
+# 			base.put('that wasn\'t a choice! try again.')
 # 			return make_choice(choices,thing)
 # 	except ValueError:
-# 		print 'that wasn\'t a choice! try again.'
+# 		base.put('that wasn\'t a choice! try again.')
 # 		return shop_make_choice(choices,choiceskeys,thing)
 # 	return choices[ret]
 

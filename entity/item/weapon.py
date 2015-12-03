@@ -25,7 +25,7 @@ class Sword(Weapon):
 
 	def do_turn(self,options):
 		self.options = ['%s' % self.to_str()]
-		# print options
+		# base.put(options)
 		if self.options[0] in options:
 			p = base.make_choice(['swing %s' % self.to_str()])
 			if p == 0:

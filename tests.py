@@ -197,7 +197,7 @@ class PlayerTest(unittest.TestCase):
                     self.player.inventory.append(legs)
                     legs.equip()
                     self.assertEquals(self.player.equipment['legs'],legs)
-                    # print name
+                    # base.put(name)
                     self.player.take_damage(self.player,30,False)
                     self.tearDown()
 
@@ -239,7 +239,7 @@ class AbilityTest(unittest.TestCase):
                     ability = obj()
                     self.player.inventory.append(ability)
                     self.party.current_dungeon = self.dung
-                    print '========testing ability======== %s ' % ability
+                    base.put('========testing ability======== %s ' % ability)
                     self.dung.start()
                     self.party.handle_player_turn()
                     self.tearDown()

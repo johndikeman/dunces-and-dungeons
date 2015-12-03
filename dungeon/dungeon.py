@@ -75,7 +75,7 @@ class Dungeon(object):
 		self.active_room.handle_monster_turn()
 
 	def start(self):
-		print 'you find yourself in a large, spooky dungeon.'
+		base.put('you find yourself in a large, spooky dungeon.')
 		self.active_room = self.starting_room
 		self.active_room.enter()
 
@@ -104,11 +104,11 @@ class Hub(Dungeon):
 
 
 	def enter_shop(self):
-		print 'you have %d gold!' % (self.party.inventory[self.party.index].gold)
+		base.put('you have %d gold!' % (self.party.inventory[self.party.index].gold))
 		shopping = base.make_choice(self.shop.keys(),'category')
 		item = base.make_choice( ['%s for %d' % (a.to_str(),a.get_cost()) for a in self.shop[self.shop.keys()[shopping]]],'item',True)
 		if(item is None):
-			print 'You bought nothing!'
+			base.put('You bought nothing!')
 		else:
 			item_object = self.shop[self.shop.keys()[shopping]][item]
 			# remove the item from the shop afterwards
@@ -116,7 +116,7 @@ class Hub(Dungeon):
 			success = self.party.inventory[self.party.index].buy_item(item_object)
 			if success:
 				self.shop[self.shop.keys()[shopping]].remove(item_object)
-				print 'successfully purchased a %s' % item_object.to_str()
+				base.put('successfully purchased a %s' % item_object.to_str())
 			# inventory.append(item_object)
 			# self.party.inventory[self.party.index].gold -= item_object.cost
 		# allow the player to shop as much as they want in a turn
@@ -131,10 +131,10 @@ class Hub(Dungeon):
 		for a in self.party.inventory:
 			a.action_points=a.base_ap
 		self.party.current_dungeon.start()
-		# print self.party.current_dungeon
+		# base.put(self.party.current_dungeon)
 
 	def save_game(self):
-		print 'Name your save file'
+		base.put('Name your save file')
 		ans=raw_input()
 		f=open(ans+'.txt','w')
 		f.write(str(len(self.party.inventory))+'\n')
@@ -163,7 +163,7 @@ class Hub(Dungeon):
 				inst = controller.generate(category)
 				if inst:
 					self.shop[category].append(inst)
-		print 'welcome to the hub!'
+		base.put('welcome to the hub!')
 
 
 
@@ -242,7 +242,7 @@ class Room(object):
 
 
 	def generate_neighbor(self,di):
-		# print 'generating n to the %s at %s' % (di,str(self.cords))
+		# base.put('generating n to the %s at %s' % (di,str(self.cords)))
 		new_room = Room(self.containing_dungeon,self.party)
 		x,y = self.cords
 
@@ -267,17 +267,16 @@ class Room(object):
 		self.entered = True
 
 	def handle_monster_turn(self):
-		# print "THINGS: %s" % str(self.things)
-		# print 'ID: %s' % str(self.identified_things)
+		# base.put("THINGS: %s" % str(self.things))
+		# base.put('ID: %s' % str(self.identified_things))
 		alist=[]
 		for thing in self.things:
-			thing.action_points = thing.base_ap
-			if not thing.alive:
-					alist.append(thing)
-			while thing.alive and thing.action_points > 0:
-				thing.do_turn()
-				if not thing.alive:
-					alist.append(thing)
+			if isinstance(thing,monsters.Monster):
+				thing.action_points = thing.base_ap
+				while thing.alive and thing.action_points > 0:
+					thing.do_turn()
+					if not thing.alive:
+						alist.append(thing)
 		for a in alist:
 			self.things.remove(a)
 		# for thing in self.identified_things:
@@ -299,11 +298,11 @@ class LeaveOption(thing.InteractiveObject):
 				if isinstance(a,monsters.Monster):
 					full = True
 			if full:
-				print 'you can\'t leave the dungeon while you\'re under attack!'
+				base.put('you can\'t leave the dungeon while you\'re under attack!')
 			else:
 				for player in self.owner.containing_dungeon.party.inventory:
 					player.gold += (self.owner.containing_dungeon.gold_reward / 5)
-				print 'each player is awarded %d gold!' % (self.owner.containing_dungeon.gold_reward / 5)
+				base.put('each player is awarded %d gold!' % (self.owner.containing_dungeon.gold_reward / 5))
 				self.owner.containing_dungeon.leave_dungeon()
 
 	def to_str(self):

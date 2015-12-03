@@ -28,7 +28,7 @@ class CompletedMap(items.ItemUsedFromInventory):
                             self.map[col][row] = 'X '
                         if rooms[col][row].contains_exit():
                             self.map[col][row] = 'L '
-            print self.format_output()
+            base.put(self.format_output())
 
     def format_output(self):
         ret = '+-'
@@ -77,4 +77,4 @@ class Map(CompletedMap):
                             self.map[col][row] = 'X '
                         if rooms[col][row].contains_exit():
                             self.map[col][row] = 'L '
-            print self.format_output()
+            base.put(self.format_output())
