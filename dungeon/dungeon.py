@@ -275,9 +275,13 @@ class Room(object):
 			if not thing.alive:
 					alist.append(thing)
 			while thing.alive and thing.action_points > 0:
-				thing.do_turn()
+				try:
+					thing.do_turn()
+				except:
+					thing.action_points =0
 				if not thing.alive:
 					alist.append(thing)
+
 		for a in alist:
 			self.things.remove(a)
 		# for thing in self.identified_things:
