@@ -40,9 +40,6 @@ class Manager:
 		ver = []
 		with open('%s/version.dunce' % base.BASE_DIR, 'r+') as f:
 			contents = f.read()
-			if contents is '':
-				print 'writing'
-				f.write(self.get_current_release().replace('.',' ').replace('v',''))
 			ver = contents.split(' ')
 		self.RELEASE_ID = ('v%s.%s.%s' % (ver[0],ver[1],ver[2])).strip()
 
