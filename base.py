@@ -98,6 +98,12 @@ class Entity(object):
 			self.alive = False
 			put("[DEATH] %s has died by the hand of %s" % (self.to_str(),attacker.to_str()))
 			self.kill(attacker)
+			try:
+				if self.gold != -1000:
+					pass
+			except:
+				self.owner.things.remove(self)
+
 		if wait:
 			time.sleep(1)
 
