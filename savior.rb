@@ -14,7 +14,6 @@ def convert_to_py3k_print(text)
   result
 end
 
-
 Dir['**/*'].each do |f|
 # f = 'test.txt'
   text = ''
