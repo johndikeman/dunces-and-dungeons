@@ -26,7 +26,7 @@ class InventoryHandler(base.Entity):
 						choice = base.make_choice(self.owner.party.inventory.get_list([self.owner]))
 						other_player = self.owner.party.inventory.get_list([self.owner])[choice]
 				base.put('continue? (y/n)')
-				ans = raw_input()
+				ans = base.get_input()
 				if ans=='y':
 					go=True
 				else:
