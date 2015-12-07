@@ -86,7 +86,11 @@ class Swap(Ability):
 		target=self.owner.select_target()
 		roll=base.D20.roll()
 		if roll<11:
-			target.statuses, self.owner.statuses = self.owner.statuses, target.statuses
+			for a in self.owner.statuses:
+				a.owner=target
+			for a in target.statuses:
+				a.owner=self.owner
+			#target.statuses, self.owner.statuses = self.owner.statuses, target.statuses
 			print 'You successfully swap your statuses with the Enemies!'
 		else:
 			times=len(self.owner.statuses)
