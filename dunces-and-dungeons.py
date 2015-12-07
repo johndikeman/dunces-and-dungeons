@@ -37,6 +37,7 @@ class Manager:
 		self.checked = True
 
 	def main(self,webbed=False):
+		self.webbed = webbed
 		if webbed: # ha amphibian joke
 			base.IS_WEB_VERSION = True
 			base.SERVER = web.server
@@ -98,12 +99,14 @@ class Manager:
 		PARTY.hub = dungeon
 		PARTY.current_dungeon = dungeon
 		PARTY.current_dungeon.start()
-		web.server.run()
-		while(PARTY.end):
-			PARTY.handle_player_turn()
-			if(PARTY.end):
-				PARTY.current_dungeon.handle_monster_turn()
-		base.put("\n\n------------=========GAME OVER=========------------")
+		if self.webbed:
+			web.server.run()
+		else:
+			while(PARTY.end):
+				PARTY.handle_player_turn()
+				if(PARTY.end):
+					PARTY.current_dungeon.handle_monster_turn()
+			base.put("\n\n------------=========GAME OVER=========------------")
 
 
 if __name__ == '__main__':

@@ -28,6 +28,12 @@ def put(thing):
     messages.append(thing)
     # print messages
 
+@app.route('/advance',methods=['POST'])
+def ad():
+    party.handle_player_turn()
+    if party.end:
+        party.current_dungeon.handle_monster_turn()
+
 @app.route('/stream')
 def stream():
     return flask.Response(event_stream(),

@@ -212,42 +212,49 @@ def get_input(arg=None):
 # player needs to choose from. it will be handy later on
 # i think
 def make_choice(choices,thing=None,backable=False):
-	if(backable):
-		choices.append("exit")
-	if len(choices) <= 0:
-		put('nothing to choose from!')
-		return
-	if thing:
-		put('choose a %s' % thing)
-	else:
-		put('choose one!')
-	for ind, a in enumerate(choices):
-		put("\t%s (%d)\n" % (a, ind))
-
-	# the instruction queue is used in tests to make choices for the player.
-	if len(INSTRUCTION_QUEUE) != 0:
-		cho = INSTRUCTION_QUEUE.pop()
-		# if we want to select a random option in a test, add this to the instruction queue
-		if cho == 'ayyy lmao random it':
-			ans = choices[random.choice(range(len(choices)-1))]
+	if not IS_WEB_VERSION:
+		if(backable):
+			choices.append("exit")
+		if len(choices) <= 0:
+			put('nothing to choose from!')
+			return
+		if thing:
+			put('choose a %s' % thing)
 		else:
-			try:
-				ans = choices.index(cho)
-			except:
-				raise Exception("the value '%s' in the instruction queue wasn't an option, bud." % cho)
-	else:
-		ans = get_input()
-	try:
-		ret = int(ans)
-		if ret > len(choices) - 1:
+			put('choose one!')
+		for ind, a in enumerate(choices):
+			put("\t%s (%d)\n" % (a, ind))
+
+		# the instruction queue is used in tests to make choices for the player.
+		if len(INSTRUCTION_QUEUE) != 0:
+			cho = INSTRUCTION_QUEUE.pop()
+			# if we want to select a random option in a test, add this to the instruction queue
+			if cho == 'ayyy lmao random it':
+				ans = choices[random.choice(range(len(choices)-1))]
+			else:
+				try:
+					ans = choices.index(cho)
+				except:
+					raise Exception("the value '%s' in the instruction queue wasn't an option, bud." % cho)
+		else:
+			ans = get_input()
+		try:
+			ret = int(ans)
+			if ret > len(choices) - 1:
+				put('that wasn\'t a choice! try again.')
+				return make_choice(choices,thing)
+			if backable and ret == len(choices) - 1:
+				return None
+		except ValueError:
 			put('that wasn\'t a choice! try again.')
 			return make_choice(choices,thing)
-		if backable and ret == len(choices) - 1:
-			return None
-	except ValueError:
-		put('that wasn\'t a choice! try again.')
-		return make_choice(choices,thing)
-	return ret
+		return ret
+	# this is so we can make a form in the html frontend
+	else:
+		s = ''
+		for a in choices:
+			s += '%s|' % a
+		put('CHOICE %s' % s)
 
 # def shop_make_choice(choices,choiceskeys,thing=None):
 # 	choices.append("Back")
