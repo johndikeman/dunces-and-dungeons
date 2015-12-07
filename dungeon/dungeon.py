@@ -120,7 +120,7 @@ class Hub(Dungeon):
 			# inventory.append(item_object)
 			# self.party.inventory[self.party.index].gold -= item_object.cost
 		# allow the player to shop as much as they want in a turn
-		if raw_input('continue? (y/n) ') is 'y':
+		if base.get_input('continue? (y/n) ') is 'y':
 			self.enter_shop()
 
 
@@ -135,7 +135,7 @@ class Hub(Dungeon):
 
 	def save_game(self):
 		base.put('Name your save file')
-		ans=raw_input()
+		ans=base.get_input()
 		f=open(ans+'.txt','w')
 		f.write(str(len(self.party.inventory))+'\n')
 		for currentplayer in self.party.inventory:

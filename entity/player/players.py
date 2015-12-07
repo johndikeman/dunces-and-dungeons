@@ -233,7 +233,7 @@ class Player(base.Entity):
 			args = self.return_options()[base.make_choice(self.return_options())]
 			if args == 'save':
 				if dill:
-					name = raw_input('enter the name of your save: ')
+					name = base.get_input('enter the name of your save: ')
 					if not os.path.exists('%s/saves/' % base.BASE_DIR):
 						os.makedirs('%s/saves/' % base.BASE_DIR)
 

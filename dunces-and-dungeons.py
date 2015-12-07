@@ -3,6 +3,7 @@ from entity.player.players import Player, Party
 import entity.item.items as items
 import sys, os
 import base
+import web.server
 
 try:
 	import dill
@@ -35,7 +36,12 @@ class Manager:
 				base.put("---------------=====UPDATE!!=====-----------\nan update to dunces and dungeons has been released! \ngo download it now from here: https://github.com/microwaveabletoaster/dunces-and-dungeons/releases \nit probably contains super important bugfixes and or more neat features, so don't dawdle!! \n\n<3 the team\n")
 		self.checked = True
 
-	def main(self):
+	def main(self,webbed=False):
+		if webbed: # ha amphibian joke
+			base.IS_WEB_VERSION = True
+			base.SERVER = web.server
+			web.server.party = PARTY
+		print 'MOVED ON'
 		base.BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 		ver = []
 		with open('%s/version.dunce' % base.BASE_DIR, 'r+') as f:
@@ -52,6 +58,7 @@ class Manager:
 		base.put("------=====WELCOME TO DUNCES AND DUNGEONS=====------")
 		cho = 0
 
+		# most of this code is super redundant cause cho is hardcoded but do i care? nope lol.
 		if cho is not None:
 			if cho is 0:
 				self.new_game()
@@ -74,23 +81,24 @@ class Manager:
 					base.put('save/load support is disabled because you haven\'t installed dill!')
 
 	def new_game(self):
-		party_size = raw_input('enter the size of your party: ')
+		party_size = base.get_input('enter the size of your party: ')
 		if int(party_size) is 0:
 			base.put("you can't play with zero people, dingus")
 			sys.exit()
 
 		# creating all the players in the party
 		for a in range(int(party_size)):
-			name = raw_input('enter the name of player %d: ' % a)
+			name = base.get_input('enter the name of player %d: ' % a)
 			PARTY.add_player(Player(name))
 		base.put('Game Start')
 		base.put(PARTY.to_str())
+
 
 		dungeon = Hub(PARTY)
 		PARTY.hub = dungeon
 		PARTY.current_dungeon = dungeon
 		PARTY.current_dungeon.start()
-
+		web.server.run()
 		while(PARTY.end):
 			PARTY.handle_player_turn()
 			if(PARTY.end):
@@ -100,4 +108,11 @@ class Manager:
 
 if __name__ == '__main__':
 	game = Manager()
-	game.main()
+	try:
+		if sys.argv[1] == 'web':
+			print 'initializing web server. point your browser to http://localhost:5000.'
+			game.main(True)
+		else:
+			game.main()
+	except:
+		game.main()

@@ -35,7 +35,7 @@ class SpellBook(item.Item):
 		if option == self.options[0]:
 			p = base.make_choice(['cast %s' % self.name,'rename %s' % self.name,'examine %s' % self.name])
 			if p == 1:
-				name = raw_input('enter a new name for %s' % self.name)
+				name = base.get_input('enter a new name for %s' % self.name)
 				self.name = name
 				self.options = ['%s' % self.name]
 

@@ -75,7 +75,7 @@ class Item(base.Entity):
 
 			# we want to equip something if we've done it in a test.
 			if not base.IS_TEST:
-				ans = raw_input('would you like to replace %s with %s? (y/n) ' % (name,self.to_str()))
+				ans = base.get_input('would you like to replace %s with %s? (y/n) ' % (name,self.to_str()))
 			else:
 				ans = 'y'
 			if ans is 'y':

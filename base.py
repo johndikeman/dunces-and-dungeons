@@ -5,7 +5,7 @@ IS_TEST = False
 INSTRUCTION_QUEUE = []
 BASE_DIR = None
 IS_WEB_VERSION = False
-OUTPUT = string()
+SERVER = None
 
 
 
@@ -98,6 +98,12 @@ class Entity(object):
 			self.alive = False
 			put("[DEATH] %s has died by the hand of %s" % (self.to_str(),attacker.to_str()))
 			self.kill(attacker)
+			try:
+				if self.gold != -1000:
+					pass
+			except:
+				self.owner.things.remove(self)
+
 		if wait:
 			time.sleep(1)
 
@@ -192,6 +198,14 @@ class Inventory():
 def put(thing):
 	if not IS_WEB_VERSION:
 		print thing
+	else:
+		SERVER.put(thing)
+
+def get_input(arg=None):
+	if not IS_WEB_VERSION:
+		return raw_input(arg)
+	else:
+		return str(1)
 
 
 # use this method when you have a list of things that the
@@ -222,7 +236,7 @@ def make_choice(choices,thing=None,backable=False):
 			except:
 				raise Exception("the value '%s' in the instruction queue wasn't an option, bud." % cho)
 	else:
-		ans = raw_input()
+		ans = get_input()
 	try:
 		ret = int(ans)
 		if ret > len(choices) - 1:
@@ -249,7 +263,7 @@ def make_choice(choices,thing=None,backable=False):
 # 		# base.put(a)
 # 		base.put("\t%s for %d (%d)\n" % (a, choiceskeys[ind], ind))
 
-# 	ans = raw_input()
+# 	ans = get_input()
 # 	try:
 # 		ret = int(ans)
 # 		if ret > len(choices)-1:
