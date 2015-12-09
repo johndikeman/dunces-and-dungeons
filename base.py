@@ -257,7 +257,7 @@ def make_choice(choices,thing=None,backable=False):
 		put('CHOICE %s' % s)
 		while(len(SERVER.choice_results)==0):
 			pass
-		return SERVER.ra()
+		return SERVER.choice_results.pop(0)
 
 
 # def shop_make_choice(choices,choiceskeys,thing=None):

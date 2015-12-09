@@ -82,26 +82,24 @@ class Manager:
 					base.put('save/load support is disabled because you haven\'t installed dill!')
 
 	def new_game(self):
-		party_size = base.get_input('enter the size of your party: ')
-		if int(party_size) is 0:
-			base.put("you can't play with zero people, dingus")
-			sys.exit()
-
-		# creating all the players in the party
-		for a in range(int(party_size)):
-			name = base.get_input('enter the name of player %d: ' % a)
-			PARTY.add_player(Player(name))
-		base.put('Game Start')
-		base.put(PARTY.to_str())
-
-
-		dungeon = Hub(PARTY)
-		PARTY.hub = dungeon
-		PARTY.current_dungeon = dungeon
-		PARTY.current_dungeon.start()
+		# PARTY.current_dungeon.start()
 		if self.webbed:
 			web.server.run()
 		else:
+			party_size = base.get_input('enter the size of your party: ')
+			if int(party_size) is 0:
+				base.put("you can't play with zero people, dingus")
+				sys.exit()
+			# creating all the players in the party
+			for a in range(int(party_size)):
+				name = base.get_input('enter the name of player %d: ' % a)
+				PARTY.add_player(Player(name))
+			base.put('Game Start')
+			base.put(PARTY.to_str())
+			dungeon = Hub(PARTY)
+			PARTY.hub = dungeon
+			PARTY.current_dungeon = dungeon
+			PARTY.current_dungeon.start()
 			while(PARTY.end):
 				PARTY.handle_player_turn()
 				if(PARTY.end):

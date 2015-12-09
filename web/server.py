@@ -1,4 +1,7 @@
 import base,flask,threading,Queue,time
+from dungeon.dungeon import Dungeon, Hub
+from entity.player.players import Player, Party
+import entity.item.items as items
 
 
 party = None
@@ -15,14 +18,33 @@ def event_stream():
             yield 'data: %s\n\n' % a
 
 def run():
-    th = threading.Thread(target=ghghg)
-    th.start()
+    ghghg()
 
 
 def ghghg():
     app.debug = False
     app.threaded = True
     app.run()
+    th = threading.Thread(target=newgame)
+    th.start()
+
+
+def newgame():
+    PARTY = Party()
+    party_size = base.get_input('enter the size of your party: ')
+    if int(party_size) is 0:
+        base.put("you can't play with zero people, dingus")
+        sys.exit()
+    # creating all the players in the party
+    for a in range(int(party_size)):
+        name = base.get_input('enter the name of player %d: ' % a)
+        PARTY.add_player(Player(name))
+    base.put('Game Start')
+    base.put(PARTY.to_str())
+    dungeon = Hub(PARTY)
+    PARTY.hub = dungeon
+    PARTY.current_dungeon = dungeon
+    PARTY.current_dungeon.start()
 
 @app.route('/')
 def hello():
@@ -35,7 +57,11 @@ def put(thing):
 
 @app.route('/advance',methods=['POST'])
 def ad():
-    return flask.redirect('/da')
+    th = threading.Thread(target=plsgod)
+    th.start()
+
+def plsgod():
+    party.handle_player_turn()
 
 @app.route('/choice')
 def ch():
