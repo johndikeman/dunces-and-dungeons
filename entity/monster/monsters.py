@@ -112,6 +112,7 @@ def spawn(level):
 class Spiderling(Monster):
 	def __init__(self,level):
 		super(Spiderling,self).__init__(level)
+		self.max_health=self.level*10
 		self.health = self.level * 10
 		self.power = self.level * 10
 		self.name = "Spiderling"
@@ -128,6 +129,7 @@ class Skeleton(Monster):
 	def __init__(self,level):
 		super(Skeleton,self).__init__(level)
 		self.modif=[mod.Acidic,mod.Caustic,mod.Dieing,mod.Dusty,mod.Fetid,mod.Foul,mod.Lowly,mod.Normal, mod.Putrid,mod.Tiny, mod.Weak,mod.Rancid,mod.Dieing]
+		self.max_health=10+self.level*12
 		self.health=10+self.level*12
 		self.power=4+(self.level-1)*7
 		self.name="Skeleton"
@@ -140,6 +142,7 @@ class Goblin(Monster):
 	def __init__(self,level):
 		super(Goblin,self).__init__(level)
 		self.modif=[mod.Acidic,mod.Caustic,mod.Dieing,mod.Dusty,mod.Fetid,mod.Foul,mod.Lowly,mod.Normal, mod.Putrid,mod.Tiny, mod.Weak]
+		self.max_health=8+self.level*9
 		self.health=8+self.level*9
 		self.multiplier=.5
 		self.power=3+(self.level-1)*7
@@ -151,6 +154,7 @@ class Spider(Monster):
 	def __init__(self,level):
 		super(Spider,self).__init__(level)
 		self.modif=[mod.Acidic,mod.Caustic,mod.Dieing,mod.Dusty,mod.Fetid,mod.Foul,mod.Lowly,mod.Normal, mod.Putrid,mod.Tiny, mod.Weak]
+		self.max_health=10+self.level*6
 		self.health=10+self.level*6
 		self.multiplier=.4
 		self.power=2+(self.level-1)
@@ -161,6 +165,7 @@ class Assassin(Monster):
 	def __init__(self,level):
 		super(Assassin,self).__init__(level)
 		self.modif=[mod.Dank,mod.Destructive,mod.Funky,mod.Lightning,mod.Musky,mod.Nasty,mod.Camphoric]
+		self.max_health=1+self.level*9
 		self.health=1+self.level*9
 		self.multiplier=1.5
 		self.power=10+(self.level-1)*22
@@ -171,6 +176,7 @@ class Hidden_Devourer(Monster):
 	def __init__(self,level):
 		super(Hidden_Devourer,self).__init__(level)
 		self.modif=[mod.Dank,mod.Lowly, mod.Destructive,mod.Musky,mod.Nasty,mod.Lightning,mod.Forgotten]
+		self.max_health=5+self.level*8
 		self.health=5+self.level*8
 		self.multiplier=.6
 		self.power=8+(self.level-1)*19
@@ -184,6 +190,7 @@ class Ogre(Monster):
 	def __init__(self,level):
 		super(Ogre,self).__init__(level)
 		self.modif=[mod.Forgotten,mod.Musky, mod.Normal, mod.Tiny, mod.Camphoric]
+		self.max_health=50+self.level*35
 		self.health=50+self.level*35
 		self.power=1+(self.level-1)*3;
 		self.name="Ogre"
@@ -193,6 +200,7 @@ class Hellhound(Monster):
 	def __init__(self,level):
 		super(Hellhound,self).__init__(level)
 		self.modif=[mod.Destructive,mod.Lightning,mod.Dank,mod.Scorched,mod.Musky,mod.Nasty]
+		self.max_health=40+self.level*25
 		self.health=40+self.level*25
 		self.multiplier=1.1
 		self.power=12+(self.level-1)*18
@@ -203,6 +211,7 @@ class Sorcerer(Monster):
 	def __init__(self,level):
 		super(Sorcerer,self).__init__(level)
 		self.modif=[mod.Caustic, mod.Dank, mod.Destructive, mod.Forgotten, mod.Funky, mod.Lowly, mod.Nasty]
+		self.max_health=12+self.level*12
 		self.health=12+self.level*12
 		self.multiplier = .9
 		self.power=15+(self.level-1)*15
@@ -212,6 +221,7 @@ class Sorcerer(Monster):
 class Elemental(Monster):
 	def __init__(self,level):
 		super(Elemental,self).__init__(level)
+		self.max_health=20+self.level*22
 		self.health=20+self.level*22
 		self.power=15+(self.level-1)*10
 		self.name="Elemental"
@@ -220,6 +230,7 @@ class Meme(Monster):
 	def __init__(self,level):
 		super(Meme,self).__init__(level)
 		self.modif=[mod.Dank, mod.Forgotten]
+		self.max_health=420+self.level*9.11
 		self.health=420+self.level*9.11
 		self.power=69+(self.level-1)*42
 		self.name ="Meme"
@@ -228,6 +239,7 @@ class WindElemental(Elemental):
 	def __init__(self,level):
 		super(WindElemental,self).__init__(level)
 		self.modif=[mod.Camphoric, mod.Dank, mod.Destructive, mod.Dusty, mod.Forgotten, mod.Lightning, mod.Nasty]
+		self.max_health=5+self.level*15
 		self.health=5+self.level*15
 		self.power=11+(self.level-1)*14
 		self.name="Wind Elemental"
@@ -245,6 +257,7 @@ class FireElemental(Elemental):
 	def __init__(self,level):
 		super(FireElemental,self).__init__(level)
 		self.modif=[mod.Scorched, mod.Dank]
+		self.max_health=10+self.level*20
 		self.health=10+self.level*20
 		self.power=18+(self.level-1)*20
 		self.name="Fire Elemental"
@@ -255,6 +268,7 @@ class EarthElemental(Elemental):
 	def __init__(self,level):
 		super(EarthElemental,self).__init__(level)
 		self.modif=[mod.Acidic, mod.Caustic, mod.Decaying, mod.Destructive, mod.Dieing, mod.Flowery, mod.Forgotten, mod.Foul, mod.Musky, mod.Nasty, mod.Normal, mod.Rancid, mod.Scorched]
+		self.max_health=100+self.level*30
 		self.health=100+self.level*30
 		self.power=4+(self.level-1)*12
 		self.name="Earth Elemental"
@@ -265,6 +279,7 @@ class Demigod(Monster):
 		super(Demigod,self).__init__(level)
 		self.modif=[mod.Camphoric, mod.Dank, mod.Destructive, mod.Forgotten, mod.Funky, mod.Lightning, mod.Nasty]
 		self.multiplier=1.6
+		self.max_health=100+self.level*18
 		self.health=100+self.level*18
 		self.power=20+(self.level-1)*14
 		self.action_points=2
@@ -276,6 +291,7 @@ class Overcharger(Monster):
 		super(Overcharger,self).__init__(level)
 		self.modif=[mod.Dank, mod.Destructive, mod.Forgotten, mod.Funky, mod.Lightning, mod.Nasty]
 		self.multiplier=1.05
+		self.max_health=5+self.level*10
 		self.health=5+self.level*10
 		self.power=30+(self.level-1)*65
 		self.ap=1
@@ -287,6 +303,7 @@ class Cyclops(Monster):
 	def __init__(self,level):
 		super(Cyclops,self).__init__(level)
 		self.modif=[mod.Tiny, mod.Camphoric, mod.Caustic, mod.Dank, mod.Destructive, mod.Dieing, mod.Forgotten, mod.Lowly, mod.Musky, mod.Nasty, mod.Normal, mod.Weak]
+		self.max_health=60+self.level*20
 		self.health=60+self.level*20
 		self.power=6+(self.level-1)*16
 		self.name="Cyclops"

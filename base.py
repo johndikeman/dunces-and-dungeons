@@ -10,8 +10,8 @@ class Entity(object):
 	def __init__(self):
 		# ATTRIBUTES
 		self.attributes = {'strength':0,'intelligence':0,'luck':0,'agility':0,'mana':0}
-
 		self.health = 0.0
+		self.max_health=self.health
 		self.level = 1
 		# base ap is what the ap should be restored to after a turn is complete
 		self.base_ap = 1
