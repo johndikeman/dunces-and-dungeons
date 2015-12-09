@@ -1,4 +1,4 @@
-import random, math, time
+import random, math, time,requests
 from StringIO import StringIO as string
 
 IS_TEST = False
@@ -255,6 +255,10 @@ def make_choice(choices,thing=None,backable=False):
 		for a in choices:
 			s += '%s|' % a
 		put('CHOICE %s' % s)
+		while(len(SERVER.choice_results)==0):
+			pass
+		return SERVER.ra()
+
 
 # def shop_make_choice(choices,choiceskeys,thing=None):
 # 	choices.append("Back")

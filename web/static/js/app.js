@@ -5,7 +5,19 @@
     console.log('nicela!');
     source = new EventSource('/stream');
     return source.onmessage = function(event) {
-      return console.log(event.data);
+      var a, form, i, len, options;
+      $('#main').append(event.data);
+      if (event.data.slice(0, 6) === 'CHOICE') {
+        console.log("CREATING A FORM");
+        options = event.data.slice(6).split('|');
+        form = "<form id=\"ch\" action=\"/choice\">";
+        for (i = 0, len = options.length; i < len; i++) {
+          a = options[i];
+          form += "<input type=\"radio\">" + a + "</input>";
+        }
+        form += "</form>";
+        return $('#main').append(form);
+      }
     };
   });
 

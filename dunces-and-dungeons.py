@@ -117,5 +117,5 @@ if __name__ == '__main__':
 			game.main(True)
 		else:
 			game.main()
-	except:
+	except IndexError:
 		game.main()
