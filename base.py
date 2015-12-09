@@ -1,5 +1,6 @@
 import random, math, time,requests
 from StringIO import StringIO as string
+from web.data import r
 
 IS_TEST = False
 INSTRUCTION_QUEUE = []
@@ -199,7 +200,7 @@ def put(thing):
 	if not IS_WEB_VERSION:
 		print thing
 	else:
-		SERVER.put(thing)
+		r.publish('out',thing)
 
 def get_input(arg=None):
 	if not IS_WEB_VERSION:
@@ -254,10 +255,14 @@ def make_choice(choices,thing=None,backable=False):
 		s = ''
 		for a in choices:
 			s += '%s|' % a
-		put('CHOICE %s' % s)
-		while(len(SERVER.choice_results)==0):
-			pass
-		return SERVER.choice_results.pop(0)
+		r.publish('out',s)
+		pubsub = r.pubsub()
+		pubsub.subscribe('in')
+		while True:
+			for a in pubsub.listen():
+				if a['data']:
+					print a
+
 
 
 # def shop_make_choice(choices,choiceskeys,thing=None):

@@ -1,7 +1,9 @@
-import base,flask,threading,Queue,time
-from dungeon.dungeon import Dungeon, Hub
-from entity.player.players import Player, Party
-import entity.item.items as items
+import flask,threading,Queue,time
+# from dungeon.dungeon import Dungeon, Hub
+# from entity.player.players import Player, Party
+# import entity.item.items as items
+# the redis thing
+from data import r
 
 
 party = None
@@ -10,41 +12,41 @@ messages = []
 balls = [1,2,3,4,5,6,67,7,8,9,0]
 choice_results = []
 
+pubsub = r.pubsub()
+pubsub.subscribe('out')
+
 def event_stream():
-    while len(messages) > 0:
-        d = messages.pop(0)
-        for a in d.split('\n'):
+    for d in pubsub.listen():
+        for a in str(d['data']).split('\n'):
             print r'sending %s' % a
             yield 'data: %s\n\n' % a
 
 def run():
-    ghghg()
-
-
-def ghghg():
     app.debug = False
     app.threaded = True
     app.run()
-    th = threading.Thread(target=newgame)
-    th.start()
+    # print 'print here'
+    # th = threading.Thread(target=newgame)
+    # th.start()
 
 
-def newgame():
-    PARTY = Party()
-    party_size = base.get_input('enter the size of your party: ')
-    if int(party_size) is 0:
-        base.put("you can't play with zero people, dingus")
-        sys.exit()
-    # creating all the players in the party
-    for a in range(int(party_size)):
-        name = base.get_input('enter the name of player %d: ' % a)
-        PARTY.add_player(Player(name))
-    base.put('Game Start')
-    base.put(PARTY.to_str())
-    dungeon = Hub(PARTY)
-    PARTY.hub = dungeon
-    PARTY.current_dungeon = dungeon
-    PARTY.current_dungeon.start()
+# def newgame():
+#     print 'newgame called'
+#     PARTY = Party()
+#     party_size = base.get_input('enter the size of your party: ')
+#     if int(party_size) is 0:
+#         base.put("you can't play with zero people, dingus")
+#         sys.exit()
+#     # creating all the players in the party
+#     for a in range(int(party_size)):
+#         name = base.get_input('enter the name of player %d: ' % a)
+#         PARTY.add_player(Player(name))
+#     base.put('Game Start')
+#     base.put(PARTY.to_str())
+#     dungeon = Hub(PARTY)
+#     PARTY.hub = dungeon
+#     PARTY.current_dungeon = dungeon
+#     PARTY.current_dungeon.start()
 
 @app.route('/')
 def hello():
@@ -77,3 +79,7 @@ def ra():
 def stream():
     return flask.Response(event_stream(),
                           mimetype="text/event-stream")
+
+
+if __name__ == '__main__':
+    run()
