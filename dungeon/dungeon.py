@@ -125,12 +125,21 @@ class Hub(Dungeon):
 					print 'successfully purchased a %s' % item_object.to_str()
 				# inventory.append(item_object)
 				# self.party.inventory[self.party.index].gold -= item_object.cost
-			# allow the player to shop as much as they want in a turn
-			if raw_input('continue? (y/n) ') is 'y':
-				self.enter_shop()
 		elif opt == 1:
-			selling=base.make_choice(self.party.inventory[self.party.index].inventory)
-			self.party.inventory[self.party.index].inventory.remove(self.party.inventory[self.party.index].inventory[selling])
+			alist=[]
+			for a in self.party.inventory[self.party.index].inventory:
+				try:
+					a.cost
+					alist.append(a)
+				except:
+					pass
+			selling=base.make_choice(['%s for %d' % (a.to_str(),a.cost/5) for a in alist],'item',True)
+			self.party.inventory[self.party.index].gold+=a.cost/5		
+			self.party.inventory[self.party.index].inventory.remove(alist[selling])
+
+		# allow the player to shop as much as they want in a turn
+		if raw_input('continue? (y/n) ') is 'y':
+			self.enter_shop()
 
 
 
