@@ -252,16 +252,20 @@ def make_choice(choices,thing=None,backable=False):
 		return ret
 	# this is so we can make a form in the html frontend
 	else:
-		s = ''
+		s = 'CHOICE|'
 		for a in choices:
 			s += '%s|' % a
 		r.publish('out',s)
 		pubsub = r.pubsub()
 		pubsub.subscribe('in')
-		while True:
+		ret = None
+		wait = True
+		while wait:
 			for a in pubsub.listen():
-				if a['data']:
-					print a
+				if a['type'] == 'message':
+					ret = a['data']
+					wait = False
+		return ret
 
 
 

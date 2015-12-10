@@ -59,21 +59,12 @@ def put(thing):
 
 @app.route('/advance',methods=['POST'])
 def ad():
-    th = threading.Thread(target=plsgod)
-    th.start()
-
-def plsgod():
-    party.handle_player_turn()
+    pass
 
 @app.route('/choice')
 def ch():
     choice_results.append(flask.request.value)
     print flask.request.value
-
-def ra():
-    while len(choice_results) == 0:
-        pass
-    return choice_results.pop(0)
 
 @app.route('/stream')
 def stream():

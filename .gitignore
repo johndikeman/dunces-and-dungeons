@@ -7,3 +7,4 @@ dist
 build.py
 icon.ico
 saves
+*.bat
