@@ -24,6 +24,7 @@ class Sword(Weapon):
 		self.cost = 10
 
 	def do_turn(self,options):
+		self.damage = 7.0 * self.owner.level
 		self.options = ['%s' % self.to_str()]
 		# print options
 		if self.options[0] in options:
@@ -51,6 +52,7 @@ class Dagger(Weapon):
 
 
 	def do_turn(self,option):
+		self.damage = 5.0 * self.owner.level
 		self.options = ['%s' % self.to_str()]
 
 		if option == self.options[0]:
@@ -82,6 +84,10 @@ class Bow(Weapon):
 			self.damage *= 2
 
 	def do_turn(self,option):
+		if self.owner.race is 'Ranger':
+			self.damage = 7.0 * self.owner.level*2.0
+		else:
+			self.damage = 1.0 * self.owner.level
 		self.options = ['%s' % self.to_str()]
 		if option == self.options[0]:
 			p = base.make_choice(['Shoot with %s' % self.to_str(), 'Fully draw the %s' % self.to_str(), 'Launch Volley'])
@@ -121,9 +127,10 @@ class Rapier(Weapon):
 		self.descr=self.name+" "+str(self.level)
 		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
-		self.damage = 2 * self.level
+		self.damage = 2.0 * self.level
 
 	def do_turn(self,option):
+		self.damage = 2.0 * self.owner.level
 		self.options = ['%s' % self.to_str()]
 		if option == self.options[0]:
 			p = base.make_choice(['Slash with %s' % self.to_str(),'Pierce Armor with %s'%self.to_str()])
@@ -160,6 +167,7 @@ class Flail(Weapon):
 		self.damage = 4.0 * self.level
 
 	def do_turn(self,option):
+		self.damage = 4.0 * self.owner.level
 		self.options = ['%s' % self.to_str()]
 		if option == self.options[0]:
 			p = base.make_choice(['attack with %s' % self.to_str()])

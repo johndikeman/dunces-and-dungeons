@@ -38,6 +38,7 @@ class Shield(Armor):
 
 	#I am not sure how to do the do_turn method.
 	def do_turn(self,option):
+		self.armor=12*self.owner.level
 		self.options = ['%s' % self.to_str()]
 		if self.defendin:
 			for a in self.owner.party.inventory:
@@ -79,7 +80,11 @@ class Breastplate(Armor):
 		self.item_options=['examine','equip']
 		self.level = level
 		self.armor=20*level
-
+	def register_damage(self,attacker,damage):
+		self.armor=20*self.owner.level
+		for a in self.modifiers:
+			a.do_turn(attacker,damage)
+				
 	def apply(self):
 		self.owner.armor += self.armor
 
@@ -95,6 +100,12 @@ class Chainmail(Armor):
 		self.info='chest'
 		self.level = level
 		self.armor=15*level
+
+	def register_damage(self,attacker,damage):
+		self.armor=15*self.owner.level
+		for a in self.modifiers:
+			a.do_turn(attacker,damage)
+
 	def apply(self):
 		self.owner.armor += self.armor
 
@@ -110,6 +121,12 @@ class Platelegs(Armor):
 		self.info='legs'
 		self.level = level
 		self.armor=12*level
+
+	def register_damage(self,attacker,damage):
+		self.armor=12*self.owner.level
+		for a in self.modifiers:
+			a.do_turn(attacker,damage)
+
 	def apply(self):
 		self.owner.armor += self.armor
 
@@ -125,6 +142,12 @@ class Helmet(Armor):
 		self.item_options=['examine','equip']
 		self.level = level
 		self.armor=13*level
+
+	def register_damage(self,attacker,damage):
+		self.armor=13*self.owner.level
+		for a in self.modifiers:
+			a.do_turn(attacker,damage)
+
 	def apply(self):
 		self.owner.armor += self.armor
 
