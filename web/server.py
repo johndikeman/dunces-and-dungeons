@@ -12,17 +12,21 @@ messages = []
 balls = [1,2,3,4,5,6,67,7,8,9,0]
 choice_results = []
 
-pubsub = r.pubsub()
-pubsub.subscribe('out')
+# pubsub = r.pubsub()
+
 
 def event_stream():
-    for d in pubsub.listen():
-        for a in str(d['data']).split('\n'):
+    # pubsub.subscribe('out')
+    for d in r.lrange('out',0,-1):
+        for a in r.rpop('out').split('\n'):
             print r'sending %s' % a
             yield 'data: %s\n\n' % a
+        # break
+    # pubsub.unsubscribe()
+    print 'here'
 
 def run():
-    app.debug = False
+    app.debug = True
     app.threaded = True
     app.run()
     # print 'print here'
@@ -61,9 +65,9 @@ def put(thing):
 def ad():
     pass
 
-@app.route('/choice')
+@app.route('/choice',methods=['POST'])
 def ch():
-    choice_results.append(flask.request.value)
+    r.publish('in',flask.request.value)
     print flask.request.value
 
 @app.route('/stream')

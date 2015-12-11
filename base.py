@@ -255,7 +255,7 @@ def make_choice(choices,thing=None,backable=False):
 		s = 'CHOICE|'
 		for a in choices:
 			s += '%s|' % a
-		r.publish('out',s)
+		r.rpush('out',s)
 		pubsub = r.pubsub()
 		pubsub.subscribe('in')
 		ret = None
