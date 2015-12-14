@@ -5,7 +5,6 @@ import flask,threading,Queue,time
 # the redis thing
 from data import r
 
-
 party = None
 app = flask.Flask(__name__)
 messages = []
@@ -34,24 +33,6 @@ def run():
     # th.start()
 
 
-# def newgame():
-#     print 'newgame called'
-#     PARTY = Party()
-#     party_size = base.get_input('enter the size of your party: ')
-#     if int(party_size) is 0:
-#         base.put("you can't play with zero people, dingus")
-#         sys.exit()
-#     # creating all the players in the party
-#     for a in range(int(party_size)):
-#         name = base.get_input('enter the name of player %d: ' % a)
-#         PARTY.add_player(Player(name))
-#     base.put('Game Start')
-#     base.put(PARTY.to_str())
-#     dungeon = Hub(PARTY)
-#     PARTY.hub = dungeon
-#     PARTY.current_dungeon = dungeon
-#     PARTY.current_dungeon.start()
-
 @app.route('/')
 def hello():
     # print messages
@@ -63,12 +44,13 @@ def put(thing):
 
 @app.route('/advance',methods=['POST'])
 def ad():
-    pass
+    return flask.redirect('/')
 
 @app.route('/choice',methods=['POST'])
 def ch():
-    r.publish('in',flask.request.value)
-    print flask.request.value
+    r.publish('in',flask.request.form['makechoice'])
+    print flask.request.form['makechoice']
+    return flask.redirect('/')
 
 @app.route('/stream')
 def stream():

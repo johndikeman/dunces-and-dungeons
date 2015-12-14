@@ -12,15 +12,19 @@ $(document).ready(
 )
 
 make_form = (event) ->
-  options = event.data[6..].split '|'
+  options = event.data[6..].split('|')
+  console.log options
+  # options = options[1..options.length-2]
+  # console.log options
   form = "<form id=\"ch\" action=\"/choice\" method='post'>"
   for a in options
-    form += "<input type=\"radio\" name='makechoice' value=\"#{a}\">#{a}<br>"
+    if a != '' and a != undefined
+      form += "<input type=\"radio\" name='makechoice' value=\"#{a}\">#{a}<br>"
   form += "<input type=\"submit\" value=\"choose!\">"
   form += "</form>"
   $('#main').append(form)
 
 
 
-random = () ->
+bush_did_911 = () ->
   console.log 'this is a random-ass method to hopefully stop chrome frmo caching this javascript, lulz'

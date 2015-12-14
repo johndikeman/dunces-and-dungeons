@@ -201,6 +201,7 @@ def put(thing):
 		print thing
 	else:
 		r.publish('out',thing)
+		print thing
 
 def get_input(arg=None):
 	if not IS_WEB_VERSION:
@@ -254,7 +255,7 @@ def make_choice(choices,thing=None,backable=False):
 	else:
 		s = 'CHOICE|'
 		for a in choices:
-			s += '%s|' % a
+			s += '%s|' % a.replace('\n',' ').replace('\t',' ')
 		r.rpush('out',s)
 		pubsub = r.pubsub()
 		pubsub.subscribe('in')
@@ -262,10 +263,12 @@ def make_choice(choices,thing=None,backable=False):
 		wait = True
 		while wait:
 			for a in pubsub.listen():
+				print a
 				if a['type'] == 'message':
 					ret = a['data']
 					wait = False
-		return ret
+					break
+		return int(choices.index(ret))
 
 
 
