@@ -134,8 +134,9 @@ class Hub(Dungeon):
 				except:
 					pass
 			selling=base.make_choice(['%s for %d' % (a.to_str(),a.cost/5) for a in alist],'item',True)
-			self.party.inventory[self.party.index].gold+=a.cost/5		
-			self.party.inventory[self.party.index].inventory.remove(alist[selling])
+			if selling is not None:
+				self.party.inventory[self.party.index].gold+=a.get_cost()/5		
+				self.party.inventory[self.party.index].inventory.remove(alist[selling])
 
 		# allow the player to shop as much as they want in a turn
 		if raw_input('continue? (y/n) ') is 'y':

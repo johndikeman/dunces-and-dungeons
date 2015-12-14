@@ -7,7 +7,7 @@ class Armor(entity.item.items.Item):
 	def __init__(self):
 		super(Armor,self).__init__()
 	def get_cost(self):
-		return math.ceil((math.log((self.armor * self.cost),1.1)))
+		return self.cost
 
 	def register_damage(self,attacker,damage):
 		for a in self.modifiers:
@@ -30,6 +30,7 @@ class Shield(Armor):
 		self.info='one-handed'
 		self.info2='nope'
 		self.level = level
+		self.cost=10.0
 		self.item_options=['examine','equip']
 		self.options=['%s' % self.to_str()]
 		self.armor=12*self.level
@@ -79,6 +80,7 @@ class Breastplate(Armor):
 		self.info='chest'
 		self.item_options=['examine','equip']
 		self.level = level
+		self.cost=15.0
 		self.armor=20*level
 	def register_damage(self,attacker,damage):
 		self.armor=20*self.owner.level
@@ -99,6 +101,7 @@ class Chainmail(Armor):
 		self.item_options=['examine','equip']
 		self.info='chest'
 		self.level = level
+		self.cost=12.0
 		self.armor=15*level
 
 	def register_damage(self,attacker,damage):
@@ -120,6 +123,7 @@ class Platelegs(Armor):
 		self.item_options=['examine','equip']
 		self.info='legs'
 		self.level = level
+		self.cost=10.0
 		self.armor=12*level
 
 	def register_damage(self,attacker,damage):
@@ -141,6 +145,7 @@ class Helmet(Armor):
 		self.info='helmet'
 		self.item_options=['examine','equip']
 		self.level = level
+		self.cost=8.0
 		self.armor=13*level
 
 	def register_damage(self,attacker,damage):

@@ -24,6 +24,7 @@ class Common(ModifyItems):
 
 class Basic(Common):
 	def apply(self):
+		self.owner.cost=self.owner.cost*10
 		self.owner.damage*=1
 
 	def do_turn(self,target,damage):
@@ -34,6 +35,7 @@ class Basic(Common):
 
 class Iron(Common):
 	def apply(self):
+		self.owner.cost=self.owner.cost*11
 		self.owner.damage*=1.1
 
 	def do_turn(self,target,damage):
@@ -47,6 +49,7 @@ class Iron(Common):
 
 class Rusty(Common):
 	def apply(self):
+		self.owner.cost=self.owner.cost*7
 		self.owner.damage*=.5
 
 	def do_turn(self,target,damage):
@@ -60,6 +63,7 @@ class Rusty(Common):
 
 class Used(Common):
 	def apply(self):
+		self.owner.cost=self.owner.cost*7.5
 		self.owner.damage*=.8
 
 	def do_turn(self,target,damage):
@@ -70,6 +74,7 @@ class Used(Common):
 
 class Weathered(Common):
 	def apply(self):
+		self.owner.cost=self.owner.cost*7
 		self.owner.damage*=.7
 
 	def do_turn(self,target,damage):
@@ -80,6 +85,7 @@ class Weathered(Common):
 
 class Wooden(Common):
 	def apply(self):
+		self.owner.cost=self.owner.cost*5
 		self.owner.damage*=.5
 
 	def do_turn(self,target,damage):
@@ -90,6 +96,7 @@ class Wooden(Common):
 
 class Notched(Common):
 	def apply(self):
+		self.owner.cost=self.owner.cost*8.5
 		self.owner.damage*=.9
 
 	def do_turn(self,target,damage):
@@ -103,6 +110,7 @@ class Notched(Common):
 
 class Scratched(Common):
 	def apply(self):
+		self.owner.cost=self.owner.cost*9
 		self.owner.damage*=.9
 
 	def do_turn(self,target,damage):
@@ -123,6 +131,7 @@ class Uncommon(ModifyItems):
 
 class Good(Uncommon):
 	def apply(self):
+		self.owner.cost=self.owner.cost*15
 		self.owner.damage*=1.3
 
 	def do_turn(self,target,damage):
@@ -133,6 +142,7 @@ class Good(Uncommon):
 
 class Shining(Uncommon):
 	def apply(self):
+		self.owner.cost=self.owner.cost*20
 		self.owner.damage*=1.6
 
 	def do_turn(self,target,damage):
@@ -143,6 +153,7 @@ class Shining(Uncommon):
 
 class Steel(Uncommon):
 	def apply(self):
+		self.owner.cost=self.owner.cost*16
 		self.owner.damage*=1.3
 
 	def do_turn(self,target,damage):
@@ -159,6 +170,7 @@ class Steel(Uncommon):
 
 class Archaic(Uncommon):
 	def apply(self):
+		self.owner.cost=self.owner.cost*16
 		self.owner.damage*=1.3
 
 	def do_turn(self,target,damage):
@@ -172,6 +184,7 @@ class Archaic(Uncommon):
 
 class Brutal(Uncommon):
 	def apply(self):
+		self.owner.cost=self.owner.cost*20
 		self.owner.damage*=1.5
 
 	def do_turn(self,target,damage):
@@ -198,6 +211,7 @@ class Rare(ModifyItems):
 
 class Ceremonial(Rare):
 	def apply(self):
+		self.owner.cost=self.owner.cost*40
 		self.owner.damage*=2.5
 
 	def do_turn(self,target,damage):
@@ -211,6 +225,7 @@ class Ceremonial(Rare):
 
 class Silver(Rare):
 	def apply(self):
+		self.owner.cost=self.owner.cost*38
 		self.owner.damage*=2.4
 
 	def do_turn(self,target,damage):
@@ -222,6 +237,7 @@ class Silver(Rare):
 
 class Killing(Rare):
 	def apply(self):
+		self.owner.cost=self.owner.cost*50
 		self.owner.damage*=3
 
 	def do_turn(self,target,damage):
@@ -235,6 +251,7 @@ class Killing(Rare):
 
 class Blessed(Rare):
 	def apply(self):
+		self.owner.cost=self.owner.cost*55
 		self.owner.damage*=3.2
 
 	def do_turn(self,target,damage):
@@ -258,6 +275,7 @@ class Legendary(ModifyItems):
 
 class Kingly(Legendary):
 	def apply(self):
+		self.owner.cost=self.owner.cost*75
 		self.owner.damage*=4
 
 	def do_turn(self,target,damage):
@@ -271,6 +289,7 @@ class Kingly(Legendary):
 
 class Enchanted(Legendary):
 	def apply(self):
+		self.owner.cost=self.owner.cost*80
 		self.owner.damage*=4.2
 
 	def do_turn(self,target,damage):
@@ -284,6 +303,7 @@ class Enchanted(Legendary):
 
 class Master(Legendary):
 	def apply(self):
+		self.owner.cost=self.owner.cost*100
 		self.owner.damage*=4.6
 
 	def do_turn(self,target,damage):
@@ -313,6 +333,7 @@ class Divined(ModifyItems):
 
 class Celestial(Divined):
 	def apply(self):
+		self.owner.cost=self.owner.cost*150
 		self.owner.damage*=6
 
 	def do_turn(self,target,damage):
@@ -330,6 +351,7 @@ class Celestial(Divined):
 
 class Divine(Divined):
 	def apply(self):
+		self.owner.cost=self.owner.cost*200
 		self.owner.damage*=6.8
 
 	def do_turn(self,target,damage):
@@ -345,6 +367,7 @@ class Divine(Divined):
 
 class Heavenly(Divined):
 	def apply(self):
+		self.owner.cost=self.owner.cost*250
 		self.owner.damage*=6.4
 
 	def do_turn(self,target,damage):
@@ -365,6 +388,7 @@ class Heavenly(Divined):
 
 class Arch(Divined):
 	def apply(self):
+		self.owner.cost=self.owner.cost*500
 		self.owner.damage*=8
 
 	def do_turn(self,target,damage):

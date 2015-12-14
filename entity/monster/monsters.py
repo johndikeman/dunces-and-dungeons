@@ -63,7 +63,7 @@ class Monster(base.Entity):
 	def attack(self,target):
 		self.reveal()
 		target.take_damage(self,self.power)
-		self.take_damage(target,target.retaliate())
+		target.retaliate(self)
 
 	def conceal(self):
 		self.revealed=False

@@ -344,18 +344,18 @@ class Player(base.Entity):
 	def kill(self,attacker=None):
 		pass
 
-	def retaliate(self):
+	def retaliate(self,target):
 		try:
 			if(isinstance(self.equipment['left'],weapons.Weapon) and isinstance(self.equipment['right'],weapons.Weapon)):
-				return (self.equipment['left'].damage/3+self.equipment['right'].damage/3)*self.attributes['strength']/4
+				return (self.equipment['left'].standard_attack(target)/10+self.equipment['right'].standard_attack(target)/10)
 			elif(isinstance(self.equipment['left'],weapons.Weapon)):
-				return (self.equipment['left'].damage/2)*self.attributes['strength']/4
+				return (self.equipment['left'].standard_attack(target)/7)
 			elif(isinstance(self.equipment['right'],weapons.Weapon)):
-				return (self.equipment['right'].damage/2)*self.attributes['strength']/4
+				return (self.equipment['right'].standard_attack(target)/7)
 			else:
 				return self.attributes['strength']/4
 		except:
-			print "error here, 291 monsters.py"
+			print "error here, 358 players.py"
 			return self.attributes['strength']/4
 
 	# this is what items that need to operate in an area of effect need to do.
