@@ -68,7 +68,7 @@ class Dungeon(object):
 		# self.rooms[0][0].things.append(LeaveOption())
 
 	def leave_dungeon(self):
-		for a in self.party:
+		for a in self.party.inventory:
 			if a.inventory.contains_type(utils.CompletedMap):
 				print "%s's map crumbles to dust", a.name
 				a.inventory.remove(utils.CompletedMap)

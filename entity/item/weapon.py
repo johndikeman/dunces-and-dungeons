@@ -32,11 +32,12 @@ class Sword(Weapon):
 			if p == 0:
 				target = self.owner.select_target()
 				if target:
-					self.standard_attack(target)
+					for a in self.modifiers:
+						a.do_turn(target,self.standard_attack(target))
+					
 
 	def standard_attack(self,target):
-		for a in self.modifiers:
-			a.do_turn(target,self.damage + self.owner.attributes['strength'] + base.D12.roll())
+		return self.damage + self.owner.attributes['strength'] + base.D12.roll()
 
 class Dagger(Weapon):
 	def __init__(self,level):
@@ -61,11 +62,11 @@ class Dagger(Weapon):
 			if p == 0:
 				target = self.owner.select_target()
 				if target:
-					self.standard_attack(target)
+					for a in self.modifiers:
+						a.do_turn(target,self.standard_attack(target))
 
 	def standard_attack(self,target):
-		for a in self.modifiers:
-			a.do_turn(target,self.damage + self.owner.attributes['strength'] / 2.0 + self.owner.attributes['agility'] / 2.0 + base.D20.roll())
+		return self.damage + self.owner.attributes['strength'] / 2.0 + self.owner.attributes['agility'] / 2.0 + base.D20.roll()
 
 class Bow(Weapon):
 	def __init__(self,level):
@@ -96,7 +97,8 @@ class Bow(Weapon):
 			if p == 0:
 				target = self.owner.select_target()
 				if target:
-					self.standard_attack(target)
+					for a in self.modifiers:
+						a.do_turn(target,self.damage * (self.owner.attributes['agility'] + self.owner.attributes['strength'] / 10.0) + base.D12.roll())
 			elif p == 1:
 				target = self.owner.select_target()
 				if target:
@@ -108,8 +110,8 @@ class Bow(Weapon):
 
 	#an attempt to further increase the action points system. shoot would only cost 1 action point while aim would take 2
 	def standard_attack(self,target):
-		for a in self.modifiers:
-			a.do_turn(target,self.damage * (self.owner.attributes['agility'] + self.owner.attributes['strength'] / 10.0) + base.D12.roll())
+		return self.damage * (self.owner.attributes['agility'] + self.owner.attributes['strength'] / 10.0)
+		
 	def aim(self,target):
 		for a in self.modifiers:
 			a.do_turn(target,self.damage * (self.owner.attributes['agility'] * 1.9 + self.owner.attributes['strength']/4.0) + base.D20.roll())
@@ -140,15 +142,15 @@ class Rapier(Weapon):
 			if p == 0:
 				target = self.owner.select_target()
 				if target:
-					self.standard_attack(target)
+					for a in self.modifiers:
+						a.do_turn(target,self.standard_attack(target))
 			elif p == 1:
 				target = self.owner.select_target()
 				if target:
 					self.pierce(target)
 
 	def standard_attack(self,target):
-		for a in self.modifiers:
-			a.do_turn(target,self.damage+self.owner.attributes['agility'])
+		return self.damage+self.owner.attributes['agility']
 	def pierce(self,target):
 		hold=target.armor
 		target.armor = 0
@@ -178,8 +180,10 @@ class Flail(Weapon):
 			if p == 0:
 				target = self.owner.select_target()
 				if target:
-					self.standard_attack(target)
+					for a in self.modifiers:
+						a.do_turn(target,self.standard_attack(target))
+						
 
 	def standard_attack(self,target):
-		for a in self.modifiers:
-			a.do_turn(target,self.damage + self.owner.attributes['strength'] / 2.0 + self.owner.attributes['agility'] + self.owner.attributes['luck'] + base.D20.roll())
+		return self.damage + self.owner.attributes['strength'] / 2.0 + self.owner.attributes['agility'] + self.owner.attributes['luck'] + base.D20.roll()
+		

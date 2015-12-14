@@ -228,7 +228,7 @@ class GrandMage(m.Monster):
     def attack(self,target,damage):
         self.reveal()
         target.take_damage(self,damage)
-        target.retaliate(self)
+        self.take_damage(target,target.retaliate(self))
 
     def cast_fireball(self):
         self.reveal()

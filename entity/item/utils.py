@@ -7,6 +7,7 @@ class CompletedMap(items.ItemUsedFromInventory):
         self.options = ['open completed map']
         # map will be the matrix
         self.map = []
+        self.id='Why did i get an error'
         self.name = "a completed map of the dungeon"
         self.cost = 200
 
