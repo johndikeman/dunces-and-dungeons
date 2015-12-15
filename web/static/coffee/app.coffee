@@ -1,6 +1,11 @@
+
+
+
+
 $(document).ready(
   ()->
-    console.log 'nicela!'
+    process_old_messages(window.messages)
+    # console.log 'nicela!'
     source = new EventSource '/stream'
     source.onmessage = (event)->
       $('#main').append event.data
@@ -13,18 +18,27 @@ $(document).ready(
 
 make_choice_form = (event) ->
   options = event.data[6..].split('|')
-  console.log options
+  # console.log options
   # options = options[1..options.length-2]
   # console.log options
   form = "<form id=\"ch\" action=\"/choice\" method='post'>"
   for a in options
+    # make sure the option is in fact an option
     if a != '' and a != undefined
+      # add a radio button to the string
       form += "<input type=\"radio\" name='makechoice' value=\"#{a[0]}\">#{a[1..]}<br>"
   form += "<input type=\"submit\" value=\"choose!\">"
   form += "</form>"
+  # add the form to the main div
   $('#main').append(form)
 
+process_old_messages = (message) ->
+  console.log "printing the options now! #{message}"
+  for mes in message
+    $('#main').append("#{mes}<br>")
 
 
-bush_did_911 = () ->
-  console.log 'this is a random-ass method to hopefully stop chrome frmo caching this javascript, lulz'
+
+
+fix_this_pls = () ->
+  no

@@ -9,6 +9,9 @@ party = None
 app = flask.Flask(__name__)
 messages = []
 choice_results = []
+r.delete('out')
+r.delete('in')
+r.delete('cache')
 
 # pubsub = r.pubsub()
 
@@ -16,15 +19,16 @@ choice_results = []
 def event_stream():
     # pubsub.subscribe('out')
     for d in r.lrange('out',0,-1):
-        for a in r.rpop('out').split('\n'):
-            # print r'sending %s' % a
+        print d
+        for a in r.rpoplpush('out','cache').split('\n'):
+            print r'sending %s' % a
             yield 'data: %s\n\n' % a
         # break
     # pubsub.unsubscribe()
     # print 'here'
 
 def run():
-    app.debug = True
+    app.debug = False
     app.threaded = True
     app.run()
 
@@ -32,7 +36,7 @@ def run():
 @app.route('/')
 def hello():
     # print messages
-    return flask.render_template('main.html')
+    return flask.render_template('main.html',db=r)
 
 def put(thing):
     messages.append(thing)

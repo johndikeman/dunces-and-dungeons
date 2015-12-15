@@ -200,7 +200,7 @@ def put(thing):
 	if not IS_WEB_VERSION:
 		print thing
 	else:
-		r.publish('out',thing)
+		r.rpush('out',thing)
 		print thing
 
 def get_input(arg=None):
