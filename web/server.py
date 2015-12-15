@@ -8,7 +8,6 @@ from data import r
 party = None
 app = flask.Flask(__name__)
 messages = []
-balls = [1,2,3,4,5,6,67,7,8,9,0]
 choice_results = []
 
 # pubsub = r.pubsub()
@@ -18,25 +17,22 @@ def event_stream():
     # pubsub.subscribe('out')
     for d in r.lrange('out',0,-1):
         for a in r.rpop('out').split('\n'):
-            print r'sending %s' % a
+            # print r'sending %s' % a
             yield 'data: %s\n\n' % a
         # break
     # pubsub.unsubscribe()
-    print 'here'
+    # print 'here'
 
 def run():
     app.debug = True
     app.threaded = True
     app.run()
-    # print 'print here'
-    # th = threading.Thread(target=newgame)
-    # th.start()
 
 
 @app.route('/')
 def hello():
     # print messages
-    return flask.render_template('main.html',party=party)
+    return flask.render_template('main.html')
 
 def put(thing):
     messages.append(thing)

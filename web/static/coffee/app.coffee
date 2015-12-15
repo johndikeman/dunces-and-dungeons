@@ -7,11 +7,11 @@ $(document).ready(
       # if make_choice was called
       if event.data[0..5] == 'CHOICE'
         console.log "CREATING A FORM"
-        make_form(event)
+        make_choice_form(event)
         # choices should be divided with a |
 )
 
-make_form = (event) ->
+make_choice_form = (event) ->
   options = event.data[6..].split('|')
   console.log options
   # options = options[1..options.length-2]
@@ -19,7 +19,7 @@ make_form = (event) ->
   form = "<form id=\"ch\" action=\"/choice\" method='post'>"
   for a in options
     if a != '' and a != undefined
-      form += "<input type=\"radio\" name='makechoice' value=\"#{a}\">#{a}<br>"
+      form += "<input type=\"radio\" name='makechoice' value=\"#{a[0]}\">#{a[1..]}<br>"
   form += "<input type=\"submit\" value=\"choose!\">"
   form += "</form>"
   $('#main').append(form)

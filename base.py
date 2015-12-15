@@ -254,8 +254,8 @@ def make_choice(choices,thing=None,backable=False):
 	# this is so we can make a form in the html frontend
 	else:
 		s = 'CHOICE|'
-		for a in choices:
-			s += '%s|' % a.replace('\n',' ').replace('\t',' ')
+		for a in range(len(choices)):
+			s += '%d%s|' % (a,choices[a].replace('\n',' ').replace('\t',' '))
 		r.rpush('out',s)
 		pubsub = r.pubsub()
 		pubsub.subscribe('in')
@@ -268,7 +268,7 @@ def make_choice(choices,thing=None,backable=False):
 					ret = a['data']
 					wait = False
 					break
-		return int(choices.index(ret))
+		return int(ret)
 
 
 
