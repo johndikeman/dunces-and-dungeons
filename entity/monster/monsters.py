@@ -115,6 +115,7 @@ class Spiderling(Monster):
 		self.max_health=self.level*10
 		self.health = self.level * 10
 		self.power = self.level * 10
+		self.armor=2
 		self.name = "Spiderling"
 
 	def do_turn(self):
@@ -132,6 +133,7 @@ class Skeleton(Monster):
 		self.max_health=10+self.level*12
 		self.health=10+self.level*12
 		self.power=4+(self.level-1)*7
+		self.armor=.5
 		self.name="Skeleton"
 		# self.compute_rewards()
 
@@ -145,6 +147,7 @@ class Goblin(Monster):
 		self.max_health=8+self.level*9
 		self.health=8+self.level*9
 		self.multiplier=.5
+		self.armor=1
 		self.power=3+(self.level-1)*7
 		self.name="Goblin"
 		# self.compute_rewards()
@@ -157,6 +160,7 @@ class Spider(Monster):
 		self.max_health=10+self.level*6
 		self.health=10+self.level*6
 		self.multiplier=.4
+		self.armor=5
 		self.power=2+(self.level-1)
 		self.name="Spider"
 		# self.compute_rewards()
@@ -168,6 +172,7 @@ class Assassin(Monster):
 		self.max_health=1+self.level*9
 		self.health=1+self.level*9
 		self.multiplier=1.5
+		self.armor =20
 		self.power=10+(self.level-1)*22
 		self.name="Assassin"
 		# self.compute_rewards()
@@ -180,6 +185,7 @@ class Hidden_Devourer(Monster):
 		self.health=5+self.level*8
 		self.multiplier=.6
 		self.power=8+(self.level-1)*19
+		self.armor = 1
 		self.ap=1
 		self.action_points=1
 		self.name="Hidden Devourer"
@@ -193,6 +199,7 @@ class Ogre(Monster):
 		self.max_health=50+self.level*35
 		self.health=50+self.level*35
 		self.power=1+(self.level-1)*3;
+		self.armor =3
 		self.name="Ogre"
 		# self.compute_rewards()
 
@@ -203,6 +210,7 @@ class Hellhound(Monster):
 		self.max_health=40+self.level*25
 		self.health=40+self.level*25
 		self.multiplier=1.1
+		self.armor = 14
 		self.power=12+(self.level-1)*18
 		self.name="Hellhound"
 		# self.compute_rewards()
@@ -214,6 +222,7 @@ class Sorcerer(Monster):
 		self.max_health=12+self.level*12
 		self.health=12+self.level*12
 		self.multiplier = .9
+		self.armor=.0000000000001
 		self.power=15+(self.level-1)*15
 		self.name="Sorcerer"
 		# self.compute_rewards()
@@ -224,6 +233,7 @@ class Elemental(Monster):
 		self.max_health=20+self.level*22
 		self.health=20+self.level*22
 		self.power=15+(self.level-1)*10
+		self.armor =4
 		self.name="Elemental"
 		# self.compute_rewards()
 class Meme(Monster):
@@ -232,6 +242,7 @@ class Meme(Monster):
 		self.modif=[mod.Dank, mod.Forgotten]
 		self.max_health=420+self.level*9.11
 		self.health=420+self.level*9.11
+		self.armor=81082065
 		self.power=69+(self.level-1)*42
 		self.name ="Meme"
 		# self.compute_rewards()
@@ -242,6 +253,7 @@ class WindElemental(Elemental):
 		self.max_health=5+self.level*15
 		self.health=5+self.level*15
 		self.power=11+(self.level-1)*14
+		self.armor =1
 		self.name="Wind Elemental"
 		# self.compute_rewards()
 
@@ -250,6 +262,7 @@ class WaterElemental(Elemental):
 		super(WaterElemental,self).__init__(level)
 		self.modif=[mod.Destructive, mod.Forgotten, mod.Funky, mod.Foul, mod.Musky, mod.Nasty, mod.Putrid, mod.Weak]
 		self.power=4+(self.level-1)*20
+		self.armor =5
 		self.name="Water Elemental"
 		# self.compute_rewards()
 
@@ -259,6 +272,7 @@ class FireElemental(Elemental):
 		self.modif=[mod.Scorched, mod.Dank]
 		self.max_health=10+self.level*20
 		self.health=10+self.level*20
+		self.armor=2
 		self.power=18+(self.level-1)*20
 		self.name="Fire Elemental"
 		# self.compute_rewards()
@@ -270,6 +284,7 @@ class EarthElemental(Elemental):
 		self.modif=[mod.Acidic, mod.Caustic, mod.Decaying, mod.Destructive, mod.Dieing, mod.Flowery, mod.Forgotten, mod.Foul, mod.Musky, mod.Nasty, mod.Normal, mod.Rancid, mod.Scorched]
 		self.max_health=100+self.level*30
 		self.health=100+self.level*30
+		self.armor=25
 		self.power=4+(self.level-1)*12
 		self.name="Earth Elemental"
 		# self.compute_rewards()

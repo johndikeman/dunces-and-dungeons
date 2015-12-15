@@ -29,6 +29,7 @@ class Dungeon(object):
 		self.starting_room = Room(self,self.party)
 		self.starting_room.test = 0
 		self.rooms = []
+		self.things =[]
 		self.roomsmap=[]
 
 		self.size = size
@@ -98,6 +99,7 @@ class Hub(Dungeon):
 	def __init__(self,party):
 		#self.shop = []
 		self.party = party
+		self.things=[]
 		self.shop = {
 			"health":[consumable.HealthPotion() for a in self.party.inventory],
 			"weapons":[],

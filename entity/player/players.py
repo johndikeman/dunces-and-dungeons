@@ -227,7 +227,13 @@ class Player(base.Entity):
 	def do_turn(self):
 		for x in self.statuses:
 			x.do_turn(None)
-
+		ireallyhatemylife=len(self.owner.current_dungeon.things)
+		for a in range(ireallyhatemylife):
+			if isinstance(a,Monster):
+				if not a.alive:
+					self.owner.current_dungeon.things.remove(a)
+					a-=1
+					ireallyhatemylife-=1
 		# since action points can be removed in the statuses, we need to check it here
 		if self.action_points > 0:
 			args = self.return_options()[base.make_choice(self.return_options())]

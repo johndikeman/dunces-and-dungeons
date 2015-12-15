@@ -10,7 +10,7 @@ class Apply(object):
 
 # the size of this method was reduced by 1,460%, lol
 	def modify_monster(self,Monster):
-		mod = random.choice(self.monster_modifiers)()
+		mod = random.choice(Monster.modif)()
 		Monster.modifiers.append(mod)
 		mod.apply()
 		Monster.name = "%s %s" % (mod.to_str(),Monster.name)
