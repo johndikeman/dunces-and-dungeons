@@ -221,7 +221,7 @@ class Player(base.Entity):
 			return super(Player,self).return_options(True)
 
 		else:
-			self.options =  ['shop','enter a dungeon','inventory','save','load']
+			self.options =  ['shop','repair','enter a dungeon','inventory','save','load']
 			return super(Player,self).return_options(False)
 
 	def do_turn(self):
@@ -296,6 +296,9 @@ class Player(base.Entity):
 
 			if args == 'enter a dungeon':
 				self.party.current_dungeon.leave_dungeon()
+
+			if args == 'repair':
+				self.party.current_dungeon.repair_items()
 
 			for a in self.inventory:
 				if isinstance(a,weapons.Weapon):

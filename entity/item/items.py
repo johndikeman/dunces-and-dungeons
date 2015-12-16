@@ -84,6 +84,13 @@ class Item(base.Entity):
 		self.equipped = True
 		# self.name += '*'
 
+	def unequipWep(self):
+		self.equipped=False
+		if self.owner.equipment['right'] is self:
+			self.owner.equipment['right']=None
+		if self.owner.equipment['left'] is self:
+			self.owner.equipment['left']=Non
+
 	def unequip(self):
 		self.equipped = False
 		# self.name = self.name[:-1]

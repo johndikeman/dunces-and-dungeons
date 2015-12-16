@@ -175,6 +175,14 @@ class Hub(Dungeon):
 			for disitem in currentplayer.inventory:
 				f.write(str(disitem)+'\n')
 			f.write(str(currentplayer.equipment)+'\n\n\n\n')
+
+	def repair_items(self):
+		print "Select What you wish to repair."
+		select=base.make_choice(self.party.get_active_player().inventory)
+		try:
+			self.party.get_active_player().inventory[select].current_durability=self.party.get_active_player().inventory[select].durability
+		except:
+			print "This item cannot be repaired"
 	def handle_monster_turn(self):
 		pass
 
