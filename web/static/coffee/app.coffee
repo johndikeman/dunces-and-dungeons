@@ -17,7 +17,7 @@ $(document).ready(
       else
         # only process output if nobody else has done anything with it
         # process_output takes a list only
-        # process_output([event.data])
+        document.location.reload yes
 )
 
 is_choice = (data) ->
@@ -38,7 +38,7 @@ make_choice_form = (event) ->
   form += "<input type=\"submit\" value=\"choose!\">"
   form += "</form>"
   # add the form to the main div
-  $('#main').append(form)
+  $('#choiceholder').append(form)
 
 process_output = (message) ->
   for mes in message

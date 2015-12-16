@@ -11,7 +11,7 @@
       if (is_choice(event.data)) {
         return make_choice_form(event);
       } else {
-
+        return document.location.reload(true);
       }
     };
   });
@@ -35,7 +35,7 @@
     }
     form += "<input type=\"submit\" value=\"choose!\">";
     form += "</form>";
-    return $('#main').append(form);
+    return $('#choiceholder').append(form);
   };
 
   process_output = function(message) {

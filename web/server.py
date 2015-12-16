@@ -18,7 +18,7 @@ r.delete('cache')
 
 def event_stream():
     # pubsub.subscribe('out')
-    for d in r.lrange('out',0,-1):
+    for d in r.lrange('out',0,-1)[::-1]:
         print d
         for a in r.rpoplpush('out','cache').split('\n'):
             print r'sending %s' % a

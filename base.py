@@ -214,12 +214,12 @@ def get_input(arg=None):
 # player needs to choose from. it will be handy later on
 # i think
 def make_choice(choices,thing=None,backable=False):
+	if(backable):
+		choices.append("exit")
+	if len(choices) <= 0:
+		put('nothing to choose from!')
+		return
 	if not IS_WEB_VERSION:
-		if(backable):
-			choices.append("exit")
-		if len(choices) <= 0:
-			put('nothing to choose from!')
-			return
 		if thing:
 			put('choose a %s' % thing)
 		else:
