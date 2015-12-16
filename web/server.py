@@ -28,7 +28,7 @@ def event_stream():
     # print 'here'
 
 def run():
-    app.debug = False
+    app.debug = True
     app.threaded = True
     app.run()
 

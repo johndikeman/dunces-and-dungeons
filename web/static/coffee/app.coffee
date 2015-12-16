@@ -4,17 +4,25 @@
 
 $(document).ready(
   ()->
-    process_old_messages(window.messages)
+    console.log "new print #{window.messages}"
+    process_output(window.messages)
     # console.log 'nicela!'
     source = new EventSource '/stream'
     source.onmessage = (event)->
-      $('#main').append event.data
+      # $('#main').append event.data
       # if make_choice was called
-      if event.data[0..5] == 'CHOICE'
-        console.log "CREATING A FORM"
+      if is_choice(event.data)
         make_choice_form(event)
         # choices should be divided with a |
+      else
+        # only process output if nobody else has done anything with it
+        # process_output takes a list only
+        # process_output([event.data])
 )
+
+is_choice = (data) ->
+  return yes if data[0..5] == 'CHOICE'
+  no
 
 make_choice_form = (event) ->
   options = event.data[6..].split('|')
@@ -32,13 +40,7 @@ make_choice_form = (event) ->
   # add the form to the main div
   $('#main').append(form)
 
-process_old_messages = (message) ->
-  console.log "printing the options now! #{message}"
+process_output = (message) ->
   for mes in message
-    $('#main').append("#{mes}<br>")
-
-
-
-
-fix_this_pls = () ->
-  no
+    if not is_choice(mes)
+      $('#main').append("#{mes}<br>")
