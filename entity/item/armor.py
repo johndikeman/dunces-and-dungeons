@@ -28,6 +28,7 @@ class Shield(Armor):
 		super(Shield,self).__init__()
 		self.name = 'shield'
 		self.info='one-handed'
+		self.equipable=True
 		self.info2='nope'
 		self.level = level
 		self.cost=10.0
@@ -78,6 +79,7 @@ class Breastplate(Armor):
 		super(Breastplate,self).__init__()
 		self.name = 'breastplate'
 		self.info='chest'
+		self.equipable=True
 		self.item_options=['examine','equip']
 		self.level = level
 		self.cost=15.0
@@ -100,6 +102,7 @@ class Chainmail(Armor):
 		self.name = 'chainmail'
 		self.item_options=['examine','equip']
 		self.info='chest'
+		self.equipable=True
 		self.level = level
 		self.cost=12.0
 		self.armor=15*level
@@ -123,6 +126,7 @@ class Platelegs(Armor):
 		self.item_options=['examine','equip']
 		self.info='legs'
 		self.level = level
+		self.equipable=True
 		self.cost=10.0
 		self.armor=12*level
 
@@ -145,6 +149,7 @@ class Helmet(Armor):
 		self.info='helmet'
 		self.item_options=['examine','equip']
 		self.level = level
+		self.equipable=True
 		self.cost=8.0
 		self.armor=13*level
 

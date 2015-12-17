@@ -135,10 +135,11 @@ class Hub(Dungeon):
 					alist.append(a)
 				except:
 					pass
-			selling=base.make_choice(['%s for %d' % (a.to_str(),a.cost/5) for a in alist],'item',True)
+			selling=base.make_choice(['%s for %d' % (a.to_str(),a.cost/5) for a in self.party.get_active_player().equipable],'item',True)
 			if selling is not None:
-				self.party.inventory[self.party.index].gold+=a.get_cost()/5		
-				self.party.inventory[self.party.index].inventory.remove(alist[selling])
+				self.party.inventory[self.party.index].gold+=a.get_cost()/5	
+				self.party.inventory[self.party.index].inventory.remove(equipable[selling])
+				self.party.inventory[self.party.index].equipable.remove(selling)
 
 		# allow the player to shop as much as they want in a turn
 		if raw_input('continue? (y/n) ') is 'y':
@@ -178,11 +179,21 @@ class Hub(Dungeon):
 
 	def repair_items(self):
 		print "Select What you wish to repair."
-		select=base.make_choice(self.party.get_active_player().inventory)
+		select = base.make_choice( ['%s for %d' % (a.to_str(),(a.durability-a.current_durability)*5) for a in self.party.get_active_player().equipable],'item',True)
+		#select=base.make_choice(self.party.get_active_player().inventory)
 		try:
-			self.party.get_active_player().inventory[select].current_durability=self.party.get_active_player().inventory[select].durability
+			amt=self.party.get_active_player().equipable[select].durability-self.party.get_active_player().equipable[select].current_durability
+			print "%s costs %d to repair"%(self.party.get_active_player().equipable[select].name,amt*5)
+			print "Do you wish to continue? y/n"
+			ans = raw_input()
+			if ans == 'y':
+				if self.party.get_active_player().inventory[select].gold>= amt*5:
+					self.party.get_active_player().inventory[select].current_durability=self.party.get_active_player().inventory[select].durability
+					self.party.get_active_player().inventory[select].gold-=(amt*5)
+				else:
+					print "You don't have enough gold to do that!"
 		except:
-			print "This item cannot be repaired"
+			print 'Woops'
 	def handle_monster_turn(self):
 		pass
 

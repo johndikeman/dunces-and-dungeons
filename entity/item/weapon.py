@@ -19,6 +19,7 @@ class Sword(Weapon):
 		self.durability=40
 		self.current_durability=40
 		self.level = level
+		self.equipable=True
 		self.descr=self.name+" "+str(self.level)
 		self.options = ['%s' % self.to_str()]
 		self.item_options=['examine','equip']
@@ -51,6 +52,7 @@ class Dagger(Weapon):
 		self.name = 'dagger'
 		self.level = level
 		self.descr=self.name+" "+str(self.level)
+		self.equipable=True
 		self.info='one-handed'
 		self.durability=50
 		self.current_durability=50
@@ -87,6 +89,7 @@ class Bow(Weapon):
 		self.name='bow'
 		self.info='two-handed'
 		self.info2='weapon'
+		self.equipable=True
 		self.level = level
 		self.durability=40
 		self.current_durability=40
@@ -151,6 +154,7 @@ class Rapier(Weapon):
 		self.info2='weapon'
 		self.durability=30
 		self.current_durability=30
+		self.equipable=True
 		self.descr=self.name+" "+str(self.level)
 		self.item_options=['examine','equip']
 		self.options = ['%s' % self.to_str()]
@@ -194,6 +198,7 @@ class Flail(Weapon):
 		self.name = 'flail'
 		self.info='one-handed'
 		self.info2='weapon'
+		self.equipable=True
 		self.durability=40
 		self.current_durability=40
 		self.cost=8.0

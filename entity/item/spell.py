@@ -8,6 +8,7 @@ class SpellBook(item.Item):
 		super(SpellBook,self).__init__()
 		self.info = 'one-handed'
 		self.info2='nope'
+		self.equipable=True
 		self.cost = random.randint(0,10)
 		# print type(level)
 

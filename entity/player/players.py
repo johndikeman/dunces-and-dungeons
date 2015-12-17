@@ -126,7 +126,7 @@ class Player(base.Entity):
 		self.base_ap = 2
 		self.options = ['exit room','examine','dev-examine','inventory']
 		self.alive = True
-
+		self.equipable=[]
 		self.health = 0
 		self.max_health = 0
 		self.armor = 1
@@ -197,7 +197,7 @@ class Player(base.Entity):
 	def buy_item(self,item):
 		if self.gold >= item.get_cost():
 			self.gold -= item.get_cost()
-			self.inventory.append(item)
+			self.add_to_inventory(item)
 			return True
 		print "you don't have enough gold for that!"
 		return False
@@ -350,6 +350,13 @@ class Player(base.Entity):
 	def to_str(self):
 		return self.name
 
+	def add_to_inventory(self,item):
+		self.inventory.append(item)
+		try:
+			item.equipable
+			self.equipable.append(item)
+		except:
+			pass
 	def kill(self,attacker=None):
 		pass
 

@@ -21,7 +21,7 @@ class Chest(t.InteractiveObject):
 		if option == self.options[0]:
 			inv = base.make_choice([i.to_str() for i in self.items])
 			if inv is not None:
-				self.owner.containing_dungeon.party.get_active_player().inventory.append(self.items[inv])
+				self.owner.containing_dungeon.party.get_active_player().add_to_inventory(self.items[inv])
 				self.items = self.items[:inv] + self.items[inv+1:]
 
 	def to_str(self):
