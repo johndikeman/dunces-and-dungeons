@@ -3,17 +3,8 @@
   var is_choice, make_choice_form, process_output;
 
   $(document).ready(function() {
-    var source;
-    console.log("new print " + window.messages);
     process_output(window.messages);
-    source = new EventSource('/stream');
-    return source.onmessage = function(event) {
-      if (is_choice(event.data)) {
-        return make_choice_form(event);
-      } else {
-        return document.location.reload(true);
-      }
-    };
+    return console.log("new print " + window.messages);
   });
 
   is_choice = function(data) {
@@ -23,19 +14,24 @@
     return false;
   };
 
-  make_choice_form = function(event) {
+  make_choice_form = function(data) {
     var a, form, i, len, options;
-    options = event.data.slice(6).split('|');
-    form = "<form id=\"ch\" action=\"/choice\" method='post'>";
-    for (i = 0, len = options.length; i < len; i++) {
-      a = options[i];
-      if (a !== '' && a !== void 0) {
-        form += "<input type=\"radio\" name='makechoice' value=\"" + a[0] + "\">" + a.slice(1) + "<br>";
+    console.log(window.choiceskips);
+    if (window.choiceskips === 0) {
+      options = data.slice(6).split('|');
+      form = "<form id=\"ch\" action=\"/choice\" method='post'>";
+      for (i = 0, len = options.length; i < len; i++) {
+        a = options[i];
+        if (a !== '' && a !== void 0) {
+          form += "<input type=\"radio\" name='makechoice' value=\"" + data + "%" + a[0] + "\">" + a.slice(1) + "<br>";
+        }
       }
+      form += "<input type=\"submit\" value=\"choose!\">";
+      form += "</form>";
+      return $('#choiceholder').append(form);
+    } else {
+      return window.choiceskips -= 1;
     }
-    form += "<input type=\"submit\" value=\"choose!\">";
-    form += "</form>";
-    return $('#choiceholder').append(form);
   };
 
   process_output = function(message) {
@@ -43,10 +39,10 @@
     results = [];
     for (i = 0, len = message.length; i < len; i++) {
       mes = message[i];
-      if (!is_choice(mes)) {
-        results.push($('#main').append(mes + "<br>"));
+      if (is_choice(mes)) {
+        results.push(make_choice_form(mes));
       } else {
-        results.push(void 0);
+        results.push($('#main').append(mes + "<br>"));
       }
     }
     return results;

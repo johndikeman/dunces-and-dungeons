@@ -15,3 +15,8 @@ html{
   length:50%;
   padding:10px;
 }
+
+#refresh{
+  position: absolute;
+  top: 50%
+}

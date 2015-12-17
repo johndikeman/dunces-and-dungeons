@@ -12,20 +12,10 @@ choice_results = []
 r.delete('out')
 r.delete('in')
 r.delete('cache')
+r.delete('choiceskip')
+r.set('choiceskip',0)
 
 # pubsub = r.pubsub()
-
-
-def event_stream():
-    # pubsub.subscribe('out')
-    for d in r.lrange('out',0,-1)[::-1]:
-        print d
-        for a in r.rpoplpush('out','cache').split('\n'):
-            print r'sending %s' % a
-            yield 'data: %s\n\n' % a
-        # break
-    # pubsub.unsubscribe()
-    # print 'here'
 
 def run():
     app.debug = True
@@ -48,14 +38,13 @@ def ad():
 
 @app.route('/choice',methods=['POST'])
 def ch():
-    r.publish('in',flask.request.form['makechoice'])
-    print flask.request.form['makechoice']
-    return flask.redirect('/')
+    thing = flask.request.form['makechoice'].split('%')
+    print thing
 
-@app.route('/stream')
-def stream():
-    return flask.Response(event_stream(),
-                          mimetype="text/event-stream")
+    r.publish('in',thing[1]) # the zero value of this split should  be the exact query
+    # remove the choice from the database when we get a value from it
+    r.incr('choiceskip',1)
+    return flask.redirect('/')
 
 
 if __name__ == '__main__':
