@@ -46,6 +46,10 @@ def ch():
     r.incr('choiceskip',1)
     return flask.redirect('/')
 
+@app.route('/positioning',methods=['POST'])
+def pos():
+    flask.request.get_data()
+    r.set('positions',flask.request.data)
 
 if __name__ == '__main__':
     run()

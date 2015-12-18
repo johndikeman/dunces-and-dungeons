@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>
     window.messages = {{db.lrange('out',0,-1)|tojson|safe}}
     window.choiceskips = {{db.get('choiceskip')}}
+    window.positions = {{db.get('positions')|tojson}}
   </script>
-  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script src='../static/js/jquery.js'></script>
+  <script src='../static/js/jquery-ui.js'></script>
   <script src='../static/js/app.js'></script>
   <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
 
 </head>
 <body>
-  <div id='choiceholder'></div>
-  <div id='main'></div>
+  <div id='choiceholder' class='holder movable'></div>
+  <div id='main' class='holder movable'></div>
   <!-- <div id='refresh>'>click here to refresh</div> -->
   <!-- <form action="/advance" method='post' id='1'></form> -->
   <!-- <button type="submit" form="1" value="Submit">advance to the next turn!</button> -->

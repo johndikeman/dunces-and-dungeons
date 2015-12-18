@@ -2,6 +2,10 @@ html{
   background-color: #B7AE9F
 }
 
+.holder{
+  overflow-y: scroll;
+}
+
 #choiceholder{
   position: absolute;
   left:50%;

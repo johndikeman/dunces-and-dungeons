@@ -1,22 +1,39 @@
 $(document).ready(
   ()->
-    process_output(window.messages)
-    # console.log 'nicela!'
-    # source = new EventSource '/stream'
-    # source.onmessage = (event)->
-    #   # $('#main').append event.data
-    #   # if make_choice was called
-    #   if is_choice(event.data)
-    #     make_choice_form(event)
-    #     # choices should be divided with a |
-    #   else
-    #     # only process output if nobody else has done anything with it
-    #     # process_output takes a list only
-    #     document.location.reload yes
-    # setTimeout (()->
-    #   document.location.reload(yes)), 3000
-    console.log "new print #{window.messages}"
+    # first bind the jquery draggable thingy to the movable elements.
+    $('.movable').draggable(
+      # whenever we stop dragging, send the positions to the server
+      stop: (()-> send_positions())
+    )
+    # window.positions will be the same string we sent to the server
+    reset_movables window.positions
+    process_output window.messages
 )
+
+reset_movables = (positions) ->
+  if positions != null
+    ind = 0
+    for a in positions.split('%')
+      l = a.split '|'
+      element = $ "\##{l[0]}"
+      element.offset(top:l[1],left:l[2])
+
+
+
+
+send_positions = () ->
+  # select all the elements that are movable
+  movable = $('.movable')
+  payload = ''
+  for a in [0...movable.length]
+    # this is one movable jquery selector
+    one_movable_object = $(movable[a])
+    pos = one_movable_object.position()
+    # only send the id as a payload
+    payload += "#{one_movable_object[0].id}|#{pos.top}|#{pos.left}%"
+  # send the position string to the server
+  $.post('/positioning',payload)
+
 
 is_choice = (data) ->
   return yes if data[0..5] == 'CHOICE'
@@ -48,3 +65,6 @@ process_output = (message) ->
       make_choice_form(mes)
     else
       $('#main').append("#{mes}<br>")
+
+fix = () ->
+  alert 'dicks'

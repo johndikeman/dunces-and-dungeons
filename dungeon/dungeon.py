@@ -185,7 +185,7 @@ class Hub(Dungeon):
 			amt=self.party.get_active_player().equipable[select].durability-self.party.get_active_player().equipable[select].current_durability
 			print "%s costs %d to repair"%(self.party.get_active_player().equipable[select].name,amt*5)
 			print "Do you wish to continue? y/n"
-			ans = raw_input()
+			ans = base.get_input()
 			if ans == 'y':
 				if self.party.get_active_player().inventory[select].gold>= amt*5:
 					self.party.get_active_player().inventory[select].current_durability=self.party.get_active_player().inventory[select].durability
