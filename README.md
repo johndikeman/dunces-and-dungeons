@@ -2,8 +2,6 @@
 
 master: [![Build Status](https://travis-ci.org/microwaveabletoaster/dunces-and-dungeons.svg?branch=master)](https://travis-ci.org/microwaveabletoaster/dunces-and-dungeons)
 
-webdunce: [![Build Status](https://travis-ci.org/microwaveabletoaster/dunces-and-dungeons.svg?branch=webdunce)](https://travis-ci.org/microwaveabletoaster/dunces-and-dungeons)
-
 # play the game
 if you're on any post-xp version of windows, you can head over to the <a href='https://github.com/microwaveabletoaster/dunces-and-dungeons/releases'>release</a> page and download the latest binary for windows. if you're on some sort of *nix system, you're going to need to download the source code from the latest release and run it with python 2.7.10- the game doesn't depend on any external libraries so you should be set from there.
 
