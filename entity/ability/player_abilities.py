@@ -189,7 +189,7 @@ class Steal(Ability):
 		if target:
 			amount=target.power/5
 			roll=base.D20.roll()
-			roll=roll+(self.owner.attributes['luck']/(100/self.owner.level))
+			roll=roll+(self.owner.attributes['luck']/(100.0/self.owner.level))
 			if roll>15:
 				self.owner.gold = self.owner.gold + amount
 				print 'successfully pickpocketed the %s for %d gold' % (target.name,amount)

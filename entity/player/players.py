@@ -371,7 +371,7 @@ class Player(base.Entity):
 			else:
 				return self.attributes['strength']/4
 		except:
-			print "error here, 358 players.py"
+			print "error here, 374 players.py"
 			return self.attributes['strength']/4
 
 	# this is what items that need to operate in an area of effect need to do.

@@ -132,7 +132,7 @@ class Bow(Weapon):
 	#an attempt to further increase the action points system. shoot would only cost 1 action point while aim would take 2
 	def standard_attack(self,target):
 		self.current_durability-=1
-		return self.damage * (self.owner.attributes['agility'] + self.owner.attributes['strength'] / 10.0)
+		return self.damage + (self.owner.attributes['agility'] + self.owner.attributes['strength'] / 10.0)
 		
 	def aim(self,target):
 		for a in self.modifiers:
