@@ -110,7 +110,6 @@ class Hub(Dungeon):
 
 
 	def enter_shop(self):
-<<<<<<< HEAD
 		print 'you have %d gold!' % (self.party.inventory[self.party.index].gold)
 		opt=base.make_choice(['Buy','Sell'])
 		if opt == 0:
@@ -142,23 +141,6 @@ class Hub(Dungeon):
 				self.party.inventory[self.party.index].inventory.remove(self.party.inventory[self.party.index].equipable[selling])
 				self.party.inventory[self.party.index].equipable.remove(self.party.inventory[self.party.index].equipable[selling])
 
-=======
-		base.put('you have %d gold!' % (self.party.inventory[self.party.index].gold))
-		shopping = base.make_choice(self.shop.keys(),'category')
-		item = base.make_choice( ['%s for %d' % (a.to_str(),a.get_cost()) for a in self.shop[self.shop.keys()[shopping]]],'item',True)
-		if(item is None):
-			base.put('You bought nothing!')
-		else:
-			item_object = self.shop[self.shop.keys()[shopping]][item]
-			# remove the item from the shop afterwards
-			# self.shop[self.shop.keys()[shopping]].remove(item_object)
-			success = self.party.inventory[self.party.index].buy_item(item_object)
-			if success:
-				self.shop[self.shop.keys()[shopping]].remove(item_object)
-				base.put('successfully purchased a %s' % item_object.to_str())
-			# inventory.append(item_object)
-			# self.party.inventory[self.party.index].gold -= item_object.cost
->>>>>>> refs/remotes/origin/webdunce
 		# allow the player to shop as much as they want in a turn
 		if base.get_input('continue? (y/n) ') is 'y':
 			self.enter_shop()
