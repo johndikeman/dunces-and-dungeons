@@ -112,7 +112,7 @@ class AncientDragon(m.Monster):
             roll=base.D20.roll()
             if roll<12:
                 player.take_damage(self,self.power/3)
-                player.statuses.append(p_status.Burn(math.ceil(self.level/4),self.power/(self.level/2.0)))
+                player.statuses.append(p_status.Burn(math.ceil(self.level/4),self.power*(self.level/2.0)))
             else:
                 print '%s has dodged the flames!' %player.name
 
