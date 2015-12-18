@@ -40,11 +40,12 @@ class Sword(Weapon):
 					if target:
 						for a in self.modifiers:
 							a.do_turn(target,self.standard_attack(target))
-					
+
 
 	def standard_attack(self,target):
 		self.current_durability-=1
 		return self.damage + self.owner.attributes['strength'] + base.D12.roll()
+
 
 class Dagger(Weapon):
 	def __init__(self,level):
@@ -110,7 +111,7 @@ class Bow(Weapon):
 			self.damage = 7.0 * self.owner.level*2.0
 		if self.durability == 0:
 			self.unequipWep()
-		
+
 		else:
 			self.options = ['%s' % self.to_str()]
 			if option == self.options[0]:
@@ -133,7 +134,7 @@ class Bow(Weapon):
 	def standard_attack(self,target):
 		self.current_durability-=1
 		return self.damage + (self.owner.attributes['agility'] + self.owner.attributes['strength'] / 10.0)
-		
+
 	def aim(self,target):
 		for a in self.modifiers:
 			a.do_turn(target,self.damage * (self.owner.attributes['agility'] * 1.9 + self.owner.attributes['strength']/4.0) + base.D20.roll())
@@ -220,9 +221,8 @@ class Flail(Weapon):
 					if target:
 						for a in self.modifiers:
 							a.do_turn(target,self.standard_attack(target))
-						
+
 
 	def standard_attack(self,target):
 		self.current_durability-=1
 		return self.damage + self.owner.attributes['strength'] / 2.0 + self.owner.attributes['agility'] + self.owner.attributes['luck'] + base.D20.roll()
-		

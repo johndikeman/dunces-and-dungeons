@@ -35,18 +35,18 @@ class BattleCry(Ability):
 		if roll > 5:
 			# if the roll is 10, you do damage to all monsters based on half your strength.
 			if roll == 10:
-				print 'primal roar critical success!'
+				base.put('primal roar critical success!')
 				self.owner.do_aoe_monster(self.action_damage)
 			else:
-				print 'primal roar successfully cast!'
+				base.put('primal roar successfully cast!')
 				self.owner.do_aoe_monster(self.action)
 		# if the roll is one, you do the damage to all your party.
 		elif roll == 1:
-			print 'primal roar critical fail!'
+			base.put('primal roar critical fail!')
 			for party_member in self.owner.party.inventory:
 				party_member.take_damage(self.owner,self.owner.attributes['strength'] * .5)
 		else:
-			print 'the primal roar was unsuccessful.'
+			base.put('the primal roar was unsuccessful.')
 
 	def action(self,monster):
 		monster.aggro = self.owner
@@ -102,7 +102,7 @@ class Swap(Ability):
 			print 'You successfully swap your statuses with the Enemies!'
 		else:
 			times=len(self.owner.statuses)
-			print 'Woops! You doubled your own statuses!'
+			base.put('Woops! You doubled your own statuses!')
 			for a in range(times):
 				self.owner.statuses.append(self.owner.statuses[a])
 
@@ -143,7 +143,7 @@ class Forget(Ability):
 	def main(self):
 		roll=base.D20.roll()
 		if roll < 4:
-			print"You forget what you were planning on doing!"
+			base.put("You forget what you were planning on doing!")
 			self.owner.action_points=0
 
 # UNIMPLEMENTED
@@ -169,7 +169,7 @@ class BerserkerVitality(Ability):
 	def do_turn(self,option):
 		self.level = self.owner.level
 		self.owner.health += self.level*.5
-		print "%s's Berserker Vitality restores health!" % self.owner.name
+		base.put("%s's Berserker Vitality restores health!" % self.owner.name)
 		if self.owner.health > self.owner.max_health:
 			self.owner.health = self.owner.max_health
 
@@ -192,11 +192,11 @@ class Steal(Ability):
 			roll=roll+(self.owner.attributes['luck']/(100.0/self.owner.level))
 			if roll>15:
 				self.owner.gold = self.owner.gold + amount
-				print 'successfully pickpocketed the %s for %d gold' % (target.name,amount)
+				base.put('successfully pickpocketed the %s for %d gold' % (target.name,amount))
 			else:
 				amo = (self.owner.max_health / 3 + target.power / 10)
 				self.owner.health -= amo
-				print 'critical failure pickpocketing! %s loses %d health!' % (self.owner.name,amo)
+				base.put('critical failure pickpocketing! %s loses %d health!' % (self.owner.name,amo))
 
 class Quickness(Ability):
 	def __init__(self):
@@ -208,7 +208,7 @@ class Quickness(Ability):
 			self.main()
 
 	def main(self):
-		print '%s gets an extra action from their rogue quickness!' % self.owner.name
+		base.put('%s gets an extra action from their rogue quickness!' % self.owner.name)
 		self.owner.action_points += 1
 
 

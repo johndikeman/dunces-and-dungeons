@@ -159,7 +159,7 @@ class Player(base.Entity):
 					more_choices.update({attribute:selection})
 				# when more choices is full, add it to options
 				options.append(more_choices)
-			# print str(options)
+			# base.put(str(options))
 			pretty_options = []
 
 			for attribute_set in options:
@@ -173,7 +173,7 @@ class Player(base.Entity):
 			self.attributes = options[ret]
 
 			# haha this looks so disgusting
-			print self.race +' '+self.name+ '\'s final attributes:\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t' % ('agility',self.attributes['agility'],'intelligence',self.attributes['intelligence'],'strength',self.attributes['strength'],'luck',self.attributes['luck'],'mana',self.attributes['mana'])
+			base.put(self.race +' '+self.name+ '\'s final attributes:\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t%s:%d\n\t' % ('agility',self.attributes['agility'],'intelligence',self.attributes['intelligence'],'strength',self.attributes['strength'],'luck',self.attributes['luck'],'mana',self.attributes['mana']))
 		else:
 			self.race = test_stats['race']
 			self.attributes = test_stats['attributes']
@@ -199,7 +199,7 @@ class Player(base.Entity):
 			self.gold -= item.get_cost()
 			self.add_to_inventory(item)
 			return True
-		print "you don't have enough gold for that!"
+		base.put("you don't have enough gold for that!")
 		return False
 
 	# this method had to be overridden to make armor modifiers work
@@ -208,7 +208,7 @@ class Player(base.Entity):
 			if slot is not "left" and slot is not "right":
 				if instance:
 					instance.register_damage(attacker,damage)
-					# print 'did turn on %s' % instance.to_str()
+					# base.put('did turn on %s' % instance.to_str())
 		super(Player,self).take_damage(attacker,damage,wait)
 
 	def return_options(self):
@@ -239,7 +239,7 @@ class Player(base.Entity):
 			args = self.return_options()[base.make_choice(self.return_options())]
 			if args == 'save':
 				if dill:
-					name = raw_input('enter the name of your save: ')
+					name = base.get_input('enter the name of your save: ')
 					if not os.path.exists('%s/saves/' % base.BASE_DIR):
 						os.makedirs('%s/saves/' % base.BASE_DIR)
 
@@ -257,16 +257,16 @@ class Player(base.Entity):
 							if '.dunce' in fi:
 								li.append(fi)
 				else:
-					print 'no saves to choose from!'
+					base.put('no saves to choose from!')
 				op = base.make_choice(li,"savefile")
 				if dill:
 					if op is not None:
 						go = False
-						print 'loading session'
+						base.put('loading session')
 						self.action_points = 0
 						dill.load_session('%s/saves/%s' % (base.BASE_DIR,li[op]))
 				else:
-					print 'save/load support is disabled because you haven\'t installed dill!'
+					base.put('save/load support is disabled because you haven\'t installed dill!')
 
 
 			if args == 'exit room':
@@ -284,11 +284,11 @@ class Player(base.Entity):
 						s+='and a %s.' % a.examine(self)
 				if not s:
 					s = 'absolutely nothing.'
-				print 'you examine the room and notice %s' % s
+				base.put('you examine the room and notice %s' % s)
 
 
 			# if p == 2:
-			# 	print 'you can\'t do that yet, lol'
+			# 	base.put('you can\'t do that yet, lol')
 
 
 			if args == 'shop':
@@ -371,7 +371,7 @@ class Player(base.Entity):
 			else:
 				return self.attributes['strength']/4
 		except:
-			print "error here, 374 players.py"
+			base.put("error here, 374 players.py")
 			return self.attributes['strength']/4
 
 	# this is what items that need to operate in an area of effect need to do.
@@ -450,9 +450,9 @@ class Party(base.Entity):
 			self.end=False
 		for a in range(len(self.inventory)):
 			if(self.end):
-				print "------====%s's turn====------" % self.inventory[self.index].name
-				print 'HEALTH: %s' % self.inventory[self.index].get_healthbar(24)
-				print 'XP: %s' % self.inventory[self.index].get_xpbar(24)
+				base.put("------====%s's turn====------" % self.inventory[self.index].name)
+				base.put('HEALTH: %s' % self.inventory[self.index].get_healthbar(24))
+				base.put('XP: %s' % self.inventory[self.index].get_xpbar(24))
 				while((self.inventory[self.index].action_points > 0) and (self.inventory[self.index].alive==True)):
 					self.do_turn()
 

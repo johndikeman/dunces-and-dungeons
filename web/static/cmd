@@ -1,0 +1,5 @@
+i got this to work on the first try so you better beleive im gonna save it
+
+
+
+$ coffee --watch --compile --output js/ coffee/

@@ -284,7 +284,7 @@ class Kingly(Legendary):
 		chance = base.D20.roll()
 		if chance > 16:
 			self.owner.owner.gold+=self.owner.level*1.5
-			print '%s peices of gold just fell out of your %s!' % (self.owner.level*1.5,self.owner.name)
+			base.put('%s peices of gold just fell out of your %s!' % (self.owner.level*1.5,self.owner.name))
 		return damage
 
 	def to_str(self):
@@ -342,7 +342,7 @@ class Celestial(Divined):
 	def do_turn(self,target,damage):
 		chance=base.D40.roll()
 		if chance>39:
-			print "A blinding light flashes from the Heavens and blinds and reveals all enemies in the room!"
+			base.put("A blinding light flashes from the Heavens and blinds and reveals all enemies in the room!")
 			for a in self.owner.owner.party.current_dungeon.active_room.things:
 				if isinstance(a,Monster):
 					a.statuses.append(s.Blind(6))
@@ -359,7 +359,7 @@ class Divine(Divined):
 	def do_turn(self,target,damage):
 		chance = base.D40.roll()
 		if chance > 39:
-			print 'Power surges through your body giving you increased armor and health!'
+			base.put('Power surges through your body giving you increased armor and health!')
 			self.owner.owner.health*=3
 			damage/=4
 		return damage
@@ -375,8 +375,8 @@ class Heavenly(Divined):
 	def do_turn(self,target,damage):
 		chance = base.D40.roll()
 		if chance > 39:
-			print 'Heavenly Fire leaps from the body of your enemy, striking all enemies in the room'
-			# print 'Hey if there is an error its on 354 of item_modification.py'
+			base.put('Heavenly Fire leaps from the body of your enemy, striking all enemies in the room')
+			# base.put('Hey if there is an error its on 354 of item_modification.py')
 			for a in self.owner.owner.party.current_dungeon.active_room.things:
 				if isinstance(a,Monster):
 					a.take_damage(self.owner,20*self.owner.level)
@@ -395,8 +395,8 @@ class Arch(Divined):
 	def do_turn(self,target,damage):
 		chance=base.D100.roll()
 		if chance >99:
-			print 'The Arch Powers of the World infuse your body!'
-			print 'Mortal Blast!'
+			base.put('The Arch Powers of the World infuse your body!')
+			base.put('Mortal Blast!')
 			target.statuses.append(s.Burn(self.owner.level,100))
 			target.statuses.append(s.Poison(self.owner.level,120))
 			target.statuses.append(s.Bleeding(self.owner.level,1000))

@@ -371,8 +371,8 @@ class Celestial(Divined):
 	def do_turn(self,target,damage):
 		chance=base.D40.roll()
 		if chance>39:
-			print "A blinding light flashes from the Heavens and blinds and reveals all enemies in the room!"
-			print 'Hey if there is an error its on 323 of self.owner_modification.py'
+			base.put("A blinding light flashes from the Heavens and blinds and reveals all enemies in the room!")
+			base.put('Hey if there is an error its on 323 of self.owner_modification.py')
 			for a in self.owner.owner.party.current_dungeon.active_room.things:
 				if isinstance(a,Monster):
 					a.statuses.append(s.Blind(6))
@@ -391,7 +391,7 @@ class Divine(Divined):
 	def do_turn(self,target,damage):
 		chance = base.D40.roll()
 		if chance > 39:
-			print 'Power surges through your body giving you increased damage and speed!'
+			base.put('Power surges through your body giving you increased damage and speed!')
 			self.owner.owner.action_points+=3
 			damage*=4
 		target.take_damage(self.owner.owner,damage)
@@ -409,8 +409,8 @@ class Heavenly(Divined):
 	def do_turn(self,target,damage):
 		chance = base.D40.roll()
 		if chance > 39:
-			print 'Heavenly Fire leaps from the body of your enemy, striking all enemies in the room'
-			print 'Hey if there is an error its on 354 of self.owner_modification.py'
+			base.put('Heavenly Fire leaps from the body of your enemy, striking all enemies in the room')
+			base.put('Hey if there is an error its on 354 of self.owner_modification.py')
 			for a in self.owner.owner.party.current_dungeon.active_room.things:
 				if isinstance(a,Monster):
 					a.take_damage(self.owner,20*self.owner.level)
@@ -432,8 +432,8 @@ class Arch(Divined):
 	def do_turn(self,target,damage):
 		chance=base.D100.roll()
 		if chance >99:
-			print 'The Arch Powers of the World infuse your body!'
-			print 'Mortal Strike!'
+			base.put('The Arch Powers of the World infuse your body!')
+			base.put('Mortal Strike!')
 			target.statuses.append(s.Burn(self.owner.level,100))
 			target.statuses.append(s.Poison(self.owner.level,120))
 			target.statuses.append(s.Bleeding(self.owner.level,1000))

@@ -33,20 +33,20 @@ class ChemicalOgre(m.Monster):
             if roll is 4:
                 self.feast()
             if roll is 5 or roll is 6:
-                print "the ogre looks around, apparently confused."
-        # print self.health
+                base.put("the ogre looks around, apparently confused.")
+        # base.put(self.health)
 
         self.action_points -= 1
 
     def smash(self):
         self.reveal()
-        print 'the ogre roars and smashes the floor!'
+        base.put('the ogre roars and smashes the floor!')
         for player in self.owner.party.inventory:
             player.take_damage(self,self.power/3)
 
     def enrage(self):
         self.reveal()
-        print 'the ogre is enraged, and has gotten stronger!'
+        base.put('the ogre is enraged, and has gotten stronger!')
         self.statuses.append(status.OgreEnrage())
 
     def autoattack(self):
@@ -63,12 +63,12 @@ class ChemicalOgre(m.Monster):
 
     def feast(self):
         self.reveal()
-        print 'the ogre eats an entire %s!! where did it even get that??' % random.choice(self.animals)
+        base.put('the ogre eats an entire %s!! where did it even get that??' % random.choice(self.animals))
         self.health += (self.max_health * .05)
 
     def poison_splash(self):
         self.reveal()
-        print 'the ogre pours a cask of poisonous sludge all over your party!'
+        base.put('the ogre pours a cask of poisonous sludge all over your party!')
         for player in self.owner.party.inventory:
             player.statuses.append(p_status.Poison(3,self.power * .1))
 
@@ -101,20 +101,20 @@ class AncientDragon(m.Monster):
                 self.Roar()
             if roll is 5 or roll is 6 or roll is 2:
                 self.autoattack()
-        #print self.health
+        #base.put(self.health)
 
         self.action_points -= 1
 
     def breathefire(self):
         self.reveal()
-        print 'Zearth breathes a sea of fire at his enemies!'
+        base.put('Zearth breathes a sea of fire at his enemies!')
         for player in self.owner.party.inventory:
             roll=base.D20.roll()
             if roll<12:
                 player.take_damage(self,self.power/3)
                 player.statuses.append(p_status.Burn(math.ceil(self.level/4),self.power*(self.level/2.0)))
             else:
-                print '%s has dodged the flames!' %player.name
+                base.put('%s has dodged the flames!' %player.name)
 
     def autoattack(self):
         self.reveal()
@@ -130,13 +130,13 @@ class AncientDragon(m.Monster):
 
     def Roar(self):
         self.reveal()
-        print 'Zearth lets loose a mighty roar terrifying everyone!'
+        base.put('Zearth lets loose a mighty roar terrifying everyone!')
         for player in self.owner.party.inventory:
             player.statuses.append(p_status.Maim(math.ceil(self.level/4),1))
 
     def sleep(self):
         self.reveal()
-        print 'Zearth locks eyes with one in the party and sends them into a deep sleep'
+        base.put('Zearth locks eyes with one in the party and sends them into a deep sleep')
         if self.action_points > 0:
             if not self.aggroed:
                 self.select_aggro()
@@ -174,7 +174,7 @@ class SpiderQueen(m.Monster):
     def spawn_spiderlings(self):
         self.reveal()
         num = base.D20.roll()
-        print "the spider queen births %d new spiderlings!" % num
+        base.put("the spider queen births %d new spiderlings!" % num)
         for a in range(num):
             self.owner.things.append(m.Spiderling(self.level))
 
@@ -233,7 +233,7 @@ class GrandMage(m.Monster):
     def cast_fireball(self):
         self.reveal()
         roll=base.D6.roll()
-        print "Carl summons a mass of fire!"
+        base.put("Carl summons a mass of fire!")
         if self.action_points > 0:
             if not self.aggroed:
                 self.select_aggro()
@@ -248,13 +248,13 @@ class GrandMage(m.Monster):
 
     def cast_flood(self):
         self.reveal()
-        print "Carl closes his eyes and starts to chant. The room quickly fills with water!"
+        base.put("Carl closes his eyes and starts to chant. The room quickly fills with water!")
         for a in self.owner.party.inventory:
             self.attack(a,self.power)
 
     def cast_restore(self):
         self.reveal()
-        print "The elements form around Carl and heal him!"
+        base.put("The elements form around Carl and heal him!")
         if self.action_points > 0:
             self.health=self.max_health
 
@@ -265,8 +265,8 @@ class GrandMage(m.Monster):
                 a.conceal()
                 num+=1
         self.conceal()
-        print "The rooms is plunged into darkness as a all light is gathered into a ball"
-        print "Carl seems to have disappeared along with all other monsters!"
+        base.put("The rooms is plunged into darkness as a all light is gathered into a ball")
+        base.put("Carl seems to have disappeared along with all other monsters!")
         if self.action_points > 0:
             if not self.aggroed:
                 self.select_aggro()
@@ -283,7 +283,7 @@ class GrandMage(m.Monster):
 
     def cast_oops(self):
         self.reveal()
-        print "Carl seems to have missed invokation!"
+        base.put("Carl seems to have missed invokation!")
 
     def to_str(self):
         return "Carl the Grand Magus"

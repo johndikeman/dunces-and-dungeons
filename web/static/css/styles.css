@@ -1,0 +1,22 @@
+html{
+  background-color: #B7AE9F
+}
+
+#choiceholder{
+  position: absolute;
+  left:50%;
+  outline: #7D6003 dotted thick;
+  length:50%;
+}
+
+#main{
+  position: absolute;
+  outline: #7D6003 dotted thick;
+  length:50%;
+  padding:10px;
+}
+
+#refresh{
+  position: absolute;
+  top: 50%
+}

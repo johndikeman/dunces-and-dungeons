@@ -1,5 +1,6 @@
 import entity.item.items
 import entity.status.player_statuses as s
+import base
 # this extends item but overrides return_options to allow it to return an option
 # if it isnt equipped
 
@@ -13,7 +14,7 @@ class HealthPotion(entity.item.items.ItemUsedFromInventory):
 		pass
 		# the player can only have one health potion active at a time
 		##if option == self.options[0] and not self.owner.statuses.contains_type(s.Healing):
-		##	print "%s consumes a health potion!" % self.owner.name
+		##	base.put("%s consumes a health potion!" % self.owner.name)
 		##	self.owner.statuses.append(s.Healing())
 		##	self.owner.inventory.remove(self)
 	def add_to_inventory(self):
@@ -35,7 +36,7 @@ class Sack(entity.item.items.ItemUsedFromInventory):
 			for a in self.contents:
 				self.owner.inventory.append(a)
 				de += '%s, ' % a.name
-			print 'you open the sack and find %s' % de[:-2]
+			base.put('you open the sack and find %s' % de[:-2])
 			self.owner.inventory.remove(self)
 
 class HealthSack(entity.item.items.ItemUsedFromInventory):

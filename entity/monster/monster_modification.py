@@ -23,7 +23,7 @@ class Acidic(ModifyMons):
 		chance=base.D20.roll()
 		if chance > 10:
 			target.statuses.append(s.Poison(3,(chance*self.level-10*self.level)/4))
-			print '[STATUS] ' + target.name +"has been poisoned by" + self.owner.name
+			base.put('[STATUS] ' + target.name +"has been poisoned by" + self.owner.name)
 
 	def to_str(self):
 		return "Acidic"
@@ -50,7 +50,7 @@ class Caustic(ModifyMons):
 		chance=base.D20.roll()
 		if chance>16:
 			target.statuses.append(s.Poison(2,self.level*base.D2.roll()))
-			print '[STATUS] ' +target.name + " has been poisoned by "+self.owner.name
+			base.put('[STATUS] ' +target.name + " has been poisoned by "+self.owner.name)
 
 	def to_str(self):
 		return "Caustic"
@@ -66,15 +66,15 @@ class Dank(ModifyMons):
 		chance=base.D20.roll()
 		if chance > 18:
 			target.statuses.append(s.Stun(base.D2.roll()))
-			print '[STATUS] ' +target.name +" has been stunned by " + self.owner.name
+			base.put('[STATUS] ' +target.name +" has been stunned by " + self.owner.name)
 		chance2=base.D20.roll()
 		if chance2 > 19:
 			target.statuses.append(s.Poison(base.D4.roll(),base.D6.roll()*self.level))
-			print '[STATUS] ' +target.name +" has been poisoned by " + self.owner.name
+			base.put('[STATUS] ' +target.name +" has been poisoned by " + self.owner.name)
 		chance3=base.D20.roll()
 		if chance3>18:
 			target.statuses.append(s.Burn(base.D6.roll(),self.level*base.D2.roll()))
-			print '[STATUS] ' +target.name + " has been burned by "+self.owner.name
+			base.put('[STATUS] ' +target.name + " has been burned by "+self.owner.name)
 
 	def to_str(self):
 		return "Dank"
@@ -102,7 +102,7 @@ class Destructive(ModifyMons):
 		chance = base.D20.roll()
 		if chance>19:
 			target.statuses.append(s.Stun(base.D6.roll()))
-			print '[STATUS] ' +target.name + " has been stunned by "+self.owner.name
+			base.put('[STATUS] ' +target.name + " has been stunned by "+self.owner.name)
 
 	def to_str(self):
 		return "Destructive"
@@ -129,7 +129,7 @@ class Dusty(ModifyMons):
 		chance=base.D20.roll()
 		if chance>19:
 			target.statuses.append(s.Poison(base.D2.roll(),3))
-			print '[STATUS] ' +target.name + " has been poisoned by "+self.owner.name
+			base.put('[STATUS] ' +target.name + " has been poisoned by "+self.owner.name)
 
 	def to_str(self):
 		return "Dusty"
@@ -156,7 +156,7 @@ class Flowery(ModifyMons):
 		chance=base.D20.roll()
 		if chance>19:
 			target.statuses.append(s.Healing())
-			print '[STATUS] ' +target.name + " has been healed by "+self.owner.name
+			base.put('[STATUS] ' +target.name + " has been healed by "+self.owner.name)
 
 	def to_str(self):
 		return "Flowery"
@@ -183,7 +183,7 @@ class Foul(ModifyMons):
 		chance=base.D20.roll()
 		if chance>16:
 			target.statuses.append(s.Poison(2,self.level*base.D2.roll()))
-			print '[STATUS] ' +target.name + " has been poisoned by "+self.owner.name
+			base.put('[STATUS] ' +target.name + " has been poisoned by "+self.owner.name)
 
 	def to_str(self):
 		return "Foul"
@@ -198,7 +198,7 @@ class Funky(ModifyMons):
 	def do_turn(self,target):
 		chance =  base.D20.roll()
 		if chance > 19:
-			print "[INFO] The %s regenerates health!" %self.owner.name
+			base.put("[INFO] The %s regenerates health!" %self.owner.name)
 			self.owner.health*=2
 
 	def to_str(self):
@@ -215,7 +215,7 @@ class Lightning(ModifyMons):
 		chance =base.D20.roll()
 		if chance > 12:
 			self.base_ap+=1
-			print '[STATUS] ' +self.owner.name+" can attack again!"
+			base.put('[STATUS] ' +self.owner.name+" can attack again!")
 
 	def to_str(self):
 		return "Lightning"
@@ -244,7 +244,7 @@ class Musky(ModifyMons):
 		chance=base.D20.roll()
 		if chance>19:
 			target.statuses.append(s.Stun(base.D3.roll()))
-			print '[STATUS] ' +target.name + " has been stunned by "+self.owner.name
+			base.put('[STATUS] ' +target.name + " has been stunned by "+self.owner.name)
 
 	def to_str(self):
 		return "Musky"
@@ -260,7 +260,7 @@ class Nasty(ModifyMons):
 		chance=base.D20.roll()
 		if chance>12:
 			target.statuses.append(s.Stun(2))
-			print '[STATUS] ' +target.name + " has been stunned by "+self.owner.name
+			base.put('[STATUS] ' +target.name + " has been stunned by "+self.owner.name)
 
 	def to_str(self):
 		return "Nasty"
@@ -299,7 +299,7 @@ class Rancid(ModifyMons):
 		chance=base.D20.roll()
 		if chance>16:
 			target.statuses.append(s.Poison(2,self.level*base.D2.roll()))
-			print '[STATUS] ' +target.name + " has been poisoned by "+self.owner.name
+			base.put('[STATUS] ' +target.name + " has been poisoned by "+self.owner.name)
 
 	def to_str(self):
 		return "Rancid"
@@ -314,7 +314,7 @@ class Scorched(ModifyMons):
 		chance=base.D20.roll()
 		if chance>14:
 			target.statuses.append(s.Poison(1,self.level*base.D3.roll()))
-			print '[STATUS] ' +target.name + " has been burned by "+self.owner.name
+			base.put('[STATUS] ' +target.name + " has been burned by "+self.owner.name)
 
 	def to_str(self):
 		return "Scorched"

@@ -1,10 +1,14 @@
-import random, math, time
+import random, math, time,requests
+from StringIO import StringIO as string
+from web.data import r
 
 IS_TEST = False
-
 INSTRUCTION_QUEUE = []
-
 BASE_DIR = None
+IS_WEB_VERSION = False
+SERVER = None
+
+
 
 class Entity(object):
 	def __init__(self):
@@ -33,7 +37,7 @@ class Entity(object):
 		pass
 
 	def update_xp(self,val):
-		print '[INFO] %s has gained %d xp!' % (self.to_str(),val)
+		put('[INFO] %s has gained %d xp!' % (self.to_str(),val))
 		self.xp += val
 		self.check_for_levelup()
 
@@ -45,7 +49,7 @@ class Entity(object):
 			self.level_up()
 			self.xp -= self.level_up_threshold
 			self.level += 1
-			print "[LEVELUP] %s has leveled up to level %d!" % (self.to_str(),self.level)
+			put("[LEVELUP] %s has leveled up to level %d!" % (self.to_str(),self.level))
 			self.level_up_threshold = (self.level * self.level)+6
 			self.check_for_levelup()
 
@@ -89,12 +93,18 @@ class Entity(object):
 		damage -= (damage * res)
 		if(damage<0):
 			damage=0
-		print '[DAMAGE] %s takes %.2f damage from %s' % (self.to_str(),damage,attacker.to_str())
+		put('[DAMAGE] %s takes %.2f damage from %s' % (self.to_str(),damage,attacker.to_str()))
 		self.health -= damage
 		if self.health <= 0:
 			self.alive = False
-			print "[DEATH] %s has died by the hand of %s" % (self.to_str(),attacker.to_str())
+			put("[DEATH] %s has died by the hand of %s" % (self.to_str(),attacker.to_str()))
 			self.kill(attacker)
+			try:
+				if self.gold != -1000:
+					pass
+			except:
+				self.owner.things.remove(self)
+
 		if wait:
 			time.sleep(1)
 
@@ -186,6 +196,19 @@ class Inventory():
 	def __len__(self):
 		return len(self.list)
 
+def put(thing):
+	if not IS_WEB_VERSION:
+		print thing
+	else:
+		r.rpush('out',thing)
+		print thing
+
+def get_input(arg=None):
+	if not IS_WEB_VERSION:
+		return raw_input(arg)
+	else:
+		return str(1)
+
 
 # use this method when you have a list of things that the
 # player needs to choose from. it will be handy later on
@@ -194,62 +217,83 @@ def make_choice(choices,thing=None,backable=False):
 	if(backable):
 		choices.append("exit")
 	if len(choices) <= 0:
-		print 'nothing to choose from!'
+		put('nothing to choose from!')
 		return
-	if thing:
-		print 'choose a %s' % thing
-	else:
-		print 'choose one!'
-	for ind, a in enumerate(choices):
-		print "\t%s (%d)\n" % (a, ind)
-
-	# the instruction queue is used in tests to make choices for the player.
-	if len(INSTRUCTION_QUEUE) != 0:
-		cho = INSTRUCTION_QUEUE.pop()
-		# if we want to select a random option in a test, add this to the instruction queue
-		if cho == 'ayyy lmao random it':
-			ans = choices[random.choice(range(len(choices)-1))]
+	if not IS_WEB_VERSION:
+		if thing:
+			put('choose a %s' % thing)
 		else:
-			try:
-				ans = choices.index(cho)
-			except:
-				raise Exception("the value '%s' in the instruction queue wasn't an option, bud." % cho)
-	else:
-		ans = raw_input()
-	try:
-		ret = int(ans)
-		if ret > len(choices) - 1:
-			print 'that wasn\'t a choice! try again.'
+			put('choose one!')
+		for ind, a in enumerate(choices):
+			put("\t%s (%d)\n" % (a, ind))
+
+		# the instruction queue is used in tests to make choices for the player.
+		if len(INSTRUCTION_QUEUE) != 0:
+			cho = INSTRUCTION_QUEUE.pop()
+			# if we want to select a random option in a test, add this to the instruction queue
+			if cho == 'ayyy lmao random it':
+				ans = choices[random.choice(range(len(choices)-1))]
+			else:
+				try:
+					ans = choices.index(cho)
+				except:
+					raise Exception("the value '%s' in the instruction queue wasn't an option, bud." % cho)
+		else:
+			ans = get_input()
+		try:
+			ret = int(ans)
+			if ret > len(choices) - 1:
+				put('that wasn\'t a choice! try again.')
+				return make_choice(choices,thing)
+			if backable and ret == len(choices) - 1:
+				return None
+		except ValueError:
+			put('that wasn\'t a choice! try again.')
 			return make_choice(choices,thing)
-		if backable and ret == len(choices) - 1:
-			return None
-	except ValueError:
-		print 'that wasn\'t a choice! try again.'
-		return make_choice(choices,thing)
-	return ret
+		return ret
+	# this is so we can make a form in the html frontend
+	else:
+		s = 'CHOICE|'
+		for a in range(len(choices)):
+			s += '%d%s|' % (a,choices[a].replace('\n',' ').replace('\t',' '))
+		r.rpush('out',s)
+		pubsub = r.pubsub()
+		pubsub.subscribe('in')
+		ret = None
+		wait = True
+		while wait:
+			for a in pubsub.listen():
+				print a
+				if a['type'] == 'message':
+					ret = a['data']
+					wait = False
+					break
+		return int(ret)
+
+
 
 # def shop_make_choice(choices,choiceskeys,thing=None):
 # 	choices.append("Back")
 # 	choiceskeys.append(0)
 # 	if len(choices) <= 0:
-# 		print 'nothing to choose from!'
+# 		base.put('nothing to choose from!')
 # 		return
 # 	if thing:
-# 		print 'choose a %s' % thing
+# 		base.put('choose a %s' % thing)
 # 	else:
-# 		print 'choose one!'
+# 		base.put('choose one!')
 # 	for ind, a in enumerate(choices):
-# 		# print a
-# 		print "\t%s for %d (%d)\n" % (a, choiceskeys[ind], ind)
+# 		# base.put(a)
+# 		base.put("\t%s for %d (%d)\n" % (a, choiceskeys[ind], ind))
 
-# 	ans = raw_input()
+# 	ans = get_input()
 # 	try:
 # 		ret = int(ans)
 # 		if ret > len(choices)-1:
-# 			print 'that wasn\'t a choice! try again.'
+# 			base.put('that wasn\'t a choice! try again.')
 # 			return make_choice(choices,thing)
 # 	except ValueError:
-# 		print 'that wasn\'t a choice! try again.'
+# 		base.put('that wasn\'t a choice! try again.')
 # 		return shop_make_choice(choices,choiceskeys,thing)
 # 	return choices[ret]
 
