@@ -59,10 +59,26 @@ make_choice_form = (data) ->
   else
     window.choiceskips -= 1
 
+is_input = (message) ->
+  # console.log message[0..4]
+  if message[0..4] == 'INPUT' then yes else no
+
+make_input_form = (message) ->
+  if window.choiceskips == 0
+    form = "<a>#{message[5..]}</a><form id=\"ch\" action=\"/input\" method='post'>"
+    form += "<input type=\"text\" name='input'><br><input type=\"submit\" value=\"choose!\"></form>"
+    $('#choiceholder').append(form)
+  else
+    window.choiceskips -= 1
+
+
+
 process_output = (message) ->
   for mes in message
     if is_choice(mes)
       make_choice_form(mes)
+    else if is_input(mes)
+      make_input_form(mes)
     else
       $('#main').append("#{mes}<br>")
 

@@ -207,7 +207,20 @@ def get_input(arg=None):
 	if not IS_WEB_VERSION:
 		return raw_input(arg)
 	else:
-		return str(1)
+		put('INPUT%s' % arg)
+		pubsub = r.pubsub()
+		# subscribe to the 'in' channel so we know when the message goes through
+		pubsub.subscribe('in')
+		ret = None
+		wait = True
+		while wait:
+			for a in pubsub.listen():
+				if a['type'] == 'message':
+					ret = a['data']
+					wait = False
+					break
+		return ret
+
 
 
 # use this method when you have a list of things that the

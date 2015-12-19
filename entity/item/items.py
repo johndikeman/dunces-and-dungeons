@@ -75,10 +75,10 @@ class Item(base.Entity):
 
 			# we want to equip something if we've done it in a test.
 			if not base.IS_TEST:
-				ans = base.get_input('would you like to replace %s with %s? (y/n) ' % (name,self.to_str()))
+				ans = base.make_choice(['replace %s with %s' % (name,self.to_str()),'don\'t'])
 			else:
-				ans = 'y'
-			if ans is 'y':
+				ans = 0
+			if ans is 0:
 				if self.owner.equipment[self.info]: self.owner.equipment[self.info].unequip()
 				self.owner.equipment[self.info] = self
 		self.equipped = True

@@ -142,7 +142,7 @@ class Hub(Dungeon):
 				self.party.inventory[self.party.index].equipable.remove(self.party.inventory[self.party.index].equipable[selling])
 
 		# allow the player to shop as much as they want in a turn
-		if base.get_input('continue? (y/n) ') is 'y':
+		if base.make_choice(['continue','done']) is 0:
 			self.enter_shop()
 
 
@@ -184,9 +184,7 @@ class Hub(Dungeon):
 		try:
 			amt=self.party.get_active_player().equipable[select].durability-self.party.get_active_player().equipable[select].current_durability
 			print "%s costs %d to repair"%(self.party.get_active_player().equipable[select].name,amt*5)
-			print "Do you wish to continue? y/n"
-			ans = base.get_input()
-			if ans == 'y':
+			if base.make_choice(['continue','done']) is 0:
 				if self.party.get_active_player().inventory[select].gold>= amt*5:
 					self.party.get_active_player().inventory[select].current_durability=self.party.get_active_player().inventory[select].durability
 					self.party.get_active_player().inventory[select].gold-=(amt*5)

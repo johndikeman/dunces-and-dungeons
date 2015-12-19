@@ -51,5 +51,12 @@ def pos():
     flask.request.get_data()
     r.set('positions',flask.request.data)
 
+@app.route('/input',methods=['POST'])
+def i():
+    val = thing = flask.request.form['input']
+    r.publish('in',val)
+    r.incr('choiceskip',1)
+    return flask.redirect('/')
+
 if __name__ == '__main__':
     run()
