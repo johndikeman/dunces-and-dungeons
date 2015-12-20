@@ -9,11 +9,7 @@ party = None
 app = flask.Flask(__name__)
 messages = []
 choice_results = []
-r.delete('out')
-r.delete('in')
-r.delete('cache')
-r.delete('choiceskip')
-r.set('choiceskip',0)
+
 
 # pubsub = r.pubsub()
 
@@ -50,6 +46,7 @@ def ch():
 def pos():
     flask.request.get_data()
     r.set('positions',flask.request.data)
+    return None
 
 @app.route('/input',methods=['POST'])
 def i():
@@ -59,4 +56,9 @@ def i():
     return flask.redirect('/')
 
 if __name__ == '__main__':
+    r.delete('out')
+    r.delete('in')
+    r.delete('cache')
+    r.delete('choiceskip')
+    r.set('choiceskip',0)
     run()

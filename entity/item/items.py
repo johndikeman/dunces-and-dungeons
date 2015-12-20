@@ -89,7 +89,7 @@ class Item(base.Entity):
 		if self.owner.equipment['right'] is self:
 			self.owner.equipment['right']=None
 		if self.owner.equipment['left'] is self:
-			self.owner.equipment['left']=Non
+			self.owner.equipment['left']=None
 
 	def unequip(self):
 		self.equipped = False

@@ -1,4 +1,4 @@
-import base, math, time
+import base, math, time, os, json
 import entity.item.weapon as weapons
 import dungeon.dungeon as dungeon
 import entity.player.player_inventory as inv
@@ -7,7 +7,7 @@ import entity.monster.monsters as monster
 import entity.item.consumable as consumable
 import entity.ability.player_abilities as ability
 import entity.item.utils as utils
-import os
+
 
 try:
 	import dill
@@ -225,10 +225,14 @@ class Player(base.Entity):
 			return super(Player,self).return_options(False)
 
 	def do_turn(self):
+		if base.IS_WEB_VERSION:
+			base.put(self.get_info())
 		for x in self.statuses:
 			x.do_turn(None)
 		ireallyhatemylife=len(self.owner.current_dungeon.things)
 		for a in range(ireallyhatemylife):
+			# im not entirely sure what's going on here, but 'a' is an int
+			# so it will never be an instance of monster.
 			if isinstance(a,Monster):
 				if not a.alive:
 					self.owner.current_dungeon.things.remove(a)
@@ -340,6 +344,15 @@ class Player(base.Entity):
 			bar += ' '
 		return bar + ']'
 
+	def get_info(self):
+		return 'PLAYERINFO' + json.dumps({
+			'name': self.name,
+			'hp':self.health,
+			'max_health':self.max_health,
+			'action_points':self.action_points,
+			'gold':self.gold,
+			'xp':self.xp,
+			'level_up_threshold':self.level_up_threshold})
 
 	def select_player_target(self):
 		opt = base.make_choice([a.to_str() for a in self.party.inventory])
@@ -450,9 +463,12 @@ class Party(base.Entity):
 			self.end=False
 		for a in range(len(self.inventory)):
 			if(self.end):
-				base.put("------====%s's turn====------" % self.inventory[self.index].name)
-				base.put('HEALTH: %s' % self.inventory[self.index].get_healthbar(24))
-				base.put('XP: %s' % self.inventory[self.index].get_xpbar(24))
+				if not base.IS_WEB_VERSION:
+					base.put("------====%s's turn====------" % self.inventory[self.index].name)
+					base.put('HEALTH: %s' % self.inventory[self.index].get_healthbar(24))
+					base.put('XP: %s' % self.inventory[self.index].get_xpbar(24))
+				else:
+					base.put(self.inventory[self.index].get_info())
 				while((self.inventory[self.index].action_points > 0) and (self.inventory[self.index].alive==True)):
 					self.do_turn()
 

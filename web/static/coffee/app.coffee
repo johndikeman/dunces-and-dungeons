@@ -5,18 +5,21 @@ $(document).ready(
       # whenever we stop dragging, send the positions to the server
       stop: (()-> send_positions())
     )
+    $('.bar').progressbar()
     # window.positions will be the same string we sent to the server
     reset_movables window.positions
     process_output window.messages
 )
 
 reset_movables = (positions) ->
+  console.log positions
   if positions != null
     ind = 0
     for a in positions.split('%')
-      l = a.split '|'
-      element = $ "\##{l[0]}"
-      element.offset(top:l[1],left:l[2])
+      if a != ''
+        l = a.split '|'
+        element = $ "\##{l[0]}"
+        element.offset(top:l[1],left:l[2])
 
 
 
@@ -71,14 +74,27 @@ make_input_form = (message) ->
   else
     window.choiceskips -= 1
 
+is_player_info = (message) ->
+  if message[0..9] == 'PLAYERINFO' then yes else no
 
+update_player_ui = (message) ->
+  player_data = $.parseJSON(message[10..])
+  console.log player_data
+  $('#healthbar').html("health: #{player_data.hp}")
+  $('#xpbar').html("xp: #{player_data.xp}")
+  $('#playername').html("#{player_data.name}'s stats")
+  $('#action_points').html("action points: #{player_data.action_points}")
+  #(player_data.max_health / player_data.health)*100)
 
 process_output = (message) ->
   for mes in message
+    # console.log "#{typeof(mes)},#{mes}"
     if is_choice(mes)
       make_choice_form(mes)
     else if is_input(mes)
       make_input_form(mes)
+    else if is_player_info(mes)
+      update_player_ui(mes)
     else
       $('#main').append("#{mes}<br>")
 

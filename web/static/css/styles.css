@@ -4,18 +4,21 @@ html{
 
 .holder{
   overflow-y: scroll;
+  outline: #7D6003 dotted thick;
 }
 
 #choiceholder{
   position: absolute;
   left:50%;
-  outline: #7D6003 dotted thick;
+  length:50%;
+}
+
+#playerinfo{
   length:50%;
 }
 
 #main{
   position: absolute;
-  outline: #7D6003 dotted thick;
   length:50%;
   padding:10px;
 }
