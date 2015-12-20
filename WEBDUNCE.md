@@ -18,7 +18,7 @@ RUNNING THE GAME
 these steps need to be followed every time you want to launch webdunce.
 
 1. if you're on windows, you can probably skip this step. everyone else: start the redis server by mashing ```redis-server``` into your terminal of choice.
-2. cd into the ```web``` directory, and launch the server by running `python server.py'
+2. cd into the ```web``` directory, and launch the server by running ```python server.py```
 3. back out into the root of the project and then run the game itself by typing ```python dunces-and-dungeons.py web```
 4. fire up your browser of choice and navigate to localhost:5000. if you don't see anything, do these steps over again and be SURE to do them in order.
 5. ???
