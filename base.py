@@ -154,7 +154,7 @@ class Inventory():
 	def append(self,thing):
 		thing.owner = self.owner
 		self.list.append(thing)
-		#thing.add_to_inventory()
+		thing.add_to_inventory()
 
 	def remove(self,object_to_remove):
 		if object_to_remove in self:
