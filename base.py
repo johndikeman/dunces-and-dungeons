@@ -50,7 +50,7 @@ class Entity(object):
 			self.xp -= self.level_up_threshold
 			self.level += 1
 			put("[LEVELUP] %s has leveled up to level %d!" % (self.to_str(),self.level))
-			self.level_up_threshold = (self.level * self.level)+6
+			self.level_up_threshold = (self.level * self.level * self.level)+6
 			self.check_for_levelup()
 
 	def examine(self,arg):
@@ -205,7 +205,9 @@ def put(thing):
 
 def get_input(arg=None):
 	if not IS_WEB_VERSION:
-		return raw_input(arg)
+		if arg:
+			return raw_input(arg)
+		return raw_input()
 	else:
 		put('INPUT%s' % arg)
 		pubsub = r.pubsub()
