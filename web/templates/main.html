@@ -12,13 +12,16 @@
   <script src='../static/js/jquery.js'></script>
   <script src='../static/js/jquery-ui.js'></script>
   <script src='../static/js/app.js'></script>
+  <link rel="stylesheet" type="text/css" href="../static/css/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/jquery-ui.theme.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/jquery.ui.structure.css">
   <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
 
 </head>
 <body>
-  <div id='choiceholder' class='holder movable'></div>
-  <div id='main' class='holder movable'></div>
-  <div id='playerinfo' class='holder movable'>
+  <div id='choiceholder' class='holder movable resizable'></div>
+  <div id='main' class='holder movable resizable'></div>
+  <div id='playerinfo' class='holder resizable movable '>
     <div id='playername' class='bar'></div>
     <div id='action_points' class='bar'></div>
     <div id='healthbar' class='bar'></div>

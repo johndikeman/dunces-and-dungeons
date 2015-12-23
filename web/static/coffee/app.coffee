@@ -5,7 +5,7 @@ $(document).ready(
       # whenever we stop dragging, send the positions to the server
       stop: (()-> send_positions())
     )
-    $('.bar').progressbar()
+    $('.resizable').resizable()
     # window.positions will be the same string we sent to the server
     reset_movables window.positions
     process_output window.messages

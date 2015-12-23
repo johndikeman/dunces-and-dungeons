@@ -363,7 +363,7 @@ class Player(base.Entity):
 	def to_str(self):
 		return self.name
 
-	def add_to_inventory(self,item):
+	def add(self,item):
 		self.inventory.append(item)
 		try:
 			item.equipable

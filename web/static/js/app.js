@@ -8,7 +8,7 @@
         return send_positions();
       })
     });
-    $('.bar').progressbar();
+    $('.resizable').resizable();
     reset_movables(window.positions);
     return process_output(window.messages);
   });
