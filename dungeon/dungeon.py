@@ -19,9 +19,15 @@ TOUCH = ('tough bristly burning cold cottony damp dank moist dry feathery frosty
 
 class Dungeon(object):
 	def __init__(self, size, level, party):
+		""" size: int, the sqrt of the number of rooms in the dungeon
+			level: int, the level of the dungeon. this affects the level of the monsters and stuff.
+			party: entity.player.players.Party object
+		"""
+
 		# as far as i can tell, the generation algorithm doesn't pay attention to the size
 		# parameter and just does what it feels like. this is probably a bug.
 		num_doors = 0
+		# this is the level of the dungeon. it affects the strength of the monsters
 		self.level = level
 		self.party = party
 		self.active_room = None
@@ -60,6 +66,8 @@ class Dungeon(object):
 			for b in a:
 				if b:
 					temp.append(b)
+
+		# grab a random room to serve as the boss room
 		final = random.choice(temp)
 		# final = temp[0]
 		final.things.append(LeaveOption())
@@ -69,10 +77,13 @@ class Dungeon(object):
 		# self.rooms[0][0].things.append(LeaveOption())
 
 	def leave_dungeon(self):
+		"""this method is called when the dungeon is completed."""
+		# destroy any maps in the inventory
 		for a in self.party.inventory:
 			if a.inventory.contains_type(utils.CompletedMap):
 				print "%s's map crumbles to dust", a.name
 				a.inventory.remove(utils.CompletedMap)
+		# set the current dungeon back to the hub
 		self.party.current_dungeon = self.party.hub
 		self.party.current_dungeon.start()
 
@@ -97,10 +108,14 @@ class Dungeon(object):
 
 class Hub(Dungeon):
 	def __init__(self,party):
+		""" the hub is the starting area, and it is what the player is always taken back to.
+			part: entity.player.players.Party object
+		"""
 		#self.shop = []
 		self.party = party
 		self.things=[]
 		self.shop = {
+			# make sure there is a potion for every single player
 			"health":[consumable.HealthPotion() for a in self.party.inventory],
 			"weapons":[],
 			"armor":[],
@@ -110,11 +125,13 @@ class Hub(Dungeon):
 
 
 	def enter_shop(self):
+		"""this method is called when the party enters the shop, it handles buying and selling."""
 		print 'you have %d gold!' % (self.party.inventory[self.party.index].gold)
-		opt=base.make_choice(['Buy','Sell'])
+		opt = base.make_choice(['Buy','Sell'])
 		if opt == 0:
 			shopping = base.make_choice(self.shop.keys(),'category')
 			item = base.make_choice( ['%s for %d' % (a.to_str(),a.get_cost()) for a in self.shop[self.shop.keys()[shopping]]],'item',True)
+			# None can be returned from make_choice when the last parameter is true
 			if(item is None):
 				print 'You bought nothing!'
 			else:
@@ -128,18 +145,20 @@ class Hub(Dungeon):
 				# inventory.append(item_object)
 				# self.party.inventory[self.party.index].gold -= item_object.cost
 		elif opt == 1:
-			alist=[]
+			alist = []
 			for a in self.party.inventory[self.party.index].inventory:
 				try:
+					# compile a list of everything that has a price associated with it in the
+					# player's inventory
 					a.cost
 					alist.append(a)
 				except:
 					pass
-			selling=base.make_choice(['%s for %d' % (a.to_str(),a.cost/5) for a in self.party.get_active_player().equipable],'item',True)
+			selling = base.make_choice(['%s for %d' % (a.to_str(),a.cost/5) for a in alist],'item',True)
 			if selling is not None:
-				self.party.inventory[self.party.index].gold+=a.get_cost()/5
-				self.party.inventory[self.party.index].inventory.remove(self.party.inventory[self.party.index].equipable[selling])
-				self.party.inventory[self.party.index].equipable.remove(self.party.inventory[self.party.index].equipable[selling])
+				self.party.inventory[self.party.index].gold+=alist[selling].get_cost()/5
+				self.party.inventory[self.party.index].inventory.remove(self.party.inventory[self.party.index].alist[selling])
+				self.party.inventory[self.party.index].equipable.remove(self.party.inventory[self.party.index].alist[selling])
 
 		# allow the player to shop as much as they want in a turn
 		if base.make_choice(['continue','done']) is 0:
@@ -148,6 +167,7 @@ class Hub(Dungeon):
 
 
 	def leave_dungeon(self):
+		"""called when the player leaves the dungeon"""
 		he = [5,8,15,25]
 		ind = base.make_choice(['smol','medium','large','goliath'],'size')
 		self.party.current_dungeon = Dungeon(he[ind],self.party.get_avg_level(),self.party)
@@ -157,6 +177,7 @@ class Hub(Dungeon):
 		# base.put(self.party.current_dungeon)
 
 	def save_game(self):
+		"""this method is an unused early attempt at making save files work."""
 		base.put('Name your save file')
 		ans=base.get_input()
 		f=open(ans+'.txt','w')
@@ -192,10 +213,13 @@ class Hub(Dungeon):
 					print "You don't have enough gold to do that!"
 		except:
 			print 'Woops'
+
+	# there are no monsters in the hub
 	def handle_monster_turn(self):
 		pass
 
 	def start(self):
+		"""this method starts the hub and is called after the players enter, it populates the shop."""
 		controller = control.ItemController(self.party.get_avg_level())
 		for category in self.shop.keys():
 			for b in range(random.randint(len(self.party.inventory),len(self.party.inventory)+5)):
@@ -209,6 +233,10 @@ class Hub(Dungeon):
 
 class Room(object):
 	def __init__(self,containing_dungeon,party):
+		""" the class for an individual room in the dungeon
+			containing_dungeon: dungeon.dungeon.Dungeon instance.
+			party: entity.player.players.Party instance.
+		"""
 		self.containing_dungeon = containing_dungeon
 		self.neighbors = []
 		# the room should only be 50% weaker than the dungeon level or 150% stronger- this is not a mistake
@@ -218,6 +246,7 @@ class Room(object):
 		self.test = -9999
 
 		# this will identify the rooms to the players for now
+		# this isn't actually used i think
 		self.id = random.getrandbits(32)
 		self.things = base.Inventory(self)
 		# self.identified_things = base.Inventory(self)
@@ -230,14 +259,21 @@ class Room(object):
 		self.entered = False
 
 	def generate(self):
+		""" this method is called recursively on every room, it populates the room with monsters and
+			makes other connecting rooms- the dungeon grows like a tree.
+		"""
+		# use the spawn method in the monster file
 		for monstar in monsters.spawn(self.level):
 			self.things.append(monstar)
+			# set this to the monster's room
 			monstar.room=self
 
+		# use the spawn method in the chest file
 		chest = chesteses.spawn(self.level)
 		if chest:
 			self.things.append(chest)
 
+		# this loop decides whether or not we're spawning a new room in the indicated direction
 		for direction, dircords in self.directions.iteritems():
 			x,y = dircords
 			selfx,selfy = self.cords
@@ -245,15 +281,20 @@ class Room(object):
 			newx = x + selfx
 			newy = y + selfy
 			ma = self.containing_dungeon.size
-
+			# make sure the cords of a new potential room aren't negative and that there isn't already a room in the space
 			if newx >= 0 and newx < ma and newy >=0 and newy < ma and not self.containing_dungeon.rooms[newx][newy]:
+				# if there are no neighbors, we want to generate one
 				if len(self.get_neighbors().keys()) <= 1:
 					self.generate_neighbor(direction)
 				else:
+					# if there are less than four, then there is a 60% chance that a new one will happen
 					if len(self.get_neighbors().keys()) < 3 and base.D6.roll() > 4:
 						self.generate_neighbor(direction)
 
 	def get_neighbors(self):
+		""" get the room's neighbors
+			
+		"""
 		# this returns a dictionary structured like {'direction':room_object}
 		neighbors = {}
 		for direction, coordpair in self.directions.iteritems():
