@@ -234,8 +234,9 @@ class Hub(Dungeon):
 class Room(object):
 	def __init__(self,containing_dungeon,party):
 		""" the class for an individual room in the dungeon
-			containing_dungeon: dungeon.dungeon.Dungeon instance.
-			party: entity.player.players.Party instance.
+			paramaters:
+				containing_dungeon: dungeon.dungeon.Dungeon instance.
+				party: entity.player.players.Party instance.
 		"""
 		self.containing_dungeon = containing_dungeon
 		self.neighbors = []
@@ -293,7 +294,8 @@ class Room(object):
 
 	def get_neighbors(self):
 		""" get the room's neighbors
-			
+			returns:
+				dict of neighbors, structured like {"direction":room_object}
 		"""
 		# this returns a dictionary structured like {'direction':room_object}
 		neighbors = {}
@@ -309,12 +311,20 @@ class Room(object):
 		return neighbors
 
 	def contains_exit(self):
+		""" check if the room has an exit
+			returns:
+				boolean, indicating if the boolean has an exit
+		"""
 		for a in self.things:
 			if isinstance(a,LeaveOption):
 				return True
 		return False
 
 	def contains_chest(self):
+		""" check if the room contains a chest
+			returns:
+				boolean, indicating if the room has a chest in it
+		"""
 		for a in self.things:
 			if isinstance(a,chesteses.Chest):
 				return True
@@ -322,6 +332,10 @@ class Room(object):
 
 
 	def generate_neighbor(self,di):
+		"""	generate a neighboring room.
+			parameters:
+				di: string, either "north" "south" "east" or "west"
+		"""
 		# base.put('generating n to the %s at %s' % (di,str(self.cords)))
 		new_room = Room(self.containing_dungeon,self.party)
 		x,y = self.cords
@@ -330,13 +344,19 @@ class Room(object):
 		new_room.cords = (x+dirx,y+diry)
 		self.containing_dungeon.roomslist+=''+str(x+dirx)+' '+str(y+diry)+' '
 		self.containing_dungeon.rooms[new_room.cords[0]][new_room.cords[1]] = new_room
+		# generation is recursive- call the next room's generate function
 		self.containing_dungeon.rooms[new_room.cords[0]][new_room.cords[1]].generate()
 
 	def to_str(self):
+		"""deprecated"""
 		# this method was a thing at one point, but now it is not. rip
 		return self.description
 
 	def move_to(self,ind):
+		""" sets the current dungeon's active room to the selected room, and call the enter method on it.
+			parameters:
+				ind: an int, the index of the room in the keylist of self.neighbors
+		"""
 		self.containing_dungeon.active_room = self.get_neighbors()[self.get_neighbors().keys()[ind]]
 		self.containing_dungeon.active_room.enter()
 
@@ -344,9 +364,12 @@ class Room(object):
 
 
 	def enter(self):
+		""" mark a room as entered"""
 		self.entered = True
 
 	def handle_monster_turn(self):
+		""" called every turn to let all the monsters do their turn
+		"""
 		# base.put("THINGS: %s" % str(self.things))
 		# base.put('ID: %s' % str(self.identified_things))
 		alist=[]
@@ -368,10 +391,12 @@ class Room(object):
 
 class LeaveOption(thing.InteractiveObject):
 	def __init__(self):
+		""" the object that will allow players to leave the dungeon."""
 		super(LeaveOption,self).__init__()
 		self.options = ['leave the dungeon']
 
 	def do_turn(self,arg):
+		""" overridden from base.Entity, see that documentation """
 		if arg == self.options[0]:
 			full = False
 			for a in self.owner.things:

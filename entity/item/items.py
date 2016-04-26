@@ -7,6 +7,7 @@ import entity.monster.monsters as r
 
 class Item(base.Entity):
 	def __init__(self):
+		"""this is the basic item class, it is the superclass for every item in the game."""
 		super(Item,self).__init__()
 		self.consumes_inventory_space = True
 		# THIS PROBABLY IS NOT FINAL
@@ -15,13 +16,16 @@ class Item(base.Entity):
 		self.equipped = False
 		self.descr=self.name+" "+str(self.level)
 		self.item_options = []
+
 	def to_str(self):
 		return self.name
 
 	def do_turn(self,options):
+		"""overridden from base.Entity, see that documentation"""
 		pass
 
 	def return_options(self):
+		"""returns a list of options if the item is equipped"""
 		if self.equipped:
 			return super(Item,self).return_options()
 		return []
@@ -97,6 +101,7 @@ class Item(base.Entity):
 
 	def examine(self):
 		try:
+			# if the item has a description, then use it here
 			return self.descr
 		except:
 			return 'a %s' % self.to_str()

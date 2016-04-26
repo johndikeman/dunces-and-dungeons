@@ -1,27 +1,34 @@
 import random, math, time,requests
 from StringIO import StringIO as string
 from web.data import r
+from misc.colors import red, green, blue, yellow, magenta, cyan, white
 
-IS_TEST = False
+IS_TEST = False # if the game is being tested, this is set to true
 INSTRUCTION_QUEUE = []
 BASE_DIR = None
-IS_WEB_VERSION = False
+IS_WEB_VERSION = False # if the user is using webdunce, this is set to true
 SERVER = None
 
 
 
 class Entity(object):
 	def __init__(self):
+		""" this class is essentially the superclass for everything in the game. if you want to add something,
+			it probably needs to inherit from entity.
+		""""
 		# ATTRIBUTES
 		self.attributes = {'strength':0,'intelligence':0,'luck':0,'agility':0,'mana':0}
 		self.health = 0.0
-		self.max_health=self.health
+		self.max_health = self.health
 		self.level = 1
 		# base ap is what the ap should be restored to after a turn is complete
 		self.base_ap = 1
 		self.alive = True
+		# this is the current level of action points
 		self.action_points = 1
 		self.options = []
+
+		# use the custom inventory class for everything
 		self.inventory = Inventory(self)
 		self.statuses = Inventory(self)
 		self.modifiers = Inventory(self)
@@ -30,6 +37,7 @@ class Entity(object):
 		self.armor = 1
 		self.id = random.random() * 100000000
 		self.xp = 0
+		# the xp that it takes to level up
 		self.level_up_threshold = math.log(self.level * self.level,2)*100
 		self.xp_reward = 0
 
@@ -93,7 +101,7 @@ class Entity(object):
 		damage -= (damage * res)
 		if(damage<0):
 			damage=0
-		put('[DAMAGE] %s takes %.2f damage from %s' % (self.to_str(),damage,attacker.to_str()))
+		put(red([DAMAGE]) + "%s takes %.2f damage from %s' % (self.to_str(),damage,attacker.to_str()))
 		self.health -= damage
 		if self.health <= 0:
 			self.alive = False
