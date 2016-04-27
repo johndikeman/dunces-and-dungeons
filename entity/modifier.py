@@ -2,6 +2,7 @@ import base,random
 import entity.monster.monster_modification as mo
 import entity.item.weapon_modification as wm
 import entity.item.armor_modification as ar
+from misc.colors import back_white, back_green, back_cyan, back_yellow, back_magenta
 
 
 class Apply(object):
@@ -91,17 +92,22 @@ class Apply(object):
 		mylist = []
 		if(rander<76):
 			mylist=Mod["Common"]
+			color = back_white
 		elif(rander<91):
 			mylist=Mod["Uncommon"]
+			color = back_green
 		elif(rander<99):
 			mylist=Mod["Rare"]
+			color = back_cyan
 		elif(rander<99.99):
 			mylist=Mod["Legendary"]
+			color = back_yellow
 		else:
 			mylist=Mod['Divined']
+			color = back_magenta
 		namer = random.choice(mylist)
 		modification_instance = namer()
 		Item.modifiers.append(modification_instance)
 		modification_instance.apply()
-		Item.name="%s %s" % (modification_instance.to_str(), Item.name)
+		Item.name=color("%s %s") % (modification_instance.to_str(), Item.name)
 		return Item

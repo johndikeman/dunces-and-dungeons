@@ -1,7 +1,7 @@
 import random, math, time,requests
 from StringIO import StringIO as string
 from web.data import r
-from misc.colors import red, green, blue, yellow, magenta, cyan, white
+from misc.colors import red, green, blue, yellow, magenta, cyan, white, back_red
 
 IS_TEST = False # if the game is being tested, this is set to true
 INSTRUCTION_QUEUE = []
@@ -15,7 +15,7 @@ class Entity(object):
 	def __init__(self):
 		""" this class is essentially the superclass for everything in the game. if you want to add something,
 			it probably needs to inherit from entity.
-		""""
+		"""
 		# ATTRIBUTES
 		self.attributes = {'strength':0,'intelligence':0,'luck':0,'agility':0,'mana':0}
 		self.health = 0.0
@@ -101,11 +101,11 @@ class Entity(object):
 		damage -= (damage * res)
 		if(damage<0):
 			damage=0
-		put(red([DAMAGE]) + "%s takes %.2f damage from %s' % (self.to_str(),damage,attacker.to_str()))
+		put(red("[DAMAGE] ") + "%s takes %.2f damage from %s" % (self.to_str(),damage,attacker.to_str()))
 		self.health -= damage
 		if self.health <= 0:
 			self.alive = False
-			put("[DEATH] %s has died by the hand of %s" % (self.to_str(),attacker.to_str()))
+			put(back_red("[DEATH]") + " %s has died by the hand of %s" % (self.to_str(),attacker.to_str()))
 			self.kill(attacker)
 			try:
 				if self.gold != -1000:
@@ -248,7 +248,7 @@ def make_choice(choices,thing=None,backable=False):
 		else:
 			put('choose one!')
 		for ind, a in enumerate(choices):
-			put("\t%s (%d)\n" % (a, ind))
+			put("\t%s (%s)\n" % (a, cyan(ind)))
 
 		# the instruction queue is used in tests to make choices for the player.
 		if len(INSTRUCTION_QUEUE) != 0:

@@ -7,6 +7,7 @@ import entity.monster.monsters as monster
 import entity.item.consumable as consumable
 import entity.ability.player_abilities as ability
 import entity.item.utils as utils
+from misc.colors import red, cyan
 
 
 try:
@@ -197,7 +198,7 @@ class Player(base.Entity):
 	def buy_item(self,item):
 		if self.gold >= item.get_cost():
 			self.gold -= item.get_cost()
-			self.add_to_inventory(item)
+			self.inventory.append(item)
 			return True
 		base.put("you don't have enough gold for that!")
 		return False
@@ -332,7 +333,7 @@ class Player(base.Entity):
 			bar += '='
 		for a in range(rest):
 			bar += ' '
-		return bar + ']'
+		return red(bar + ']')
 
 	def get_xpbar(self,size=12):
 		bar = '['
@@ -342,7 +343,7 @@ class Player(base.Entity):
 			bar += '='
 		for a in range(rest):
 			bar += ' '
-		return bar + ']'
+		return cyan(bar + ']')
 
 	def get_info(self):
 		return 'PLAYERINFO' + json.dumps({
