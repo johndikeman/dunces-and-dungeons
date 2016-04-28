@@ -56,10 +56,40 @@ class Dungeon(object):
 				row.append('F')
 			self.roomsmap.append(row)
 
-
+		current_x, current_y = (0,0)
 		self.starting_room.cords = (0,0)
 		self.rooms[0][0] = self.starting_room
-		self.rooms[0][0].generate()
+		needed = self.rooms[0][0].generate()
+		while 1:
+			try:
+				# print needed
+
+				# make sure that there is a value in the stack
+				needed[-1]
+				# grab the needed coordinatese
+				ind = random.randint(0,len(needed)-1)
+				needed_x_dir, needed_y_dir = needed[ind]
+				needed = needed[:ind] + needed[ind + 1:]
+				# this actually doesn't do anything
+				actual_x, actual_y = (current_x + needed_x_dir, current_y + needed_y_dir)
+				# set the room matrix to a room
+				self.rooms[actual_x][actual_y] = Room(self,self.party)
+				# set the coords of the new room
+				self.rooms[actual_x][actual_y].cords = (actual_x, actual_y)
+				# print (actual_x,actual_y)
+				# get the neighbors that the new room needs
+				for new_tuple in self.rooms[actual_x][actual_y].generate():
+					# print new_tuple
+					# grab the individual coords
+					new_x_dir, new_y_dir = new_tuple
+					# make a new entry into the stack- the absolute coordinates of the room that
+					# needs to be generated
+					needed.append((new_x_dir + actual_x, new_y_dir + actual_y))
+			except IndexError:
+				break
+
+
+
 
 		temp = []
 		for a in self.rooms:
@@ -262,6 +292,8 @@ class Room(object):
 	def generate(self):
 		""" this method is called recursively on every room, it populates the room with monsters and
 			makes other connecting rooms- the dungeon grows like a tree.
+			returns:
+				rooms_needed: a list of tuples that indicate in which direction new rooms should be generated
 		"""
 		# use the spawn method in the monster file
 		for monstar in monsters.spawn(self.level):
@@ -274,6 +306,7 @@ class Room(object):
 		if chest:
 			self.things.append(chest)
 
+		rooms_needed = []
 		# this loop decides whether or not we're spawning a new room in the indicated direction
 		for direction, dircords in self.directions.iteritems():
 			x,y = dircords
@@ -285,12 +318,17 @@ class Room(object):
 			# make sure the cords of a new potential room aren't negative and that there isn't already a room in the space
 			if newx >= 0 and newx < ma and newy >=0 and newy < ma and not self.containing_dungeon.rooms[newx][newy]:
 				# if there are no neighbors, we want to generate one
-				if len(self.get_neighbors().keys()) <= 1:
-					self.generate_neighbor(direction)
+				# print len(self.get_neighbors().keys())
+				# print len(self.get_neighbors().keys()) <= 1
+				if (len(self.get_neighbors().keys()) <= 1):
+					rooms_needed.append(self.directions[direction])
+					return rooms_needed
 				else:
-					# if there are less than four, then there is a 60% chance that a new one will happen
-					if len(self.get_neighbors().keys()) < 3 and base.D6.roll() > 4:
-						self.generate_neighbor(direction)
+					# if there are less than four, then there is a 10% chance that a new one will happen
+					if len(self.get_neighbors().keys()) < 3 and base.D100.roll() <= 5:
+						rooms_needed.append(self.directions[direction])
+						return rooms_needed
+		return rooms_needed
 
 	def get_neighbors(self):
 		""" get the room's neighbors

@@ -90,15 +90,15 @@ class Bow(Weapon):
 		self.name='bow'
 		self.info='two-handed'
 		self.info2='weapon'
-		self.equipable=True
+		self.equipable = True
 		self.level = level
-		self.durability=40
-		self.current_durability=40
+		self.durability = 40
+		self.current_durability = 40
 		self.descr=self.name+" "+str(self.level)
 		self.cost=10.0
-		self.item_options=['examine','equip']
+		self.item_options = ['examine','equip']
 		self.options = ['%s' % self.to_str()]
-		self.damage=1.0 * (25 * math.log(self.level + 1, 2) + 3) / 50.0
+		self.damage = 1.0 * (25 * math.log(self.level + 1, 2) + 3) / 50.0
 
 	def add_to_inventory(self):
 		# we want rangers to be super effective with bows
