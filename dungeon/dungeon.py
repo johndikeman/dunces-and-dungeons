@@ -37,6 +37,7 @@ class Dungeon(object):
 		self.rooms = []
 		self.things =[]
 		self.roomsmap=[]
+		self.directions = {'north':(-1,0),'south':(1,0),'east':(0,1),'west':(0,-1)}
 
 		self.size = size
 		self.gold_reward = (self.level * 100) * self.size
@@ -60,33 +61,15 @@ class Dungeon(object):
 		self.starting_room.cords = (0,0)
 		self.rooms[0][0] = self.starting_room
 		needed = self.rooms[0][0].generate()
-		while 1:
-			try:
-				# print needed
+		cornerlist = {(0,0):('south','east')}
 
-				# make sure that there is a value in the stack
-				needed[-1]
-				# grab the needed coordinatese
-				ind = random.randint(0,len(needed)-1)
-				needed_x_dir, needed_y_dir = needed[ind]
-				needed = needed[:ind] + needed[ind + 1:]
-				# this actually doesn't do anything
-				actual_x, actual_y = (current_x + needed_x_dir, current_y + needed_y_dir)
-				# set the room matrix to a room
-				self.rooms[actual_x][actual_y] = Room(self,self.party)
-				# set the coords of the new room
-				self.rooms[actual_x][actual_y].cords = (actual_x, actual_y)
-				# print (actual_x,actual_y)
-				# get the neighbors that the new room needs
-				for new_tuple in self.rooms[actual_x][actual_y].generate():
-					# print new_tuple
-					# grab the individual coords
-					new_x_dir, new_y_dir = new_tuple
-					# make a new entry into the stack- the absolute coordinates of the room that
-					# needs to be generated
-					needed.append((new_x_dir + actual_x, new_y_dir + actual_y))
-			except IndexError:
-				break
+		while 1:
+			x,y = random.choice(cornerlist.keys())
+			dx, dy = self.directions[random.choice(cornerlist[(x,y)])]
+			while base.D100.roll() <= 25 and dx + current_x >= 0 and dx + current_x < self.size and \
+				dy + current_y >= 0 and dy + current_y < self.size:
+				self.rooms[x + dx][y + dy] = Room(self,self.party)
+				current_x, current_y = (x + dx,y + dy)
 
 
 
