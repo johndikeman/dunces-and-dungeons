@@ -201,6 +201,18 @@ class PlayerTest(unittest.TestCase):
                     self.player.take_damage(self.player,30,False)
                     self.tearDown()
 
+class DungeonStressTests(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_generation(self):
+        for a in range(100):
+            print d.Dungeon(100,5,None).to_str() + "\n\n"
+
+
 class AbilityTest(unittest.TestCase):
     def setUp(self):
         base.INSTRUCTION_QUEUE = []
@@ -279,10 +291,10 @@ man_tests.addTests(unittest.TestLoader().loadTestsFromTestCase(AbilityTest))
 
 
 if __name__ == '__main__':
-    # if you run the script without any arguments (like travis ci does) itll just run the automatic tests.
+    # if you run the script without any arguments (like travis ci does) it'll just run the automatic tests.
     # to test abilities and other things that require a little more finesse just specify any argument
     try:
-        sys.argv[1]
-        unittest.TextTestRunner().run(man_tests)
-    except:
+        if sys.argv[1] == "manual":
+            unittest.TextTestRunner().run(man_tests)
+    except IndexError:
         unittest.TextTestRunner().run(auto_tests)

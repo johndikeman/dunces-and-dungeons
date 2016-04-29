@@ -103,11 +103,11 @@ class Dungeon(object):
 
 	def leave_dungeon(self):
 		"""this method is called when the dungeon is completed."""
-		# destroy any maps in the inventory
-		for a in self.party.inventory:
-			if a.inventory.contains_type(utils.CompletedMap):
-				print "%s's map crumbles to dust", a.name
-				a.inventory.remove(utils.CompletedMap)
+		# # destroy any maps in the inventory
+		# for a in self.party.inventory:
+		# 	if a.inventory.contains_type(utils.CompletedMap):
+		# 		print "%s's map crumbles to dust" % a.name
+		# 		a.inventory.remove(utils.CompletedMap)
 		# set the current dungeon back to the hub
 		self.party.current_dungeon = self.party.hub
 		self.party.current_dungeon.start()
@@ -121,14 +121,41 @@ class Dungeon(object):
 		self.active_room.enter()
 
 	def to_str(self):
-		ret = ''
-		for a in self.rooms:
-			for b in a:
-				if isinstance(b,Room):
-					ret += 'ROOM '
-				else:
-					ret += '____ '
-			ret += '\n'
+		tmap = []
+		for a in range(self.size):
+			tmap.append([])
+			for b in range(self.size):
+				tmap[b].append(None)
+
+		rooms = self.rooms
+		for row in range(len(rooms)):
+			for col in range(len(rooms[row])):
+				# check first if there is a room at that position
+				if rooms[col][row]:
+					# check to see if theyre in the room
+					tmap[col][row] = 'R '
+					if rooms[col][row].contains_chest():
+						tmap[col][row] = 'C '
+					if rooms[col][row].cords == self.active_room.cords:
+						tmap[col][row] = 'X '
+					if rooms[col][row].contains_exit():
+						tmap[col][row] = 'L '
+		return self.format_output(tmap)
+
+	def format_output(self,tmap):
+		ret = '+-'
+		for a in tmap[0]:
+		    ret += '--'
+		ret += '+\n'
+		for a in tmap:
+		    ret += '| '
+		    for b in a:
+		        ret += b
+		    ret += '|\n'
+		ret += '+'
+		for a in tmap[0]:
+		    ret += '--'
+		ret += '-+\n'
 		return ret
 
 class Hub(Dungeon):
