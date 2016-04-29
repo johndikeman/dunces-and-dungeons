@@ -63,13 +63,16 @@ class Dungeon(object):
 		needed = self.rooms[0][0].generate()
 		cornerlist = {(0,0):('south','east')}
 
-		while 1:
+		for a in range(int(self.size / 2)):
 			x,y = random.choice(cornerlist.keys())
 			dx, dy = self.directions[random.choice(cornerlist[(x,y)])]
+			current_x, current_y = dx, dy
 			while base.D100.roll() <= 25 and dx + current_x >= 0 and dx + current_x < self.size and \
 				dy + current_y >= 0 and dy + current_y < self.size:
-				self.rooms[x + dx][y + dy] = Room(self,self.party)
-				current_x, current_y = (x + dx,y + dy)
+				self.rooms[current_x + dx][y + dy] = Room(self,self.party)
+				self.rooms[current_x + dx][y + dy].cords = (x + dx, y + dy)
+				self.rooms[current_x + dx][y + dy].generate()
+				current_x, current_y = (current_x + dx,current_y + dy)
 
 
 
