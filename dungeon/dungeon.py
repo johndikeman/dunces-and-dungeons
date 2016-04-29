@@ -64,15 +64,24 @@ class Dungeon(object):
 		cornerlist = {(0,0):('south','east')}
 
 		for a in range(int(self.size / 2)):
-			x,y = random.choice(cornerlist.keys())
-			dx, dy = self.directions[random.choice(cornerlist[(x,y)])]
-			current_x, current_y = dx, dy
-			while base.D100.roll() <= 25 and dx + current_x >= 0 and dx + current_x < self.size and \
+			corner_x, corner_y = random.choice(cornerlist.keys())
+			print cornerlist
+			dx, dy = self.directions[random.choice(cornerlist[(corner_x,corner_y)])]
+			current_x, current_y = corner_x, corner_y
+			while dx + current_x >= 0 and dx + current_x < self.size and \
 				dy + current_y >= 0 and dy + current_y < self.size:
-				self.rooms[current_x + dx][y + dy] = Room(self,self.party)
-				self.rooms[current_x + dx][y + dy].cords = (x + dx, y + dy)
-				self.rooms[current_x + dx][y + dy].generate()
-				current_x, current_y = (current_x + dx,current_y + dy)
+				if base.D100.roll() <= 15:
+					self.rooms[current_x + dx][current_y + dy] = Room(self,self.party)
+					self.rooms[current_x + dx][current_y + dy].cords = (current_x + dx, current_y + dy)
+					self.rooms[current_x + dx][current_y + dy].generate()
+					current_x, current_y = (current_x + dx,current_y + dy)
+				else:
+					open_directions = self.rooms[current_x][current_y].get_open_spaces()
+					for ind, a in enumerate(open_directions):
+						if self.directions[a] == (dx,dy):
+							open_directions = open_directions[:ind] + open_directions[ind+1:]
+
+					cornerlist.update({(current_x,current_y):open_directions})
 
 
 
@@ -333,6 +342,17 @@ class Room(object):
 			except IndexError:
 				pass
 		return neighbors
+
+	def get_open_spaces(self):
+		ret = []
+		ne = self.get_neighbors()
+		for direction in self.directions.keys():
+			if direction not in ne.keys():
+				ret.append(direction)
+		return ret
+
+	def is_in_bounds(self,x,y):
+		return x >= 0 and y >= 0 and x < self.containing_dungeon.size and y < self.containing_dungeon.size
 
 	def contains_exit(self):
 		""" check if the room has an exit

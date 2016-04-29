@@ -315,7 +315,7 @@ class Master(Legendary):
 			damage /= 2.5
 		chance2 = base.D20.roll()
 		if chance2 > 16:
-			target.statuses.append(s.Maim(2))
+			target.statuses.append(s.Maim(2,5))
 		chance3 = base.D20.roll()
 		if chance3 > 16:
 			target.statuses.append(s.Bleeding(2,self.owner.level*6))
