@@ -19,6 +19,6 @@ however, as with many good things, this takes a little work to experience. lucki
 # contributing
 if you encounter a bug or crash, open an <a href="https://github.com/microwaveabletoaster/dunces-and-dungeons/issues">issue</a> and let us know exactly what happened. this helps us out a lot, so thanks!
 
-this repository was a project by cameron egger and john dikeman for their highschool independent study course, and isn't really being actively developed anymore. that being said, we would love to see some outside interest in the project! contact me at jrobdikeman@gmail.com if you're interested in becoming a collaborator.
+this repository was a project by cameron egger and john dikeman for their highschool independent study course, and isn't really being actively developed anymore. feel free to mess around with the code, and submit a pull request if you've implemented a feature or made some balance changes that you feel make the game better. i've added some features that we would like to see added in the issues section, so if you need a place to start, check over there! we're probably going to be very accepting of pull requests, so please feel free to contribute.
 
 we're working hard to make the internal documentation better, but at this stage you'll find that most things are commented in the code and everything is relatively easy to follow. if you have any specific questions, open an <a href="https://github.com/microwaveabletoaster/dunces-and-dungeons/issues">issue</a>.
