@@ -2,9 +2,7 @@
 
 master: [![Build Status](https://travis-ci.org/microwaveabletoaster/dunces-and-dungeons.svg?branch=master)](https://travis-ci.org/microwaveabletoaster/dunces-and-dungeons)
 
-<img href='https://dl.dropboxusercontent.com/s/68p3mj77rhvzosi/Screen%20Shot%202016-06-02%20at%206.47.25%20PM.png?dl=0'></img>
 
-<img href='https://dl.dropboxusercontent.com/s/kibxynvolqp8gm0/Screen%20Shot%202016-06-02%20at%206.49.34%20PM.png?dl=0'></img>
 
 # about
 dnd is a command-line randomly generated rpg with an emphasis on teamwork. players work together to defeat scores of monsters with unique qualities in sprawling procedurally generated dungeons, and collect plenty of loot in the process!
@@ -19,6 +17,8 @@ ever get tired of staring at a terminal, brainlessly pressing number keys for ho
 
 however, as with many good things, this takes a little work to experience. luckily for you, i've laid it all out here in a handy <a href='WEBDUNCE.md'>guide</a>.
 
+![loot!](https://dl.dropboxusercontent.com/s/68p3mj77rhvzosi/Screen%20Shot%202016-06-02%20at%206.47.25%20PM.png?dl=0)
+![monsters!](https://dl.dropboxusercontent.com/s/kibxynvolqp8gm0/Screen%20Shot%202016-06-02%20at%206.49.34%20PM.png?dl=0)
 
 # contributing
 if you encounter a bug or crash, open an <a href="https://github.com/microwaveabletoaster/dunces-and-dungeons/issues">issue</a> and let us know exactly what happened. this helps us out a lot, so thanks!
