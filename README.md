@@ -2,6 +2,10 @@
 
 master: [![Build Status](https://travis-ci.org/microwaveabletoaster/dunces-and-dungeons.svg?branch=master)](https://travis-ci.org/microwaveabletoaster/dunces-and-dungeons)
 
+<img href='https://dl.dropboxusercontent.com/s/68p3mj77rhvzosi/Screen%20Shot%202016-06-02%20at%206.47.25%20PM.png?dl=0'></img>
+
+<img href='https://dl.dropboxusercontent.com/s/kibxynvolqp8gm0/Screen%20Shot%202016-06-02%20at%206.49.34%20PM.png?dl=0'></img>
+
 # about
 dnd is a command-line randomly generated rpg with an emphasis on teamwork. players work together to defeat scores of monsters with unique qualities in sprawling procedurally generated dungeons, and collect plenty of loot in the process!
 

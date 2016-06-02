@@ -65,7 +65,7 @@ class Dungeon(object):
 
 		for a in range(int(self.size / 2)):
 			corner_x, corner_y = random.choice(cornerlist.keys())
-			print cornerlist
+			# print cornerlist
 			dx, dy = self.directions[random.choice(cornerlist[(corner_x,corner_y)])]
 			current_x, current_y = corner_x, corner_y
 			while dx + current_x >= 0 and dx + current_x < self.size and \
